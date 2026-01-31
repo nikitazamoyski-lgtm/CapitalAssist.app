@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>RAW Dating</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        body {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .app-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 20px 15px 20px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            letter-spacing: 6px;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            color: #FFFFFF;
+            font-size: 1em;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .age-warning {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 0 20px 15px 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .upload-screen {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 20px 20px;
+        }
+
+        .upload-content {
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid #FFFFFF;
+            border-radius: 25px;
+            padding: 30px 25px;
+            box-shadow: 
+                0 0 40px rgba(255, 255, 255, 0.2),
+                0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .upload-section {
+            margin-bottom: 25px;
+        }
+
+        .upload-section h2 {
+            color: #FFFFFF;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .upload-hint {
+            color: #CCCCCC;
+            margin-bottom: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 16px;
+            background: #FFFFFF;
+            color: #000000;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .file-input-label:active {
+            transform: scale(0.98);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .preview-item {
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .start-btn {
+            margin-top: 20px;
+            padding: 16px 40px;
+            background: #FFFFFF;
+            color: #000000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+        }
+
+        .start-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .start-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .swipe-screen {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            padding: 0 15px 20px 15px;
+        }
+
+        .card-stack {
+            position: relative;
+            flex: 1;
+            perspective: 1000px;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            border: 3px solid #FFFFFF;
+            border-radius: 25px;
+            box-shadow: 
+                0 0 40px rgba(255, 255, 255, 0.3),
+                0 15px 40px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            transition: transform 0.3s, opacity 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-container {
+            flex: 1;
+            background: #000000;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            padding: 3px;
+            overflow: hidden;
+        }
+
+        .guy-card {
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guy-photo {
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+        }
+
+        .guy-info {
+            padding: 10px;
+            background: linear-gradient(180deg, rgba(30, 30, 30, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .guy-name {
+            color: #FFFFFF;
+            font-size: 1.1em;
+            font-weight: 900;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        .guy-stats {
+            color: #CCCCCC;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .guy-description {
+            color: #999999;
+            font-size: 0.7em;
+            line-height: 1.2;
+            font-family: Arial, sans-serif;
+        }
+
+        .card-info {
+            padding: 15px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%);
+            border-top: 2px solid #FFFFFF;
+            flex-shrink: 0;
+        }
+
+        .swipe-counter {
+            color: #FFFFFF;
+            font-weight: 900;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .swipe-instruction {
+            color: #CCCCCC;
+            font-size: 0.9em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-shrink: 0;
+        }
+
+        .action-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid;
+            cursor: pointer;
+            font-size: 2em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .nope-btn {
+            background: #000000;
+            border-color: #FFFFFF;
+            color: #FFFFFF;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .like-btn {
+            background: #FFFFFF;
+            border-color: #FFFFFF;
+            color: #000000;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .action-btn:active {
+            transform: scale(1.1);
+        }
+
+        .match-screen {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            padding: 0 15px 20px 15px;
+        }
+
+        .match-content {
+            background: rgba(20, 20, 20, 0.98);
+            border: 3px solid #FFFFFF;
+            border-radius: 25px;
+            padding: 30px 20px;
+            box-shadow: 
+                0 0 60px rgba(255, 255, 255, 0.5),
+                0 15px 40px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            animation: matchAppear 0.5s ease-out;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes matchAppear {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .match-title {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .match-subtitle {
+            color: #FFFFFF;
+            font-size: 2em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        .match-tagline {
+            color: #CCCCCC;
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .match-photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex: 1;
+        }
+
+        .match-photo {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            animation: matchPhotoAppear 0.6s ease-out forwards;
+            position: relative;
+        }
+
+        .match-photo:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .match-photo:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .match-photo:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .match-photo:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes matchPhotoAppear {
+            from {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .match-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .match-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 6px;
+            font-weight: 900;
+            font-size: 0.75em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .chat-btn {
+            padding: 16px 40px;
+            background: #FFFFFF;
+            color: #000000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            flex-shrink: 0;
+        }
+
+        .chat-btn:active {
+            transform: scale(0.98);
+        }
+
+        .chat-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: rgba(20, 20, 20, 0.98);
+            border-bottom: 2px solid #FFFFFF;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .chat-back-btn {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .chat-title {
+            color: #FFFFFF;
+            font-size: 1.2em;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-family: Arial, sans-serif;
+            font-size: 0.95em;
+            line-height: 1.4;
+            animation: messageAppear 0.3s ease-out;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-them {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .message-me {
+            background: #FFFFFF;
+            color: #000000;
+            align-self: flex-end;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .chat-input-container {
+            background: rgba(20, 20, 20, 0.98);
+            border-top: 2px solid #FFFFFF;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FFFFFF;
+            border-radius: 25px;
+            padding: 12px 18px;
+            color: #FFFFFF;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chat-send-btn {
+            background: #FFFFFF;
+            color: #000000;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.3em;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-send-btn:active {
+            transform: scale(0.95);
+        }
+
+        .card-exit-left {
+            animation: slideLeft 0.5s ease-out forwards;
+        }
+
+        .card-exit-right {
+            animation: slideRight 0.5s ease-out forwards;
+        }
+
+        @keyframes slideLeft {
+            to {
+                transform: translateX(-150%) rotate(-30deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideRight {
+            to {
+                transform: translateX(150%) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">RAW DATING</div>
+            <div class="tagline">Real! Black! Wild!</div>
+        </div>
+
+        <!-- Upload Screen -->
+        <div class="upload-screen" id="uploadScreen">
+            <div class="age-warning">
+                ⚠️ 18+ ADULTS ONLY - EXPLICIT DATING ⚠️
+            </div>
+            
+            <div class="upload-content">
+                <div class="upload-section">
+                    <h2>🔥 UPLOAD MEN</h2>
+                    <p class="upload-hint">6 photos of hung guys</p>
+                    
+                    <div class="file-input-wrapper">
+                        <input type="file" id="maleInput" accept="image/*" multiple>
+                        <label for="maleInput" class="file-input-label">
+                            📸 SELECT MEN
+                        </label>
+                    </div>
+                    
+                    <div class="preview-grid" id="malePreview"></div>
+                </div>
+
+                <div class="upload-section">
+                    <h2>💋 UPLOAD WOMEN</h2>
+                    <p class="upload-hint">2 photos of girls</p>
+                    
+                    <div class="file-input-wrapper">
+                        <input type="file" id="femaleInput" accept="image/*" multiple>
+                        <label for="femaleInput" class="file-input-label">
+                            📸 SELECT WOMEN
+                        </label>
+                    </div>
+                    
+                    <div class="preview-grid" id="femalePreview"></div>
+                </div>
+
+                <div class="upload-section">
+                    <h2>⚙️ MATCH SETTINGS</h2>
+                    <p class="upload-hint">Customize your match couple</p>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="guy1Name" placeholder="Guy 1 Name (e.g. Marcus)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
+                        <input type="text" id="guy1Size" placeholder="Guy 1 Size (e.g. 10&quot;)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 15px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="guy2Name" placeholder="Guy 2 Name (e.g. Jamal)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
+                        <input type="text" id="guy2Size" placeholder="Guy 2 Size (e.g. 11&quot;)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 15px;">
+                    </div>
+                    
+                    <div>
+                        <input type="text" id="girl1Name" placeholder="Girl 1 Name (e.g. Ashley)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
+                        <input type="text" id="girl2Name" placeholder="Girl 2 Name (e.g. Madison)" 
+                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif;">
+                    </div>
+                </div>
+                
+                <button class="start-btn" id="startBtn" disabled>
+                    START SWIPING! 🔥
+                </button>
+            </div>
+        </div>
+
+        <!-- Swipe Screen -->
+        <div class="swipe-screen" id="swipeScreen">
+            <div class="card-stack" id="cardStack"></div>
+            <div class="buttons">
+                <button class="action-btn nope-btn" onclick="swipe('nope')">✕</button>
+                <button class="action-btn like-btn" onclick="swipe('like')">♥</button>
+            </div>
+        </div>
+
+        <!-- Match Screen -->
+        <div class="match-screen" id="matchScreen">
+            <div class="match-content">
+                <div class="match-title">💦😈💦</div>
+                <div class="match-subtitle">IT'S A MATCH!</div>
+                <div class="match-tagline">YOUR PERFECT FOURSOME!</div>
+                <div class="match-photos" id="matchPhotos"></div>
+                <button class="chat-btn" onclick="openChat()">CONTACT FOR PLEASURE 💦</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Screen -->
+    <div class="chat-screen" id="chatScreen">
+        <div class="chat-header">
+            <button class="chat-back-btn" onclick="closeChat()">←</button>
+            <div class="chat-title">CHAT WITH GUYS</div>
+            <div style="width: 30px;"></div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        let malePhotos = [];
+        let femalePhotos = [];
+        let currentSwipe = 0;
+        let matchGuys = [];
+        let swipeCombinations = [];
+        let girlNames = [];
+
+        const names = ['Marcus', 'Jamal', 'Tyrone', 'DeAndre', 'Isaiah', 'Xavier', 'Darius', 'Malik', 'Rashad', 'Terrell'];
+        const ages = ['25', '27', '29', '26', '28', '30', '24', '31', '26', '28'];
+        const sizes = ['9"', '10"', '11"', '9.5"', '10.5"', '11"', '9"', '10"', '11.5"', '10"'];
+        const descriptions = [
+            'Athletic build, dominant energy. Loves taking charge.',
+            'Well-built, experienced. Into rough play.',
+            'Muscular, confident. Wild in the sheets.',
+            'Fit body, high stamina. Down for anything.',
+            'Strong physique, aggressive style. No limits.',
+            'Toned & hung, intense sessions guaranteed.',
+            'Gym body, knows what he wants. Freaky.',
+            'Ripped & ready, loves to please & dominate.',
+            'Built tough, goes all night. Very oral.',
+            'Defined muscles, passionate & raw. Group friendly.'
+        ];
+
+        const autoResponses = [
+            "Hey beautiful! We've been waiting for you 😏",
+            "Damn, you look amazing! When can we meet?",
+            "We're ready for some fun tonight 🔥",
+            "You two are exactly what we've been looking for",
+            "Let's make this happen! Where you girls at?",
+            "We can host or come to you. What's your preference?",
+            "Can't wait to show you a good time 😈"
+        ];
+
+        const maleInput = document.getElementById('maleInput');
+        const femaleInput = document.getElementById('femaleInput');
+        const malePreview = document.getElementById('malePreview');
+        const femalePreview = document.getElementById('femalePreview');
+        const startBtn = document.getElementById('startBtn');
+        const uploadScreen = document.getElementById('uploadScreen');
+        const swipeScreen = document.getElementById('swipeScreen');
+        const matchScreen = document.getElementById('matchScreen');
+        const cardStack = document.getElementById('cardStack');
+        const chatScreen = document.getElementById('chatScreen');
+        const chatMessagesContainer = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        maleInput.addEventListener('change', (e) => handleFileSelect(e, 'male'));
+        femaleInput.addEventListener('change', (e) => handleFileSelect(e, 'female'));
+        startBtn.addEventListener('click', startSwiping);
+
+        function handleFileSelect(e, gender) {
+            const files = Array.from(e.target.files);
+            
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        if (gender === 'male') {
+                            if (malePhotos.length < 6) {
+                                malePhotos.push(event.target.result);
+                                renderPreviews();
+                            }
+                        } else {
+                            if (femalePhotos.length < 2) {
+                                femalePhotos.push(event.target.result);
+                                renderPreviews();
+                            }
+                        }
+                        updateStartButton();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function renderPreviews() {
+            malePreview.innerHTML = '';
+            malePhotos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${photo}" alt="Male ${index + 1}">
+                    <button class="remove-btn" onclick="removePhoto('male', ${index})">×</button>
+                `;
+                malePreview.appendChild(div);
+            });
+
+            femalePreview.innerHTML = '';
+            femalePhotos.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${photo}" alt="Female ${index + 1}">
+                    <button class="remove-btn" onclick="removePhoto('female', ${index})">×</button>
+                `;
+                femalePreview.appendChild(div);
+            });
+        }
+
+        function removePhoto(gender, index) {
+            if (gender === 'male') {
+                malePhotos.splice(index, 1);
+            } else {
+                femalePhotos.splice(index, 1);
+            }
+            renderPreviews();
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const isReady = malePhotos.length === 6 && femalePhotos.length === 2;
+            startBtn.disabled = !isReady;
+            
+            if (isReady) {
+                startBtn.textContent = '🔥 START SWIPING! 🔥';
+            } else {
+                startBtn.textContent = `NEED: ${malePhotos.length}/6 MEN, ${femalePhotos.length}/2 WOMEN`;
+            }
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function getRandomGuyInfo() {
+            const index = Math.floor(Math.random() * names.length);
+            return {
+                name: names[index],
+                age: ages[index],
+                size: sizes[index],
+                description: descriptions[index]
+            };
+        }
+
+        function startSwiping() {
+            currentSwipe = 0;
+            uploadScreen.classList.add('hidden');
+            swipeScreen.style.display = 'flex';
+            
+            const shuffledMales = shuffleArray([...malePhotos]);
+            
+            // Get custom names and sizes or use defaults
+            const guy1Name = document.getElementById('guy1Name').value.trim() || names[0];
+            const guy1Size = document.getElementById('guy1Size').value.trim() || '10"';
+            const guy2Name = document.getElementById('guy2Name').value.trim() || names[1];
+            const guy2Size = document.getElementById('guy2Size').value.trim() || '11"';
+            
+            // Get girl names or use defaults
+            const girl1Name = document.getElementById('girl1Name').value.trim() || 'Girl 1';
+            const girl2Name = document.getElementById('girl2Name').value.trim() || 'Girl 2';
+            girlNames = [girl1Name, girl2Name];
+            
+            matchGuys = [
+                { 
+                    photo: shuffledMales[0], 
+                    info: {
+                        name: guy1Name,
+                        age: ages[0],
+                        size: guy1Size,
+                        description: descriptions[0]
+                    }
+                },
+                { 
+                    photo: shuffledMales[1], 
+                    info: {
+                        name: guy2Name,
+                        age: ages[1],
+                        size: guy2Size,
+                        description: descriptions[1]
+                    }
+                }
+            ];
+            
+            swipeCombinations = [];
+            
+            for (let i = 0; i < 2; i++) {
+                const tempShuffled = shuffleArray([...malePhotos]);
+                swipeCombinations.push([
+                    { photo: tempShuffled[2], info: getRandomGuyInfo() },
+                    { photo: tempShuffled[3], info: getRandomGuyInfo() }
+                ]);
+            }
+            
+            swipeCombinations.push(matchGuys);
+            
+            createCard();
+        }
+
+        function createCard() {
+            cardStack.innerHTML = '';
+            
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = 'currentCard';
+            
+            const currentGuys = swipeCombinations[currentSwipe];
+            
+            card.innerHTML = `
+                <div class="photo-container">
+                    ${currentGuys.map(guy => `
+                        <div class="guy-card">
+                            <img src="${guy.photo}" class="guy-photo" alt="Guy">
+                            <div class="guy-info">
+                                <div class="guy-name">${guy.info.name}, ${guy.info.age}</div>
+                                <div class="guy-stats">🍆 ${guy.info.size} • BBC</div>
+                                <div class="guy-description">${guy.info.description}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="card-info">
+                    <div class="swipe-counter">SWIPE ${currentSwipe + 1}/3</div>
+                    <div class="swipe-instruction">← SWIPE LEFT OR RIGHT →</div>
+                </div>
+            `;
+            
+            cardStack.appendChild(card);
+        }
+
+        function swipe(direction) {
+            const card = document.getElementById('currentCard');
+            if (!card) return;
+            
+            if (direction === 'like') {
+                card.classList.add('card-exit-right');
+            } else {
+                card.classList.add('card-exit-left');
+            }
+            
+            setTimeout(() => {
+                currentSwipe++;
+                
+                if (currentSwipe >= 3) {
+                    showMatch();
+                } else {
+                    createCard();
+                }
+            }, 500);
+        }
+
+        function showMatch() {
+            swipeScreen.style.display = 'none';
+            matchScreen.style.display = 'flex';
+            
+            const matchPhotosContainer = document.getElementById('matchPhotos');
+            matchPhotosContainer.innerHTML = `
+                <div class="match-photo">
+                    <img src="${matchGuys[0].photo}" alt="Match Male 1">
+                    <div class="match-label">${matchGuys[0].info.name} 🔥</div>
+                </div>
+                <div class="match-photo">
+                    <img src="${femalePhotos[0]}" alt="Match Female 1">
+                    <div class="match-label">${girlNames[0]} 💋</div>
+                </div>
+                <div class="match-photo">
+                    <img src="${matchGuys[1].photo}" alt="Match Male 2">
+                    <div class="match-label">${matchGuys[1].info.name} 🔥</div>
+                </div>
+                <div class="match-photo">
+                    <img src="${femalePhotos[1]}" alt="Match Female 2">
+                    <div class="match-label">${girlNames[1]} 💋</div>
+                </div>
+            `;
+        }
+
+        function openChat() {
+            chatScreen.style.display = 'flex';
+            chatMessagesContainer.innerHTML = '';
+            
+            // Add welcome message
+            setTimeout(() => {
+                addMessage(matchGuys[0].info.name, autoResponses[0], false);
+            }, 500);
+            
+            setTimeout(() => {
+                addMessage(matchGuys[1].info.name, autoResponses[1], false);
+            }, 1500);
+        }
+
+        function closeChat() {
+            chatScreen.style.display = 'none';
+        }
+
+        function addMessage(sender, text, isMe) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isMe ? 'message message-me' : 'message message-them';
+            
+            if (!isMe) {
+                messageDiv.innerHTML = `<div class="message-sender">${sender}</div>${text}`;
+            } else {
+                messageDiv.textContent = text;
+            }
+            
+            chatMessagesContainer.appendChild(messageDiv);
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            addMessage('You', text, true);
+            chatInput.value = '';
+            
+            // Auto-reply from random guy
+            setTimeout(() => {
+                const randomGuy = matchGuys[Math.floor(Math.random() * matchGuys.length)];
+                const randomResponse = autoResponses[Math.floor(Math.random() * autoResponses.length)];
+                addMessage(randomGuy.info.name, randomResponse, false);
+            }, 1000 + Math.random() * 2000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Swipe with touch
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        cardStack.addEventListener('mousedown', handleDragStart);
+        cardStack.addEventListener('touchstart', handleDragStart);
+        cardStack.addEventListener('mousemove', handleDragMove);
+        cardStack.addEventListener('touchmove', handleDragMove);
+        cardStack.addEventListener('mouseup', handleDragEnd);
+        cardStack.addEventListener('touchend', handleDragEnd);
+        cardStack.addEventListener('mouseleave', handleDragEnd);
+
+        function handleDragStart(e) {
+            const card = document.getElementById('currentCard');
+            if (!card) return;
+            
+            isDragging = true;
+            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        }
+
+        function handleDragMove(e) {
+            if (!isDragging) return;
+            
+            const card = document.getElementById('currentCard');
+            if (!card) return;
+            
+            currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const diff = currentX - startX;
+            
+            card.style.transform = `translateX(${diff}px) rotate(${diff * 0.1}deg)`;
+        }
+
+        function handleDragEnd(e) {
+            if (!isDragging) return;
+            
+            const card = document.getElementById('currentCard');
+            if (!card) return;
+            
+            isDragging = false;
+            const diff = currentX - startX;
+            
+            if (Math.abs(diff) > 100) {
+                swipe(diff > 0 ? 'like' : 'nope');
+            } else {
+                card.style.transform = '';
+            }
+        }
+    </script>
+</body>
+</html>
