@@ -1,1196 +1,1296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RAW Dating</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: fixed;
-        }
-
-        body {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            background: #000000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .app-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px 20px 15px 20px;
-            flex-shrink: 0;
-        }
-
-        .logo {
-            font-size: 2.5em;
-            font-weight: 900;
-            color: #FFFFFF;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-            letter-spacing: 6px;
-            margin-bottom: 5px;
-        }
-
-        .tagline {
-            color: #FFFFFF;
-            font-size: 1em;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-        }
-
-        .age-warning {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #FFFFFF;
-            color: #FFFFFF;
-            padding: 12px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 0 20px 15px 20px;
-            font-weight: bold;
-            font-size: 0.85em;
-        }
-
-        .upload-screen {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0 20px 20px 20px;
-        }
-
-        .upload-content {
-            background: rgba(20, 20, 20, 0.95);
-            border: 2px solid #FFFFFF;
-            border-radius: 25px;
-            padding: 30px 25px;
-            box-shadow: 
-                0 0 40px rgba(255, 255, 255, 0.2),
-                0 15px 40px rgba(0, 0, 0, 0.8);
-        }
-
-        .upload-section {
-            margin-bottom: 25px;
-        }
-
-        .upload-section h2 {
-            color: #FFFFFF;
-            margin-bottom: 8px;
-            font-size: 1.2em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .upload-hint {
-            color: #CCCCCC;
-            margin-bottom: 12px;
-            font-size: 0.85em;
-            font-weight: bold;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-
-        .file-input-wrapper input[type=file] {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .file-input-label {
-            display: block;
-            padding: 16px;
-            background: #FFFFFF;
-            color: #000000;
-            text-align: center;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .file-input-label:active {
-            transform: scale(0.98);
-        }
-
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .preview-item {
-            position: relative;
-            aspect-ratio: 3/4;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
-
-        .preview-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(255, 0, 0, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .start-btn {
-            margin-top: 20px;
-            padding: 16px 40px;
-            background: #FFFFFF;
-            color: #000000;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            width: 100%;
-        }
-
-        .start-btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        .start-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .swipe-screen {
-            display: none;
-            flex: 1;
-            flex-direction: column;
-            padding: 0 15px 20px 15px;
-        }
-
-        .card-stack {
-            position: relative;
-            flex: 1;
-            perspective: 1000px;
-            margin-bottom: 15px;
-        }
-
-        .card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(20, 20, 20, 0.95);
-            border: 3px solid #FFFFFF;
-            border-radius: 25px;
-            box-shadow: 
-                0 0 40px rgba(255, 255, 255, 0.3),
-                0 15px 40px rgba(0, 0, 0, 0.8);
-            overflow: hidden;
-            transition: transform 0.3s, opacity 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .photo-container {
-            flex: 1;
-            background: #000000;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3px;
-            padding: 3px;
-            overflow: hidden;
-        }
-
-        .guy-card {
-            background: #1a1a1a;
-            border-radius: 15px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .guy-photo {
-            width: 100%;
-            height: 65%;
-            object-fit: cover;
-        }
-
-        .guy-info {
-            padding: 10px;
-            background: linear-gradient(180deg, rgba(30, 30, 30, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .guy-name {
-            color: #FFFFFF;
-            font-size: 1.1em;
-            font-weight: 900;
-            margin-bottom: 4px;
-            letter-spacing: 1px;
-        }
-
-        .guy-stats {
-            color: #CCCCCC;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .guy-description {
-            color: #999999;
-            font-size: 0.7em;
-            line-height: 1.2;
-            font-family: Arial, sans-serif;
-        }
-
-        .card-info {
-            padding: 15px;
-            background: linear-gradient(180deg, rgba(20, 20, 20, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%);
-            border-top: 2px solid #FFFFFF;
-            flex-shrink: 0;
-        }
-
-        .swipe-counter {
-            color: #FFFFFF;
-            font-weight: 900;
-            font-size: 1.1em;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-        }
-
-        .swipe-instruction {
-            color: #CCCCCC;
-            font-size: 0.9em;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            flex-shrink: 0;
-        }
-
-        .action-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid;
-            cursor: pointer;
-            font-size: 2em;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .nope-btn {
-            background: #000000;
-            border-color: #FFFFFF;
-            color: #FFFFFF;
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .like-btn {
-            background: #FFFFFF;
-            border-color: #FFFFFF;
-            color: #000000;
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
-        }
-
-        .action-btn:active {
-            transform: scale(1.1);
-        }
-
-        .match-screen {
-            display: none;
-            flex: 1;
-            flex-direction: column;
-            padding: 0 15px 80px 15px;
-        }
-
-        .match-content {
-            background: rgba(20, 20, 20, 0.98);
-            border: 3px solid #FFFFFF;
-            border-radius: 25px;
-            padding: 20px 15px;
-            box-shadow: 
-                0 0 60px rgba(255, 255, 255, 0.5),
-                0 15px 40px rgba(0, 0, 0, 0.8);
-            text-align: center;
-            animation: matchAppear 0.5s ease-out;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        @keyframes matchAppear {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .match-title {
-            font-size: 2.5em;
-            margin-bottom: 8px;
-        }
-
-        .match-subtitle {
-            color: #FFFFFF;
-            font-size: 1.6em;
-            font-weight: 900;
-            margin-bottom: 10px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-        }
-
-        .match-tagline {
-            color: #CCCCCC;
-            font-size: 0.9em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .match-photos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-            max-height: 40vh;
-        }
-
-        .match-photo {
-            border-radius: 15px;
-            overflow: hidden;
-            border: 3px solid #FFFFFF;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-            animation: matchPhotoAppear 0.6s ease-out forwards;
-            position: relative;
-        }
-
-        .match-photo:nth-child(1) {
-            animation-delay: 0.2s;
-        }
-
-        .match-photo:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-
-        .match-photo:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        .match-photo:nth-child(4) {
-            animation-delay: 0.5s;
-        }
-
-        @keyframes matchPhotoAppear {
-            from {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .match-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .match-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #FFFFFF;
-            color: #000000;
-            padding: 6px;
-            font-weight: 900;
-            font-size: 0.75em;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .chat-btn {
-            padding: 14px 35px;
-            background: #FFFFFF;
-            color: #000000;
-            border: none;
-            border-radius: 50px;
-            font-size: 1em;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            flex-shrink: 0;
-        }
-
-        .chat-btn:active {
-            transform: scale(0.98);
-        }
-
-        .chat-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000000;
-            z-index: 1000;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            background: rgba(20, 20, 20, 0.98);
-            border-bottom: 2px solid #FFFFFF;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-        }
-
-        .chat-back-btn {
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .chat-title {
-            color: #FFFFFF;
-            font-size: 1.2em;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-align: center;
-            flex: 1;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-family: Arial, sans-serif;
-            font-size: 0.95em;
-            line-height: 1.4;
-            animation: messageAppear 0.3s ease-out;
-        }
-
-        @keyframes messageAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message-them {
-            background: rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            align-self: flex-start;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .message-me {
-            background: #FFFFFF;
-            color: #000000;
-            align-self: flex-end;
-        }
-
-        .message-sender {
-            font-weight: bold;
-            margin-bottom: 4px;
-            font-size: 0.85em;
-            opacity: 0.8;
-        }
-
-        .chat-input-container {
-            background: rgba(20, 20, 20, 0.98);
-            border-top: 2px solid #FFFFFF;
-            padding: 15px 15px 80px 15px;
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .chat-input {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #FFFFFF;
-            border-radius: 25px;
-            padding: 12px 18px;
-            color: #FFFFFF;
-            font-size: 1em;
-            font-family: Arial, sans-serif;
-            outline: none;
-        }
-
-        .chat-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .chat-send-btn {
-            background: #FFFFFF;
-            color: #000000;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            font-size: 1.3em;
-            cursor: pointer;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-send-btn:active {
-            transform: scale(0.95);
-        }
-
-        .card-exit-left {
-            animation: slideLeft 0.5s ease-out forwards;
-        }
-
-        .card-exit-right {
-            animation: slideRight 0.5s ease-out forwards;
-        }
-
-        @keyframes slideLeft {
-            to {
-                transform: translateX(-150%) rotate(-30deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes slideRight {
-            to {
-                transform: translateX(150%) rotate(30deg);
-                opacity: 0;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CapitalAssist.app — AI управляет твоим USDT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #00D4AA;
+    --teal-dim: #00b890;
+    --teal-faint: rgba(0,212,170,0.08);
+    --teal-glow: rgba(0,212,170,0.18);
+    --amber: #F5A623;
+    --amber-faint: rgba(245,166,35,0.10);
+    --red: #FF5858;
+    --navy: #0A0E1A;
+    --navy2: #111727;
+    --card: #161D2F;
+    --card2: #1C2540;
+    --muted: #8892A4;
+    --muted2: #B0BAC8;
+    --white: #F0F4FF;
+    --border: rgba(255,255,255,0.07);
+    --border-teal: rgba(0,212,170,0.22);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3,h4,.brand,.stat-num,.proto-name {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .brand {
+    font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
+    color: var(--white);
+  }
+  .brand span { color: var(--teal); }
+  .nav-badge {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
+    background: var(--teal-faint); color: var(--teal);
+    border: 0.5px solid var(--border-teal);
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 52px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 20px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block; width: 24px; height: 0.5px;
+    background: var(--teal); opacity: 0.5;
+  }
+  h1 {
+    font-size: clamp(28px, 8vw, 42px);
+    font-weight: 700; line-height: 1.15;
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+  }
+  h1 em {
+    font-style: normal; color: var(--teal);
+  }
+  .hero-sub {
+    font-size: 15px; color: var(--muted2);
+    max-width: 340px; margin: 0 auto 36px;
+    line-height: 1.65;
+  }
+
+  /* Flow canvas */
+  .flow-wrap {
+    margin: 0 -20px 36px;
+    position: relative; height: 140px;
+    overflow: hidden;
+  }
+  #flowCanvas { width: 100%; height: 100%; display: block; }
+
+  .hero-cta {
+    display: flex; flex-direction: column; gap: 12px;
+    max-width: 320px; margin: 0 auto;
+  }
+  .btn-primary {
+    display: block; width: 100%;
+    padding: 15px; border-radius: 12px;
+    background: var(--teal); color: #050a0f;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+    letter-spacing: -0.2px;
+  }
+  .btn-primary:active { transform: scale(0.97); background: var(--teal-dim); }
+  .btn-ghost {
+    display: block; width: 100%;
+    padding: 14px; border-radius: 12px;
+    background: transparent; color: var(--muted2);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 500;
+    border: 0.5px solid var(--border); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost:active { border-color: var(--teal); color: var(--teal); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    margin: 0 0 48px;
+  }
+  .stat-cell {
+    padding: 18px 10px; text-align: center;
+    background: var(--navy);
+  }
+  .stat-num {
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.5px; color: var(--white);
+    display: block;
+  }
+  .stat-num.teal { color: var(--teal); }
+  .stat-num.amber { color: var(--amber); }
+  .stat-label {
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.2px; margin-top: 2px; display: block;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section { padding: 0 20px 56px; }
+  .sec-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700;
+    letter-spacing: -0.5px; line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 0.5px solid var(--border);
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .step.visible { opacity: 1; transform: translateY(0); }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--teal-faint);
+    border: 0.5px solid var(--border-teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--teal);
+  }
+  .step-body h3 {
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px; color: var(--white);
+  }
+  .step-body p { font-size: 13px; color: var(--muted2); line-height: 1.55; }
+
+  /* ── STRATEGY CARDS ── */
+  .strategies { display: flex; flex-direction: column; gap: 14px; }
+  .strategy-card {
+    background: var(--card); border-radius: 16px;
+    border: 0.5px solid var(--border);
+    padding: 20px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .strategy-card::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+  }
+  .strategy-card.conservative::before { background: var(--teal); }
+  .strategy-card.balanced::before { background: var(--amber); }
+  .strategy-card.aggressive::before { background: var(--red); }
+  .strategy-card.selected {
+    border-color: rgba(255,255,255,0.18);
+    background: var(--card2);
+  }
+  .strat-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 12px;
+  }
+  .strat-name {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .strat-name.c { color: var(--teal); }
+  .strat-name.b { color: var(--amber); }
+  .strat-name.r { color: var(--red); }
+  .apy-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .apy-badge.c { color: var(--teal); }
+  .apy-badge.b { color: var(--amber); }
+  .apy-badge.r { color: var(--red); }
+  .strat-desc {
+    font-size: 13px; color: var(--muted2);
+    line-height: 1.55; margin-bottom: 14px;
+  }
+  .proto-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .chip {
+    font-size: 11px; padding: 4px 8px;
+    border-radius: 6px; font-weight: 500; letter-spacing: 0.2px;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted2); border: 0.5px solid var(--border);
+  }
+  .risk-meter {
+    display: flex; gap: 3px; align-items: center; margin-top: 14px;
+  }
+  .risk-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border);
+  }
+  .risk-dot.on.c { background: var(--teal); }
+  .risk-dot.on.b { background: var(--amber); }
+  .risk-dot.on.r { background: var(--red); }
+  .risk-label {
+    font-size: 11px; color: var(--muted);
+    margin-left: 6px; letter-spacing: 0.2px;
+  }
+
+  /* ── PORTFOLIO SIMULATOR ── */
+  .simulator {
+    background: var(--card); border-radius: 20px;
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+  }
+  .sim-head {
+    padding: 18px 20px 14px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .sim-head-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--muted2);
+  }
+  .live-dot {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--teal); letter-spacing: 0.3px;
+  }
+  .live-dot::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+  .sim-body { padding: 20px; }
+  .portfolio-total {
+    margin-bottom: 24px;
+  }
+  .portfolio-total .label {
+    font-size: 12px; color: var(--muted); letter-spacing: 0.3px;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 4px;
+  }
+  .portfolio-total .amount {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 34px; font-weight: 700; letter-spacing: -1px;
+    color: var(--white); line-height: 1;
+  }
+  .portfolio-total .gain {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 600; color: var(--teal);
+    margin-top: 4px;
+  }
+
+  .alloc-bars { display: flex; flex-direction: column; gap: 10px; }
+  .alloc-row { display: flex; flex-direction: column; gap: 4px; }
+  .alloc-meta {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .alloc-name { font-size: 13px; color: var(--muted2); font-weight: 500; }
+  .alloc-pct { font-size: 13px; color: var(--muted); }
+  .bar-track {
+    height: 5px; border-radius: 3px;
+    background: rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 3px;
+    transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* ── AMOUNT INPUT ── */
+  .amount-section {
+    background: var(--card); border-radius: 20px;
+    border: 0.5px solid var(--border);
+    padding: 24px 20px;
+  }
+  .amount-label {
+    font-size: 12px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--muted); margin-bottom: 14px;
+  }
+  .amount-input-wrap {
+    display: flex; align-items: center;
+    background: var(--card2); border-radius: 12px;
+    border: 0.5px solid var(--border);
+    padding: 12px 16px; gap: 10px; margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .amount-input-wrap:focus-within { border-color: var(--teal); }
+  .currency-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 700; color: var(--muted);
+  }
+  .amount-input-wrap input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700; color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .quick-amounts {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .quick-btn {
+    padding: 7px 14px; border-radius: 8px;
+    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
+    color: var(--teal); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .quick-btn:active { background: var(--teal-glow); }
+
+  .projection {
+    background: var(--navy2); border-radius: 12px;
+    padding: 16px; margin-bottom: 20px;
+  }
+  .proj-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0;
+  }
+  .proj-row + .proj-row {
+    border-top: 0.5px solid var(--border);
+  }
+  .proj-key { font-size: 13px; color: var(--muted2); }
+  .proj-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--white);
+  }
+  .proj-val.teal { color: var(--teal); }
+
+  /* ── PROTOCOLS ── */
+  .protocols { display: flex; flex-direction: column; gap: 10px; }
+  .proto-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; border-radius: 12px;
+    background: var(--card); border: 0.5px solid var(--border);
+  }
+  .proto-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .proto-info { flex: 1; min-width: 0; }
+  .proto-name { font-size: 14px; font-weight: 600; color: var(--white); }
+  .proto-type { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .proto-apy {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px; font-weight: 700; color: var(--teal);
+    text-align: right; flex-shrink: 0;
+  }
+  .proto-apy span { display: block; font-size: 10px; color: var(--muted); font-weight: 400; font-family: 'Inter', sans-serif; }
+
+  /* ── SECURITY ── */
+  .security-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sec-card {
+    background: var(--card); border-radius: 14px;
+    border: 0.5px solid var(--border);
+    padding: 16px;
+  }
+  .sec-icon {
+    font-size: 22px; margin-bottom: 8px;
+  }
+  .sec-card h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .sec-card p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* ── STICKY BOTTOM ── */
+  .sticky-bottom {
+    position: sticky; bottom: 0; z-index: 50;
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 0.5px solid var(--border);
+  }
+  .sticky-bottom .btn-primary {
+    font-size: 16px; padding: 16px;
+    box-shadow: 0 0 28px rgba(0,212,170,0.22);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero-eyebrow { animation-delay: 0s; }
+  h1 { animation-delay: 0.08s; }
+  .hero-sub { animation-delay: 0.16s; }
+  .flow-wrap { animation-delay: 0.24s; }
+  .hero-cta { animation-delay: 0.32s; }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    overflow: hidden; margin: 0 0 48px;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 10px 0;
+    position: relative;
+  }
+  .ticker-wrap::before, .ticker-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 40px;
+    z-index: 2;
+  }
+  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--navy), transparent); }
+  .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--navy), transparent); }
+  .ticker-inner {
+    display: flex; gap: 0; white-space: nowrap;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0 24px;
+    font-size: 12px; color: var(--muted); font-weight: 500;
+  }
+  .ticker-item strong { color: var(--teal); font-family: 'Space Grotesk', sans-serif; }
+  .ticker-item .sep { color: var(--border); }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── ENTRY MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,8,18,0.82);
+    backdrop-filter: blur(8px);
+    align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet {
+    width: 100%; max-width: 480px;
+    background: var(--card); border-radius: 24px 24px 0 0;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding: 12px 24px 40px;
+    animation: slideUp 0.32s cubic-bezier(0.34,1.26,0.64,1) both;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .sheet-handle {
+    width: 40px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 auto 24px;
+  }
+  .sheet-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.4px; color: var(--white);
+    margin-bottom: 4px;
+  }
+  .sheet-sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px; line-height: 1.5;
+  }
+
+  /* Entry method tabs */
+  .entry-tabs {
+    display: flex; gap: 0;
+    background: var(--navy2); border-radius: 10px;
+    padding: 3px; margin-bottom: 24px;
+  }
+  .entry-tab {
+    flex: 1; padding: 9px;
+    border: none; background: transparent;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--muted); border-radius: 8px;
+    cursor: pointer; transition: all 0.18s;
+  }
+  .entry-tab.active {
+    background: var(--card2); color: var(--white);
+  }
+
+  /* Panels */
+  .entry-panel { display: none; }
+  .entry-panel.active { display: block; }
+
+  /* Email form */
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block; font-size: 12px; font-weight: 500;
+    color: var(--muted); margin-bottom: 6px; letter-spacing: 0.3px;
+  }
+  .field input {
+    width: 100%; padding: 13px 14px;
+    background: var(--navy2); border: 0.5px solid var(--border);
+    border-radius: 10px; color: var(--white);
+    font-family: 'Inter', sans-serif; font-size: 15px;
+    outline: none; transition: border-color 0.18s;
+    -webkit-appearance: none;
+  }
+  .field input:focus { border-color: var(--teal); }
+  .field input::placeholder { color: var(--muted); }
+  .sheet-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 18px 0;
+  }
+  .sheet-divider::before, .sheet-divider::after {
+    content: ''; flex: 1; height: 0.5px;
+    background: var(--border);
+  }
+  .sheet-divider span {
+    font-size: 11px; color: var(--muted);
+    white-space: nowrap; letter-spacing: 0.3px;
+  }
+
+  /* Social buttons */
+  .social-btns { display: flex; flex-direction: column; gap: 10px; }
+  .social-btn {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 13px 16px;
+    background: var(--navy2); border: 0.5px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    color: var(--muted2);
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  }
+  .social-btn:active { border-color: rgba(255,255,255,0.2); background: var(--card2); }
+  .social-icon {
+    width: 24px; height: 24px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Wallet panel */
+  .wallet-grid { display: flex; flex-direction: column; gap: 10px; }
+  .wallet-btn {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; padding: 14px 16px;
+    background: var(--navy2); border: 0.5px solid var(--border);
+    border-radius: 12px; cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
+  .wallet-btn:active { border-color: var(--teal); background: var(--teal-faint); }
+  .wallet-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .wallet-info { flex: 1; text-align: left; }
+  .wallet-info small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 1px; }
+  .wallet-arrow { color: var(--muted); font-size: 18px; }
+
+  .terms-note {
+    font-size: 11px; color: var(--muted); text-align: center;
+    margin-top: 16px; line-height: 1.6;
+  }
+  .terms-note a { color: var(--teal); text-decoration: none; }
+
+  /* scrolled reveal */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="header">
-            <div class="logo">RAW DATING</div>
-            <div class="tagline">Real! Black! Wild!</div>
-        </div>
 
-        <!-- Upload Screen -->
-        <div class="upload-screen" id="uploadScreen">
-            <div class="age-warning">
-                ⚠️ 18+ ADULTS ONLY - EXPLICIT DATING ⚠️
-            </div>
-            
-            <div class="upload-content">
-                <div class="upload-section">
-                    <h2>🔥 UPLOAD RANDOM MEN</h2>
-                    <p class="upload-hint">4 photos for random swipes</p>
-                    
-                    <div class="file-input-wrapper">
-                        <input type="file" id="randomMaleInput" accept="image/*" multiple>
-                        <label for="randomMaleInput" class="file-input-label">
-                            📸 SELECT RANDOM MEN
-                        </label>
-                    </div>
-                    
-                    <div class="preview-grid" id="randomMalePreview"></div>
-                </div>
+<!-- NAV -->
+<nav>
+  <div class="brand">Capital<span>Assist</span><span style="color:var(--muted);font-weight:400;font-size:14px;">.app</span></div>
+  <div class="nav-badge">AI · Beta</div>
+</nav>
 
-                <div class="upload-section">
-                    <h2>💎 UPLOAD MATCH MEN</h2>
-                    <p class="upload-hint">2 photos for the final match</p>
-                    
-                    <div class="file-input-wrapper">
-                        <input type="file" id="matchMaleInput" accept="image/*" multiple>
-                        <label for="matchMaleInput" class="file-input-label">
-                            📸 SELECT MATCH MEN
-                        </label>
-                    </div>
-                    
-                    <div class="preview-grid" id="matchMalePreview"></div>
-                </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">AI-менеджер капитала</div>
+  <h1>Твой USDT<br>работает, пока<br><em>ты отдыхаешь</em></h1>
+  <p class="hero-sub">ИИ сам ищет лучшую доходность среди лендинга, стейкинга и ликвидных пулов — и перекладывает деньги автоматически.</p>
+  <div class="flow-wrap">
+    <canvas id="flowCanvas"></canvas>
+  </div>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="openModal()">Начать зарабатывать →</button>
+    <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает?</button>
+  </div>
+</section>
 
-                <div class="upload-section">
-                    <h2>💋 UPLOAD WOMEN</h2>
-                    <p class="upload-hint">2 photos of girls</p>
-                    
-                    <div class="file-input-wrapper">
-                        <input type="file" id="femaleInput" accept="image/*" multiple>
-                        <label for="femaleInput" class="file-input-label">
-                            📸 SELECT WOMEN
-                        </label>
-                    </div>
-                    
-                    <div class="preview-grid" id="femalePreview"></div>
-                </div>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell">
+    <span class="stat-num teal" id="tvlNum">$0</span>
+    <span class="stat-label">TVL под управлением</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-num amber" id="apyNum">0%</span>
+    <span class="stat-label">Средний APY сейчас</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-num" id="protocolNum">0</span>
+    <span class="stat-label">Протоколов</span>
+  </div>
+</div>
 
-                <div class="upload-section">
-                    <h2>⚙️ MATCH SETTINGS</h2>
-                    <p class="upload-hint">Customize your match couple</p>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <input type="text" id="guy1Name" placeholder="Guy 1 Name (e.g. Marcus)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
-                        <input type="text" id="guy1Size" placeholder="Guy 1 Size (e.g. 10&quot;)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 15px;">
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <input type="text" id="guy2Name" placeholder="Guy 2 Name (e.g. Jamal)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
-                        <input type="text" id="guy2Size" placeholder="Guy 2 Size (e.g. 11&quot;)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 15px;">
-                    </div>
-                    
-                    <div>
-                        <input type="text" id="girl1Name" placeholder="Girl 1 Name (e.g. Ashley)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif; margin-bottom: 10px;">
-                        <input type="text" id="girl2Name" placeholder="Girl 2 Name (e.g. Madison)" 
-                               style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #FFFFFF; background: rgba(255,255,255,0.1); color: #FFFFFF; font-size: 1em; font-family: Arial, sans-serif;">
-                    </div>
-                </div>
-                
-                <button class="start-btn" id="startBtn" disabled>
-                    START SWIPING! 🔥
-                </button>
-            </div>
-        </div>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="tickerInner"></div>
+</div>
 
-        <!-- Swipe Screen -->
-        <div class="swipe-screen" id="swipeScreen">
-            <div class="card-stack" id="cardStack"></div>
-            <div class="buttons">
-                <button class="action-btn nope-btn" onclick="swipe('nope')">✕</button>
-                <button class="action-btn like-btn" onclick="swipe('like')">♥</button>
-            </div>
-        </div>
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <p class="sec-label">Принцип работы</p>
+  <h2>Три шага — остальное за ИИ</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Выбери стратегию</h3>
+        <p>Определи, насколько ты готов рисковать. От тихой гавани до агрессивного роста — ты решаешь.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Внеси USDT</h3>
+        <p>Сумма остаётся в децентрализованных протоколах. Мы никогда не держим твои средства напрямую.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>ИИ следит и реагирует</h3>
+        <p>Каждые несколько минут алгоритм анализирует рынок и перебрасывает капитал туда, где выгода выше. Ты видишь всё в реальном времени.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Match Screen -->
-        <div class="match-screen" id="matchScreen">
-            <div class="match-content">
-                <div class="match-title">💦😈💦</div>
-                <div class="match-subtitle">IT'S A MATCH!</div>
-                <div class="match-tagline">YOUR PERFECT FOURSOME!</div>
-                <div class="match-photos" id="matchPhotos"></div>
-                <button class="chat-btn" onclick="openChat()">CONTACT FOR PLEASURE 💦</button>
-            </div>
-        </div>
+<!-- STRATEGIES -->
+<section class="section">
+  <p class="sec-label">Стратегии</p>
+  <h2>Выбери свой уровень</h2>
+  <div class="strategies">
+
+    <div class="strategy-card conservative selected" onclick="selectStrategy(this)">
+      <div class="strat-header">
+        <span class="strat-name c">Спокойная</span>
+        <span class="apy-badge c">8–14%</span>
+      </div>
+      <p class="strat-desc">Только проверенные протоколы — лендинг на AAVE, Compound. Минимальная волатильность, стабильный доход.</p>
+      <div class="proto-chips">
+        <span class="chip">AAVE</span>
+        <span class="chip">Compound</span>
+        <span class="chip">dYdX</span>
+      </div>
+      <div class="risk-meter">
+        <div class="risk-dot on c"></div>
+        <div class="risk-dot"></div>
+        <div class="risk-dot"></div>
+        <div class="risk-dot"></div>
+        <div class="risk-dot"></div>
+        <span class="risk-label">Очень низкий риск</span>
+      </div>
     </div>
 
-    <!-- Chat Screen -->
-    <div class="chat-screen" id="chatScreen">
-        <div class="chat-header">
-            <button class="chat-back-btn" onclick="closeChat()">←</button>
-            <div class="chat-title">CHAT WITH GUYS</div>
-            <div style="width: 30px;"></div>
-        </div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
-            <button class="chat-send-btn" onclick="sendMessage()">➤</button>
-        </div>
+    <div class="strategy-card balanced" onclick="selectStrategy(this)">
+      <div class="strat-header">
+        <span class="strat-name b">Сбалансированная</span>
+        <span class="apy-badge b">18–35%</span>
+      </div>
+      <p class="strat-desc">Сочетание лендинга и ликвидных пулов DEX. Умеренный риск, заметно выше доход.</p>
+      <div class="proto-chips">
+        <span class="chip">Curve</span>
+        <span class="chip">Uniswap v3</span>
+        <span class="chip">Yearn</span>
+        <span class="chip">AAVE</span>
+      </div>
+      <div class="risk-meter">
+        <div class="risk-dot on b"></div>
+        <div class="risk-dot on b"></div>
+        <div class="risk-dot on b"></div>
+        <div class="risk-dot"></div>
+        <div class="risk-dot"></div>
+        <span class="risk-label">Умеренный риск</span>
+      </div>
     </div>
 
-    <script>
-        let randomMalePhotos = [];
-        let matchMalePhotos = [];
-        let femalePhotos = [];
-        let currentSwipe = 0;
-        let matchGuys = [];
-        let swipeCombinations = [];
-        let girlNames = [];
+    <div class="strategy-card aggressive" onclick="selectStrategy(this)">
+      <div class="strat-header">
+        <span class="strat-name r">Агрессивная</span>
+        <span class="apy-badge r">40–90%</span>
+      </div>
+      <p class="strat-desc">Фарминг новых пулов, высокорисковый стейкинг, оппортунистические позиции. Высокая доходность — и высокая возможная просадка.</p>
+      <div class="proto-chips">
+        <span class="chip">Pendle</span>
+        <span class="chip">Convex</span>
+        <span class="chip">GMX</span>
+        <span class="chip">Eigenlayer</span>
+      </div>
+      <div class="risk-meter">
+        <div class="risk-dot on r"></div>
+        <div class="risk-dot on r"></div>
+        <div class="risk-dot on r"></div>
+        <div class="risk-dot on r"></div>
+        <div class="risk-dot on r"></div>
+        <span class="risk-label">Высокий риск</span>
+      </div>
+    </div>
 
-        const names = ['Marcus', 'Jamal', 'Tyrone', 'DeAndre', 'Isaiah', 'Xavier', 'Darius', 'Malik', 'Rashad', 'Terrell'];
-        const ages = ['25', '27', '29', '26', '28', '30', '24', '31', '26', '28'];
-        const sizes = ['9"', '10"', '11"', '9.5"', '10.5"', '11"', '9"', '10"', '11.5"', '10"'];
-        const descriptions = [
-            'Athletic build, dominant energy. Loves taking charge.',
-            'Well-built, experienced. Into rough play.',
-            'Muscular, confident. Wild in the sheets.',
-            'Fit body, high stamina. Down for anything.',
-            'Strong physique, aggressive style. No limits.',
-            'Toned & hung, intense sessions guaranteed.',
-            'Gym body, knows what he wants. Freaky.',
-            'Ripped & ready, loves to please & dominate.',
-            'Built tough, goes all night. Very oral.',
-            'Defined muscles, passionate & raw. Group friendly.'
-        ];
+  </div>
+</section>
 
-        const autoResponses = [
-            "Hey beautiful! We've been waiting for you 😏",
-            "Damn, you look amazing! When can we meet?",
-            "We're ready for some fun tonight 🔥",
-            "You two are exactly what we've been looking for",
-            "Let's make this happen! Where you girls at?",
-            "We can host or come to you. What's your preference?",
-            "Can't wait to show you a good time 😈"
-        ];
+<!-- DEPOSIT -->
+<section class="section" id="deposit">
+  <p class="sec-label">Рассчитай доход</p>
+  <h2>Сколько ты хочешь вложить?</h2>
+  <div class="amount-section">
+    <p class="amount-label">Сумма в USDT</p>
+    <div class="amount-input-wrap">
+      <span class="currency-tag">$</span>
+      <input type="number" id="amountInput" placeholder="1 000" value="1000" inputmode="numeric" min="10" max="10000000">
+    </div>
+    <div class="quick-amounts">
+      <button class="quick-btn" onclick="setAmount(500)">$500</button>
+      <button class="quick-btn" onclick="setAmount(1000)">$1K</button>
+      <button class="quick-btn" onclick="setAmount(5000)">$5K</button>
+      <button class="quick-btn" onclick="setAmount(10000)">$10K</button>
+    </div>
+    <div class="projection" id="projBox">
+      <div class="proj-row">
+        <span class="proj-key">За 30 дней</span>
+        <span class="proj-val teal" id="proj30">$9.10</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-key">За 3 месяца</span>
+        <span class="proj-val teal" id="proj90">$27.40</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-key">За год</span>
+        <span class="proj-val teal" id="proj365">$110.00</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-key">Выбранная стратегия</span>
+        <span class="proj-val" id="projStrat">Спокойная (11% APY)</span>
+      </div>
+    </div>
+    <button class="btn-primary">Подключить кошелёк →</button>
+  </div>
+</section>
 
-        const randomMaleInput = document.getElementById('randomMaleInput');
-        const matchMaleInput = document.getElementById('matchMaleInput');
-        const femaleInput = document.getElementById('femaleInput');
-        const randomMalePreview = document.getElementById('randomMalePreview');
-        const matchMalePreview = document.getElementById('matchMalePreview');
-        const femalePreview = document.getElementById('femalePreview');
-        const startBtn = document.getElementById('startBtn');
-        const uploadScreen = document.getElementById('uploadScreen');
-        const swipeScreen = document.getElementById('swipeScreen');
-        const matchScreen = document.getElementById('matchScreen');
-        const cardStack = document.getElementById('cardStack');
-        const chatScreen = document.getElementById('chatScreen');
-        const chatMessagesContainer = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
+<!-- LIVE PORTFOLIO -->
+<section class="section">
+  <p class="sec-label">Пример портфеля</p>
+  <h2>Вот как выглядит <br>сбалансированная</h2>
+  <div class="simulator">
+    <div class="sim-head">
+      <span class="sim-head-title">Демо-портфель · $5 000</span>
+      <span class="live-dot">LIVE</span>
+    </div>
+    <div class="sim-body">
+      <div class="portfolio-total">
+        <div class="label">Текущая стоимость</div>
+        <div class="amount" id="liveAmount">$5 147.32</div>
+        <div class="gain" id="liveGain">+$147.32 · +2.95%</div>
+      </div>
+      <div class="alloc-bars">
+        <div class="alloc-row">
+          <div class="alloc-meta">
+            <span class="alloc-name">Curve 3pool</span>
+            <span class="alloc-pct">38%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--teal)" id="bar1"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-meta">
+            <span class="alloc-name">AAVE USDT</span>
+            <span class="alloc-pct">32%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--amber)" id="bar2"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-meta">
+            <span class="alloc-name">Yearn yUSDT</span>
+            <span class="alloc-pct">20%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:#8B7CF8" id="bar3"></div></div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-meta">
+            <span class="alloc-name">Uniswap v3</span>
+            <span class="alloc-pct">10%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:#FF7A50" id="bar4"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        randomMaleInput.addEventListener('change', (e) => handleFileSelect(e, 'randomMale'));
-        matchMaleInput.addEventListener('change', (e) => handleFileSelect(e, 'matchMale'));
-        femaleInput.addEventListener('change', (e) => handleFileSelect(e, 'female'));
-        startBtn.addEventListener('click', startSwiping);
+<!-- PROTOCOLS -->
+<section class="section">
+  <p class="sec-label">Где работают деньги</p>
+  <h2>Протоколы сейчас</h2>
+  <div class="protocols">
+    <div class="proto-row">
+      <div class="proto-icon" style="background:rgba(0,212,170,0.1);font-size:18px;">🌊</div>
+      <div class="proto-info">
+        <div class="proto-name">Curve Finance</div>
+        <div class="proto-type">Стейблкоин DEX · Лик. пул</div>
+      </div>
+      <div class="proto-apy">19.2%<span>APY</span></div>
+    </div>
+    <div class="proto-row">
+      <div class="proto-icon" style="background:rgba(144,97,247,0.1);font-size:18px;">👻</div>
+      <div class="proto-info">
+        <div class="proto-name">AAVE v3</div>
+        <div class="proto-type">Лендинг · USDT supply</div>
+      </div>
+      <div class="proto-apy">12.8%<span>APY</span></div>
+    </div>
+    <div class="proto-row">
+      <div class="proto-icon" style="background:rgba(245,166,35,0.1);font-size:18px;">🔮</div>
+      <div class="proto-info">
+        <div class="proto-name">Yearn Finance</div>
+        <div class="proto-type">Авто-стратегии · yVault</div>
+      </div>
+      <div class="proto-apy">24.1%<span>APY</span></div>
+    </div>
+    <div class="proto-row">
+      <div class="proto-icon" style="background:rgba(255,90,90,0.1);font-size:18px;">🦄</div>
+      <div class="proto-info">
+        <div class="proto-name">Uniswap v3</div>
+        <div class="proto-type">AMM · Узкий диапазон LP</div>
+      </div>
+      <div class="proto-apy">31.5%<span>APY</span></div>
+    </div>
+    <div class="proto-row">
+      <div class="proto-icon" style="background:rgba(56,189,248,0.1);font-size:18px;">📐</div>
+      <div class="proto-info">
+        <div class="proto-name">Pendle Finance</div>
+        <div class="proto-type">Yield tokenization</div>
+      </div>
+      <div class="proto-apy">41.0%<span>APY</span></div>
+    </div>
+  </div>
+</section>
 
-        function handleFileSelect(e, type) {
-            const files = Array.from(e.target.files);
-            
-            files.forEach(file => {
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        if (type === 'randomMale') {
-                            if (randomMalePhotos.length < 4) {
-                                randomMalePhotos.push(event.target.result);
-                                renderPreviews();
-                            }
-                        } else if (type === 'matchMale') {
-                            if (matchMalePhotos.length < 2) {
-                                matchMalePhotos.push(event.target.result);
-                                renderPreviews();
-                            }
-                        } else if (type === 'female') {
-                            if (femalePhotos.length < 2) {
-                                femalePhotos.push(event.target.result);
-                                renderPreviews();
-                            }
-                        }
-                        updateStartButton();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
+<!-- SECURITY -->
+<section class="section">
+  <p class="sec-label">Безопасность</p>
+  <h2>Твои деньги не у нас</h2>
+  <div class="security-grid">
+    <div class="sec-card">
+      <div class="sec-icon">🔒</div>
+      <h4>Смарт-контракты</h4>
+      <p>Средства хранятся в аудированных on-chain контрактах, не на наших счетах.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">🛡</div>
+      <h4>Аудит кода</h4>
+      <p>Все наши смарт-контракты прошли независимый аудит безопасности.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">⚡</div>
+      <h4>Вывод в любой момент</h4>
+      <p>Забираешь деньги обратно когда хочешь — никаких локапов по умолчанию.</p>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">👁</div>
+      <h4>Полная прозрачность</h4>
+      <p>Все транзакции видны on-chain. Мы не делаем ничего без твоего ведома.</p>
+    </div>
+  </div>
+</section>
 
-        function renderPreviews() {
-            randomMalePreview.innerHTML = '';
-            randomMalePhotos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = 'preview-item';
-                div.innerHTML = `
-                    <img src="${photo}" alt="Random Male ${index + 1}">
-                    <button class="remove-btn" onclick="removePhoto('randomMale', ${index})">×</button>
-                `;
-                randomMalePreview.appendChild(div);
-            });
+<!-- DISCLAIMER -->
+<section class="section">
+  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">
+    ⚠️ Криптовалютные инвестиции несут высокий риск. Указанные APY — исторические ориентиры, не гарантии. Вкладывай только то, что готов потерять. Это не финансовый совет.
+  </p>
+</section>
 
-            matchMalePreview.innerHTML = '';
-            matchMalePhotos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = 'preview-item';
-                div.innerHTML = `
-                    <img src="${photo}" alt="Match Male ${index + 1}">
-                    <button class="remove-btn" onclick="removePhoto('matchMale', ${index})">×</button>
-                `;
-                matchMalePreview.appendChild(div);
-            });
+<!-- SPACE FOR STICKY BOTTOM -->
+<div style="height: 80px;"></div>
 
-            femalePreview.innerHTML = '';
-            femalePhotos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = 'preview-item';
-                div.innerHTML = `
-                    <img src="${photo}" alt="Female ${index + 1}">
-                    <button class="remove-btn" onclick="removePhoto('female', ${index})">×</button>
-                `;
-                femalePreview.appendChild(div);
-            });
-        }
+<!-- STICKY BOTTOM -->
+<div class="sticky-bottom">
+  <button class="btn-primary" onclick="openModal()">Войти или зарегистрироваться →</button>
+</div>
 
-        function removePhoto(type, index) {
-            if (type === 'randomMale') {
-                randomMalePhotos.splice(index, 1);
-            } else if (type === 'matchMale') {
-                matchMalePhotos.splice(index, 1);
-            } else if (type === 'female') {
-                femalePhotos.splice(index, 1);
-            }
-            renderPreviews();
-            updateStartButton();
-        }
+<script>
+  /* ── CANVAS FLOW ANIMATION ── */
+  const canvas = document.getElementById('flowCanvas');
+  const ctx = canvas.getContext('2d');
 
-        function updateStartButton() {
-            const isReady = randomMalePhotos.length === 4 && matchMalePhotos.length === 2 && femalePhotos.length === 2;
-            startBtn.disabled = !isReady;
-            
-            if (isReady) {
-                startBtn.textContent = '🔥 START SWIPING! 🔥';
-            } else {
-                startBtn.textContent = `NEED: ${randomMalePhotos.length}/4 RANDOM, ${matchMalePhotos.length}/2 MATCH, ${femalePhotos.length}/2 WOMEN`;
-            }
-        }
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resizeCanvas();
 
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
+  const W = () => canvas.offsetWidth;
+  const H = () => canvas.offsetHeight;
 
-        function getRandomGuyInfo() {
-            const index = Math.floor(Math.random() * names.length);
-            return {
-                name: names[index],
-                age: ages[index],
-                size: sizes[index],
-                description: descriptions[index]
-            };
-        }
+  const nodes = [
+    { label: 'USDT', x: 0.12, y: 0.5, color: '#00D4AA', r: 22 },
+    { label: 'ИИ', x: 0.45, y: 0.5, color: '#8B7CF8', r: 18 },
+    { label: 'AAVE', x: 0.75, y: 0.18, color: '#00D4AA', r: 13 },
+    { label: 'Curve', x: 0.82, y: 0.5, color: '#F5A623', r: 13 },
+    { label: 'Yearn', x: 0.73, y: 0.82, color: '#8B7CF8', r: 13 },
+  ];
 
-        function startSwiping() {
-            currentSwipe = 0;
-            uploadScreen.classList.add('hidden');
-            swipeScreen.style.display = 'flex';
-            
-            // Get custom names and sizes or use defaults
-            const guy1Name = document.getElementById('guy1Name').value.trim() || names[0];
-            const guy1Size = document.getElementById('guy1Size').value.trim() || '10"';
-            const guy2Name = document.getElementById('guy2Name').value.trim() || names[1];
-            const guy2Size = document.getElementById('guy2Size').value.trim() || '11"';
-            
-            // Get girl names or use defaults
-            const girl1Name = document.getElementById('girl1Name').value.trim() || 'Girl 1';
-            const girl2Name = document.getElementById('girl2Name').value.trim() || 'Girl 2';
-            girlNames = [girl1Name, girl2Name];
-            
-            // Use the match male photos for the final match
-            matchGuys = [
-                { 
-                    photo: matchMalePhotos[0], 
-                    info: {
-                        name: guy1Name,
-                        age: ages[0],
-                        size: guy1Size,
-                        description: descriptions[0]
-                    }
-                },
-                { 
-                    photo: matchMalePhotos[1], 
-                    info: {
-                        name: guy2Name,
-                        age: ages[1],
-                        size: guy2Size,
-                        description: descriptions[1]
-                    }
-                }
-            ];
-            
-            swipeCombinations = [];
-            
-            // First swipe: first 2 random males
-            swipeCombinations.push([
-                { photo: randomMalePhotos[0], info: getRandomGuyInfo() },
-                { photo: randomMalePhotos[1], info: getRandomGuyInfo() }
-            ]);
-            
-            // Second swipe: last 2 random males
-            swipeCombinations.push([
-                { photo: randomMalePhotos[2], info: getRandomGuyInfo() },
-                { photo: randomMalePhotos[3], info: getRandomGuyInfo() }
-            ]);
-            
-            // Third swipe: THE MATCH!
-            swipeCombinations.push(matchGuys);
-            
-            createCard();
-        }
+  const edges = [
+    { from: 0, to: 1 },
+    { from: 1, to: 2 },
+    { from: 1, to: 3 },
+    { from: 1, to: 4 },
+  ];
 
-        function createCard() {
-            cardStack.innerHTML = '';
-            
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.id = 'currentCard';
-            
-            const currentGuys = swipeCombinations[currentSwipe];
-            
-            card.innerHTML = `
-                <div class="photo-container">
-                    ${currentGuys.map(guy => `
-                        <div class="guy-card">
-                            <img src="${guy.photo}" class="guy-photo" alt="Guy">
-                            <div class="guy-info">
-                                <div class="guy-name">${guy.info.name}, ${guy.info.age}</div>
-                                <div class="guy-stats">🍆 ${guy.info.size} • BBC</div>
-                                <div class="guy-description">${guy.info.description}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="card-info">
-                    <div class="swipe-counter">SWIPE ${currentSwipe + 1}/3</div>
-                    <div class="swipe-instruction">← SWIPE LEFT OR RIGHT →</div>
-                </div>
-            `;
-            
-            cardStack.appendChild(card);
-        }
+  const particles = [];
 
-        function swipe(direction) {
-            const card = document.getElementById('currentCard');
-            if (!card) return;
-            
-            if (direction === 'like') {
-                card.classList.add('card-exit-right');
-            } else {
-                card.classList.add('card-exit-left');
-            }
-            
-            setTimeout(() => {
-                currentSwipe++;
-                
-                if (currentSwipe >= 3) {
-                    showMatch();
-                } else {
-                    createCard();
-                }
-            }, 500);
-        }
+  for (let i = 0; i < 9; i++) {
+    const edge = edges[Math.floor(Math.random() * edges.length)];
+    particles.push({ edge, t: Math.random(), speed: 0.004 + Math.random() * 0.004 });
+  }
 
-        function showMatch() {
-            swipeScreen.style.display = 'none';
-            matchScreen.style.display = 'flex';
-            
-            const matchPhotosContainer = document.getElementById('matchPhotos');
-            matchPhotosContainer.innerHTML = `
-                <div class="match-photo">
-                    <img src="${matchGuys[0].photo}" alt="Match Male 1">
-                    <div class="match-label">${matchGuys[0].info.name} 🔥</div>
-                </div>
-                <div class="match-photo">
-                    <img src="${femalePhotos[0]}" alt="Match Female 1">
-                    <div class="match-label">${girlNames[0]} 💋</div>
-                </div>
-                <div class="match-photo">
-                    <img src="${matchGuys[1].photo}" alt="Match Male 2">
-                    <div class="match-label">${matchGuys[1].info.name} 🔥</div>
-                </div>
-                <div class="match-photo">
-                    <img src="${femalePhotos[1]}" alt="Match Female 2">
-                    <div class="match-label">${girlNames[1]} 💋</div>
-                </div>
-            `;
-        }
+  function lerp(a, b, t) { return a + (b - a) * t; }
 
-        function openChat() {
-            chatScreen.style.display = 'flex';
-            chatMessagesContainer.innerHTML = '';
-            
-            // Add welcome message
-            setTimeout(() => {
-                addMessage(matchGuys[0].info.name, autoResponses[0], false);
-            }, 500);
-            
-            setTimeout(() => {
-                addMessage(matchGuys[1].info.name, autoResponses[1], false);
-            }, 1500);
-        }
+  function drawFrame() {
+    const w = W(), h = H();
+    ctx.clearRect(0, 0, w, h);
 
-        function closeChat() {
-            chatScreen.style.display = 'none';
-        }
+    edges.forEach(e => {
+      const a = nodes[e.from], b = nodes[e.to];
+      ctx.beginPath();
+      ctx.moveTo(a.x * w, a.y * h);
+      ctx.lineTo(b.x * w, b.y * h);
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
 
-        function addMessage(sender, text, isMe) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = isMe ? 'message message-me' : 'message message-them';
-            
-            if (!isMe) {
-                messageDiv.innerHTML = `<div class="message-sender">${sender}</div>${text}`;
-            } else {
-                messageDiv.textContent = text;
-            }
-            
-            chatMessagesContainer.appendChild(messageDiv);
-            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-        }
+    particles.forEach(p => {
+      p.t += p.speed;
+      if (p.t > 1) { p.t = 0; p.edge = edges[Math.floor(Math.random() * edges.length)]; }
+      const a = nodes[p.edge.from], b = nodes[p.edge.to];
+      const x = lerp(a.x * W(), b.x * W(), p.t);
+      const y = lerp(a.y * H(), b.y * H(), p.t);
+      ctx.beginPath();
+      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,212,170,0.7)';
+      ctx.fill();
+    });
 
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            
-            addMessage('You', text, true);
-            chatInput.value = '';
-            
-            // Auto-reply from random guy
-            setTimeout(() => {
-                const randomGuy = matchGuys[Math.floor(Math.random() * matchGuys.length)];
-                const randomResponse = autoResponses[Math.floor(Math.random() * autoResponses.length)];
-                addMessage(randomGuy.info.name, randomResponse, false);
-            }, 1000 + Math.random() * 2000);
-        }
+    nodes.forEach(n => {
+      const x = n.x * w, y = n.y * h;
+      ctx.beginPath();
+      ctx.arc(x, y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(22,29,47,0.95)';
+      ctx.fill();
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
 
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
+      ctx.fillStyle = n.color;
+      ctx.font = `bold ${n.r > 18 ? 12 : 9}px Space Grotesk, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(n.label, x, y);
+    });
 
-        // Swipe with touch
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
+    requestAnimationFrame(drawFrame);
+  }
+  drawFrame();
+  window.addEventListener('resize', resizeCanvas);
 
-        cardStack.addEventListener('mousedown', handleDragStart);
-        cardStack.addEventListener('touchstart', handleDragStart);
-        cardStack.addEventListener('mousemove', handleDragMove);
-        cardStack.addEventListener('touchmove', handleDragMove);
-        cardStack.addEventListener('mouseup', handleDragEnd);
-        cardStack.addEventListener('touchend', handleDragEnd);
-        cardStack.addEventListener('mouseleave', handleDragEnd);
+  /* ── COUNTER ANIMATION ── */
+  function animCount(el, target, prefix, suffix, duration) {
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(ease * target);
+      el.textContent = prefix + val.toLocaleString('ru') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
 
-        function handleDragStart(e) {
-            const card = document.getElementById('currentCard');
-            if (!card) return;
-            
-            isDragging = true;
-            startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-        }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animCount(document.getElementById('tvlNum'), 18400000, '$', '', 1500);
+        animCount(document.getElementById('apyNum'), 22, '', '%', 1200);
+        animCount(document.getElementById('protocolNum'), 14, '', '', 1000);
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(document.querySelector('.stats-bar'));
 
-        function handleDragMove(e) {
-            if (!isDragging) return;
-            
-            const card = document.getElementById('currentCard');
-            if (!card) return;
-            
-            currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const diff = currentX - startX;
-            
-            card.style.transform = `translateX(${diff}px) rotate(${diff * 0.1}deg)`;
-        }
+  /* ── SCROLL REVEAL FOR STEPS ── */
+  const stepObserver = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.step').forEach(s => stepObserver.observe(s));
 
-        function handleDragEnd(e) {
-            if (!isDragging) return;
-            
-            const card = document.getElementById('currentCard');
-            if (!card) return;
-            
-            isDragging = false;
-            const diff = currentX - startX;
-            
-            if (Math.abs(diff) > 100) {
-                swipe(diff > 0 ? 'like' : 'nope');
-            } else {
-                card.style.transform = '';
-            }
-        }
-    </script>
+  /* ── STRATEGY SELECTOR ── */
+  const stratData = {
+    conservative: { label: 'Спокойная', apy: 0.11 },
+    balanced: { label: 'Сбалансированная', apy: 0.26 },
+    aggressive: { label: 'Агрессивная', apy: 0.65 },
+  };
+  let currentStrat = 'conservative';
+
+  function selectStrategy(card) {
+    document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    currentStrat = card.classList[1];
+    updateProjection();
+  }
+
+  /* ── PROJECTION CALCULATOR ── */
+  function updateProjection() {
+    const amount = parseFloat(document.getElementById('amountInput').value) || 0;
+    const s = stratData[currentStrat];
+    const apy = s.apy;
+    const daily = amount * apy / 365;
+
+    const fmt = v => '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    document.getElementById('proj30').textContent = fmt(daily * 30);
+    document.getElementById('proj90').textContent = fmt(daily * 90);
+    document.getElementById('proj365').textContent = fmt(amount * apy);
+    document.getElementById('projStrat').textContent = s.label + ' (' + Math.round(apy * 100) + '% APY)';
+  }
+
+  document.getElementById('amountInput').addEventListener('input', updateProjection);
+  updateProjection();
+
+  function setAmount(v) {
+    document.getElementById('amountInput').value = v;
+    updateProjection();
+  }
+
+  /* ── ALLOCATION BARS ANIMATE ── */
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => { document.getElementById('bar1').style.width = '38%'; }, 200);
+        setTimeout(() => { document.getElementById('bar2').style.width = '32%'; }, 350);
+        setTimeout(() => { document.getElementById('bar3').style.width = '20%'; }, 500);
+        setTimeout(() => { document.getElementById('bar4').style.width = '10%'; }, 650);
+        barObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  barObserver.observe(document.querySelector('.simulator'));
+
+  /* ── LIVE TICKER ── */
+  const tickers = [
+    { label: 'AAVE USDT', val: '12.8%' },
+    { label: 'Curve 3pool', val: '19.2%' },
+    { label: 'Yearn yUSDT', val: '24.1%' },
+    { label: 'Pendle PT', val: '41.0%' },
+    { label: 'Uniswap v3', val: '31.5%' },
+    { label: 'dYdX', val: '8.4%' },
+    { label: 'Convex CVX', val: '28.7%' },
+    { label: 'GMX GLP', val: '37.2%' },
+  ];
+  const inner = document.getElementById('tickerInner');
+  const makeItems = () => tickers.map(t =>
+    `<span class="ticker-item"><strong>${t.val}</strong>${t.label}<span class="sep">·</span></span>`
+  ).join('');
+  inner.innerHTML = makeItems() + makeItems();
+
+  /* ── LIVE PORTFOLIO COUNTER ── */
+  let baseAmount = 5147.32;
+  let baseGain = 147.32;
+  function tickLive() {
+    baseAmount += (Math.random() - 0.3) * 0.08;
+    baseGain = baseAmount - 5000;
+    const pct = ((baseGain / 5000) * 100).toFixed(2);
+    document.getElementById('liveAmount').textContent = '$' + baseAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    document.getElementById('liveGain').textContent = '+$' + baseGain.toFixed(2) + ' · +' + pct + '%';
+  }
+  setInterval(tickLive, 2000);
+
+  /* ── MODAL ── */
+  function openModal() {
+    document.getElementById('entryModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('entryModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('entryModal')) closeModal();
+  }
+  function switchTab(name, btn) {
+    document.querySelectorAll('.entry-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.entry-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+  function showToast(msg) {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#00D4AA;color:#050a0f;padding:12px 24px;border-radius:12px;font-family:Space Grotesk,sans-serif;font-weight:700;font-size:14px;z-index:500;pointer-events:none;opacity:0;transition:opacity 0.3s;white-space:nowrap;max-width:90vw;text-align:center;';
+    el.textContent = msg;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => { el.style.opacity = '1'; });
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, 3000);
+  }
+
+  function sendEmailNotify() {
+    const email = document.getElementById('userEmail').value.trim();
+    const name = document.getElementById('userName').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('userEmail').focus();
+      document.getElementById('userEmail').style.borderColor = '#FF5858';
+      setTimeout(() => { document.getElementById('userEmail').style.borderColor = ''; }, 2000);
+      return;
+    }
+    const to = 'CapitalAssist.app@proton.me';
+    const subject = encodeURIComponent('Новая заявка — CapitalAssist.app');
+    const body = encodeURIComponent(
+      'Новый пользователь оставил заявку на CapitalAssist.app\n\n' +
+      'Email: ' + email + '\n' +
+      (name ? 'Имя: ' + name + '\n' : '') +
+      '\nОтветь на это письмо, чтобы связаться с пользователем.'
+    );
+    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    closeModal();
+    setTimeout(() => { showToast('✓ Открываем почту — отправь письмо!'); }, 400);
+  }
+
+  function goToWalletSection() {
+    closeModal();
+    setTimeout(() => {
+      document.getElementById('deposit').scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  }
+
+  function fakeLogin() {
+    closeModal();
+    setTimeout(() => { showToast('✓ Добро пожаловать в CapitalAssist!'); }, 200);
+  }</script>
+<!-- ENTRY MODAL -->
+<div class="modal-overlay" id="entryModal" onclick="handleOverlayClick(event)">
+  <div class="modal-sheet">
+    <button class="sheet-close" onclick="closeModal()">×</button>
+    <div class="sheet-handle"></div>
+    <p class="sheet-title">Добро пожаловать</p>
+    <p class="sheet-sub">Войди или создай аккаунт — это займёт 30 секунд</p>
+
+    <div class="entry-tabs">
+      <button class="entry-tab active" onclick="switchTab('email', this)">Email</button>
+      <button class="entry-tab" onclick="switchTab('social', this)">Соцсети</button>
+      <button class="entry-tab" onclick="switchTab('wallet', this)">Кошелёк</button>
+    </div>
+
+    <!-- EMAIL PANEL -->
+    <div class="entry-panel active" id="panel-email">
+      <div class="field">
+        <label>Твой email</label>
+        <input type="email" id="userEmail" placeholder="you@example.com" inputmode="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Имя (необязательно)</label>
+        <input type="text" id="userName" placeholder="Как тебя зовут?" autocomplete="name">
+      </div>
+      <button class="btn-primary" style="margin-top:4px;" onclick="sendEmailNotify()">Отправить заявку →</button>
+      <p class="terms-note" style="margin-top:14px;">Мы получим твой email и свяжемся с тобой в течение дня</p>
+    </div>
+
+    <!-- SOCIAL PANEL -->
+    <div class="entry-panel" id="panel-social">
+      <div class="social-btns">
+        <button class="social-btn" onclick="fakeLogin()">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </div>
+          Продолжить через Google
+        </button>
+        <button class="social-btn" onclick="fakeLogin()">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796v8.437C19.612 23.097 24 18.1 24 12.073z"/>
+            </svg>
+          </div>
+          Продолжить через Facebook
+        </button>
+        <button class="social-btn" onclick="fakeLogin()">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--white)">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          Продолжить через X (Twitter)
+        </button>
+        <button class="social-btn" onclick="fakeLogin()">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--white)"/>
+            </svg>
+          </div>
+          Продолжить через GitHub
+        </button>
+      </div>
+      <p class="terms-note">Мы не постим ничего без твоего разрешения</p>
+    </div>
+
+    <!-- WALLET PANEL -->
+    <div class="entry-panel" id="panel-wallet">
+      <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px;">
+        Подключи свой крипто-кошелёк напрямую — без регистрации и паролей. Твои ключи остаются у тебя.
+      </p>
+      <button class="btn-primary" onclick="goToWalletSection()">
+        Подключить кошелёк →
+      </button>
+      <p class="terms-note" style="margin-top:14px;">Поддерживаем MetaMask, WalletConnect, Coinbase и другие</p>
+    </div>
+
+    <p class="terms-note" style="margin-top:20px;">
+      Продолжая, ты соглашаешься с <a href="#">Условиями</a> и <a href="#">Политикой конфиденциальности</a>
+    </p>
+  </div>
+</div>
+
 </body>
-</html>
