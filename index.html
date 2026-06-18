@@ -613,6 +613,169 @@
   }
   .terms-note a { color: var(--teal); text-decoration: none; }
 
+  /* ── SCROLL & HOVER ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+  .strategy-card {
+    transition: border-color 0.2s, background 0.2s, transform 0.18s, box-shadow 0.18s;
+  }
+  .strategy-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .proto-row {
+    transition: background 0.18s, transform 0.18s, border-color 0.18s;
+  }
+  .proto-row:hover {
+    background: var(--card2);
+    transform: translateX(4px);
+    border-color: var(--border-teal);
+  }
+  .sec-card {
+    transition: background 0.18s, transform 0.18s, border-color 0.18s;
+  }
+  .sec-card:hover {
+    background: var(--card2);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.14);
+  }
+  .btn-primary {
+    transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,212,170,0.28);
+  }
+  .btn-primary:active { transform: scale(0.97) !important; box-shadow: none; }
+
+  /* floating teal orbs ambient */
+  .orb {
+    position: fixed; border-radius: 50%;
+    pointer-events: none; z-index: 0;
+    animation: orbFloat linear infinite;
+    opacity: 0;
+  }
+  @keyframes orbFloat {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    10% { opacity: 0.06; }
+    90% { opacity: 0.06; }
+    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+  }
+
+  /* card shimmer on scroll into view */
+  @keyframes shimmer {
+    from { background-position: -200% center; }
+    to { background-position: 200% center; }
+  }
+  .card-shine {
+    position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+    pointer-events: none;
+  }
+
+  /* ── SUCCESS MODAL ── */
+  .success-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(5,8,18,0.88); backdrop-filter: blur(10px);
+    align-items: flex-end; justify-content: center;
+  }
+  .success-overlay.open { display: flex; }
+  .success-sheet {
+    width: 100%; max-width: 480px;
+    background: var(--card); border-radius: 24px 24px 0 0;
+    border-top: 0.5px solid rgba(0,212,170,0.3);
+    padding: 12px 24px 48px;
+    animation: slideUp 0.35s cubic-bezier(0.34,1.26,0.64,1) both;
+  }
+  .success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--teal-faint); border: 1.5px solid var(--border-teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 16px auto 20px;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .timer-ring-wrap {
+    display: flex; justify-content: center; margin: 20px 0;
+  }
+  .timer-ring { transform: rotate(-90deg); }
+  .timer-circle-bg { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 4; }
+  .timer-circle { fill: none; stroke: var(--teal); stroke-width: 4; stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear; }
+  .timer-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700; color: var(--white);
+    text-anchor: middle; dominant-baseline: middle;
+  }
+
+  /* ── DEPOSIT MANUAL MODAL ── */
+  .deposit-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(5,8,18,0.88); backdrop-filter: blur(10px);
+    align-items: flex-end; justify-content: center;
+  }
+  .deposit-overlay.open { display: flex; }
+  .deposit-sheet {
+    width: 100%; max-width: 480px;
+    background: var(--card); border-radius: 24px 24px 0 0;
+    border-top: 0.5px solid rgba(0,212,170,0.3);
+    padding: 12px 24px 48px; position: relative;
+    animation: slideUp 0.35s cubic-bezier(0.34,1.26,0.64,1) both;
+  }
+  .usdt-address-box {
+    background: var(--navy2); border-radius: 12px;
+    border: 0.5px solid var(--border-teal);
+    padding: 14px 16px; margin: 16px 0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .usdt-address {
+    flex: 1; font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; color: var(--teal);
+    word-break: break-all; line-height: 1.5;
+  }
+  .copy-btn {
+    flex-shrink: 0; padding: 8px 14px;
+    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
+    border-radius: 8px; color: var(--teal);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .copy-btn:active { background: var(--teal-glow); }
+  .network-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .net-chip {
+    padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    background: rgba(255,255,255,0.05); border: 0.5px solid var(--border);
+    color: var(--muted2);
+  }
+  .net-chip.active { background: var(--teal-faint); border-color: var(--border-teal); color: var(--teal); }
+  .deposit-steps { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .dep-step {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 13px; color: var(--muted2); line-height: 1.5;
+  }
+  .dep-step-n {
+    width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--teal);
+    margin-top: 1px;
+  }
+
   /* scrolled reveal */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -1292,5 +1455,149 @@
     </p>
   </div>
 </div>
+
+<!-- SUCCESS TIMER MODAL -->
+<div class="success-overlay" id="successModal">
+  <div class="success-sheet">
+    <div class="sheet-handle" style="margin-bottom:8px;"></div>
+    <div class="success-icon">✉️</div>
+    <p class="sheet-title" style="text-align:center;">Письмо готово!</p>
+    <p class="sheet-sub" style="text-align:center;">Открой почту и нажми «Отправить» — даём тебе 30 секунд</p>
+    <div class="timer-ring-wrap">
+      <svg width="100" height="100" class="timer-ring">
+        <circle class="timer-circle-bg" cx="50" cy="50" r="42"/>
+        <circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="42"
+          stroke-dasharray="264" stroke-dashoffset="0"/>
+        <text class="timer-text" id="timerText" x="50" y="50" transform="rotate(90,50,50)">30</text>
+      </svg>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6;">
+      Вернись сюда после отправки — мы покажем следующий шаг
+    </p>
+  </div>
+</div>
+
+<!-- DEPOSIT MANUAL MODAL -->
+<div class="deposit-overlay" id="depositModal">
+  <div class="deposit-sheet">
+    <button class="sheet-close" onclick="closeDepositModal()">×</button>
+    <div class="sheet-handle" style="margin-bottom:16px;"></div>
+    <p class="sheet-title">🎉 Отлично, всё прошло чётко!</p>
+    <p class="sheet-sub">Теперь пополни баланс — переведи USDT на наш адрес</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase;">Выбери сеть</p>
+    <div class="network-chips">
+      <div class="net-chip active" onclick="selectNet(this,'TRC-20','TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
+      <div class="net-chip" onclick="selectNet(this,'ERC-20','0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
+      <div class="net-chip" onclick="selectNet(this,'BEP-20','bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase;">Адрес кошелька</p>
+    <div class="usdt-address-box">
+      <span class="usdt-address" id="walletAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span>
+      <button class="copy-btn" onclick="copyAddr()">Копировать</button>
+    </div>
+    <div class="deposit-steps">
+      <div class="dep-step"><div class="dep-step-n">1</div><span>Открой свой кошелёк (Binance, Bybit, TrustWallet и т.д.)</span></div>
+      <div class="dep-step"><div class="dep-step-n">2</div><span>Выбери «Отправить USDT» и вставь адрес выше</span></div>
+      <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $10 USDT</span></div>
+      <div class="dep-step"><div class="dep-step-n">4</div><span>После зачисления ИИ автоматически начнёт работу</span></div>
+    </div>
+    <button class="btn-primary" onclick="closeDepositModal()">Понятно, иду переводить →</button>
+    <p class="terms-note" style="margin-top:14px;">Зачисление обычно занимает 1–5 минут</p>
+  </div>
+</div>
+
+<script>
+  /* ── AMBIENT ORBS ── */
+  for (let i = 0; i < 4; i++) {
+    const orb = document.createElement('div');
+    orb.className = 'orb';
+    const size = 120 + Math.random() * 180;
+    orb.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*90}%;background:${Math.random()>0.5?'#00D4AA':'#8B7CF8'};animation-duration:${14+Math.random()*12}s;animation-delay:${Math.random()*10}s;`;
+    document.body.appendChild(orb);
+  }
+
+  /* ── UNIVERSAL SCROLL REVEAL ── */
+  const revealAll = document.querySelectorAll('.section, .stats-bar, .ticker-wrap, .simulator, .amount-section, .security-grid, .strategies');
+  revealAll.forEach(el => el.classList.add('reveal'));
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  revealAll.forEach(el => ro.observe(el));
+
+  /* ── CARD SHIMMER ── */
+  document.querySelectorAll('.strategy-card, .simulator, .amount-section').forEach(c => {
+    const shine = document.createElement('div');
+    shine.className = 'card-shine';
+    c.appendChild(shine);
+  });
+
+  /* ── TIMER STATE ── */
+  let timerInterval = null;
+
+  function startTimer() {
+    document.getElementById('successModal').classList.add('open');
+    let secs = 30;
+    const circle = document.getElementById('timerCircle');
+    const text = document.getElementById('timerText');
+    const circumference = 264;
+    circle.style.strokeDashoffset = '0';
+    text.textContent = '30';
+
+    timerInterval = setInterval(() => {
+      secs--;
+      text.textContent = secs;
+      circle.style.strokeDashoffset = ((30 - secs) / 30 * circumference).toFixed(1);
+      if (secs <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('successModal').classList.remove('open');
+        setTimeout(() => {
+          document.getElementById('depositModal').classList.add('open');
+        }, 300);
+      }
+    }, 1000);
+  }
+
+  function closeDepositModal() {
+    document.getElementById('depositModal').classList.remove('open');
+  }
+
+  function selectNet(el, net, addr) {
+    document.querySelectorAll('.net-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('walletAddr').textContent = addr;
+  }
+
+  function copyAddr() {
+    const addr = document.getElementById('walletAddr').textContent;
+    navigator.clipboard.writeText(addr).catch(() => {});
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Скопировано';
+    setTimeout(() => { btn.textContent = 'Копировать'; }, 2000);
+  }
+
+  /* ── PATCH sendEmailNotify to trigger timer ── */
+  const _origSend = sendEmailNotify;
+  window.sendEmailNotify = function() {
+    const email = document.getElementById('userEmail').value.trim();
+    const name = document.getElementById('userName').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('userEmail').focus();
+      document.getElementById('userEmail').style.borderColor = '#FF5858';
+      setTimeout(() => { document.getElementById('userEmail').style.borderColor = ''; }, 2000);
+      return;
+    }
+    const to = 'CapitalAssist.app@proton.me';
+    const subject = encodeURIComponent('Новая заявка — CapitalAssist.app');
+    const body = encodeURIComponent(
+      'Новый пользователь оставил заявку на CapitalAssist.app\n\n' +
+      'Email: ' + email + '\n' +
+      (name ? 'Имя: ' + name + '\n' : '') +
+      '\nОтветь на это письмо, чтобы связаться с пользователем.'
+    );
+    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    closeModal();
+    setTimeout(() => { startTimer(); }, 600);
+  };
+</script>
 
 </body>
