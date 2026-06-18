@@ -301,6 +301,38 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 .nav-icon{font-size:20px;line-height:1}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+
+/* ═══ LOADER SCREENS ═══ */
+.loader-screen{display:none;position:fixed;inset:0;z-index:500;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
+.loader-screen.show{display:flex}
+.loader-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:48px}
+.loader-logo span{color:var(--teal)}
+.loader-logo small{color:var(--muted);font-size:14px;font-weight:400}
+.loader-icon-wrap{width:80px;height:80px;border-radius:50%;background:var(--teal-faint);border:1.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:34px;margin-bottom:28px;animation:loader-pop .4s cubic-bezier(0.34,1.56,0.64,1) both}
+@keyframes loader-pop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.loader-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.4px;margin-bottom:8px;color:var(--white)}
+.loader-sub{font-size:14px;color:var(--muted2);line-height:1.6;margin-bottom:36px;max-width:280px}
+.loader-bar-wrap{width:100%;max-width:280px;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:16px}
+.loader-bar{height:100%;border-radius:2px;background:var(--teal);width:0%;transition:width linear}
+.loader-pct{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:0}
+.loader-steps{display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px;margin-top:24px}
+.loader-step{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);transition:color .3s}
+.loader-step.done{color:var(--teal)}
+.loader-step.active{color:var(--muted2)}
+.loader-step-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .3s}
+.loader-step.done .loader-step-dot{background:var(--teal);border-color:var(--teal);color:#050a0f}
+.loader-step.active .loader-step-dot{border-color:var(--teal);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* approved card */
+.approved-card{background:var(--card);border:1.5px solid var(--border-teal);border-radius:20px;padding:24px 20px;width:100%;max-width:320px;margin-bottom:24px;animation:slideUp .4s cubic-bezier(0.34,1.26,0.64,1) both}
+.approved-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,170,0.12);border:1px solid var(--border-teal);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--teal);margin-bottom:16px}
+.approved-badge::before{content:'✓'}
+
+/* deposit done card */
+.dep-done-card{background:var(--card);border:1.5px solid var(--border-teal);border-radius:20px;padding:24px 20px;width:100%;max-width:320px;margin-bottom:24px;animation:slideUp .4s cubic-bezier(0.34,1.26,0.64,1) both}
+.dep-done-amount{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;letter-spacing:-1px;color:var(--teal);margin:8px 0 4px}
+.dep-done-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;font-weight:500}
 </style>
 </head>
 <body>
@@ -505,12 +537,58 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
       <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $10 USDT</span></div>
       <div class="dep-step"><div class="dep-step-n">4</div><span>После зачисления ИИ автоматически начнёт работу</span></div>
     </div>
-    <button class="btn-primary" onclick="goToDashboard()">Понятно, иду переводить →</button>
+    <button class="btn-primary" onclick="startDepositLoader()">Я пополнил → Перейти в кабинет</button>
     <p class="terms-note" style="margin-top:14px">Зачисление обычно занимает 1–5 минут</p>
   </div>
 </div>
 
 </div><!-- /page-landing -->
+
+<!-- ═══ LOADER 1: Рассмотрение заявки → Одобрено ═══ -->
+<div class="loader-screen" id="loader-review">
+  <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
+  <div class="loader-icon-wrap">🔍</div>
+  <p class="loader-title" id="lr-title">Рассматриваем заявку</p>
+  <p class="loader-sub" id="lr-sub">Администрация проверяет данные. Это занимает до 1 минуты</p>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="lr-bar"></div></div>
+  <p class="loader-pct" id="lr-pct">0%</p>
+  <div class="loader-steps" id="lr-steps">
+    <div class="loader-step active" id="lrs-1"><div class="loader-step-dot">◌</div><span>Проверка email</span></div>
+    <div class="loader-step" id="lrs-2"><div class="loader-step-dot"></div><span>Верификация заявки</span></div>
+    <div class="loader-step" id="lrs-3"><div class="loader-step-dot"></div><span>Решение администрации</span></div>
+  </div>
+</div>
+
+<!-- ═══ LOADER 2: Одобрено ═══ -->
+<div class="loader-screen" id="loader-approved">
+  <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
+  <div class="approved-card">
+    <div class="approved-badge">Заявка одобрена</div>
+    <p class="loader-title" style="text-align:left;margin-bottom:6px">Вас одобрили! 🎉</p>
+    <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">Теперь вы можете вносить депозит и начать зарабатывать с ИИ-менеджером</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Статус</span><span style="color:var(--teal);font-weight:600">✓ Активен</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Уровень</span><span style="font-weight:600">Стандарт</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Мин. депозит</span><span style="font-weight:600">$10 USDT</span></div>
+    </div>
+  </div>
+  <button class="btn-primary" style="max-width:320px" onclick="showDepositAddrFromApproved()">Внести депозит →</button>
+</div>
+
+<!-- ═══ LOADER 3: Проверяем депозит ═══ -->
+<div class="loader-screen" id="loader-deposit">
+  <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
+  <div class="loader-icon-wrap" id="ld-icon">⏳</div>
+  <p class="loader-title" id="ld-title">Проверка депозита</p>
+  <p class="loader-sub" id="ld-sub">Ищем транзакцию в блокчейне. Обычно занимает 5–7 секунд</p>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="ld-bar"></div></div>
+  <p class="loader-pct" id="ld-pct">0%</p>
+  <div class="loader-steps" style="margin-top:24px">
+    <div class="loader-step active" id="lds-1"><div class="loader-step-dot">◌</div><span>Поиск транзакции</span></div>
+    <div class="loader-step" id="lds-2"><div class="loader-step-dot"></div><span>Подтверждение блоков</span></div>
+    <div class="loader-step" id="lds-3"><div class="loader-step-dot"></div><span>Зачисление на счёт</span></div>
+  </div>
+</div>
 
 
 <!-- ═══════════════════════════════════════════
@@ -791,23 +869,85 @@ function sendEmailNotify(){
   const body=encodeURIComponent('Новый пользователь оставил заявку\n\nEmail: '+email+'\n'+(name?'Имя: '+name+'\n':'')+'\nОтветь чтобы связаться.');
   window.location.href='mailto:'+to+'?subject='+subject+'&body='+body;
   closeEntryModal();
-  setTimeout(()=>startTimer(),600);
+  setTimeout(()=>startReviewLoader(),600);
 }
 
-function startTimer(){
-  document.getElementById('successModal').classList.add('open');
-  let secs=30;
-  const circle=document.getElementById('timerCircle'),text=document.getElementById('timerText');
-  circle.style.strokeDashoffset='0';text.textContent='30';
-  timerInterval=setInterval(()=>{
-    secs--;text.textContent=secs;
-    circle.style.strokeDashoffset=((30-secs)/30*264).toFixed(1);
-    if(secs<=0){clearInterval(timerInterval);document.getElementById('successModal').classList.remove('open');setTimeout(()=>document.getElementById('depositAddrModal').classList.add('open'),300)}
-  },1000);
+/* ── LOADER 1: Review (15 sec) ── */
+function startReviewLoader(){
+  const screen=document.getElementById('loader-review');
+  screen.classList.add('show');
+  const bar=document.getElementById('lr-bar');
+  const pct=document.getElementById('lr-pct');
+  const steps=[document.getElementById('lrs-1'),document.getElementById('lrs-2'),document.getElementById('lrs-3')];
+  let progress=0;
+  bar.style.transition='width 15s linear';
+  setTimeout(()=>bar.style.width='100%',50);
+
+  const stepTimes=[0,5000,10000];
+  stepTimes.forEach((t,i)=>{
+    setTimeout(()=>{
+      if(i>0){steps[i-1].classList.remove('active');steps[i-1].classList.add('done');steps[i-1].querySelector('.loader-step-dot').textContent='✓'}
+      steps[i].classList.add('active');
+    },t);
+  });
+
+  const pctInt=setInterval(()=>{progress+=1;pct.textContent=Math.min(progress,99)+'%';if(progress>=99)clearInterval(pctInt)},150);
+
+  setTimeout(()=>{
+    clearInterval(pctInt);
+    steps[2].classList.remove('active');steps[2].classList.add('done');steps[2].querySelector('.loader-step-dot').textContent='✓';
+    pct.textContent='100%';
+    setTimeout(()=>{screen.classList.remove('show');showApproved()},600);
+  },15000);
+}
+
+/* ── LOADER 2: Approved screen ── */
+function showApproved(){
+  document.getElementById('loader-approved').classList.add('show');
+}
+
+function showDepositAddrFromApproved(){
+  document.getElementById('loader-approved').classList.remove('show');
+  document.getElementById('depositAddrModal').classList.add('open');
+}
+
+/* ── LOADER 3: Deposit check (5-7 sec) ── */
+function startDepositLoader(){
+  document.getElementById('depositAddrModal').classList.remove('open');
+  const screen=document.getElementById('loader-deposit');
+  screen.classList.add('show');
+  const bar=document.getElementById('ld-bar');
+  const pct=document.getElementById('ld-pct');
+  const icon=document.getElementById('ld-icon');
+  const steps=[document.getElementById('lds-1'),document.getElementById('lds-2'),document.getElementById('lds-3')];
+  const dur=6000;
+  let progress=0;
+  bar.style.transition='width '+dur+'ms linear';
+  setTimeout(()=>bar.style.width='100%',50);
+
+  const stepTimes=[0,2000,4000];
+  stepTimes.forEach((t,i)=>{
+    setTimeout(()=>{
+      if(i>0){steps[i-1].classList.remove('active');steps[i-1].classList.add('done');steps[i-1].querySelector('.loader-step-dot').textContent='✓'}
+      steps[i].classList.add('active');
+    },t);
+  });
+
+  const pctInt=setInterval(()=>{progress+=2;pct.textContent=Math.min(progress,99)+'%';if(progress>=99)clearInterval(pctInt)},120);
+
+  setTimeout(()=>{
+    clearInterval(pctInt);
+    steps[2].classList.remove('active');steps[2].classList.add('done');steps[2].querySelector('.loader-step-dot').textContent='✓';
+    pct.textContent='100%';
+    icon.textContent='✅';
+    document.getElementById('ld-title').textContent='Депозит зачислен!';
+    document.getElementById('ld-sub').textContent='Транзакция подтверждена. ИИ уже начал работу с вашими средствами';
+    setTimeout(()=>{screen.classList.remove('show');goToDashboard()},1200);
+  },dur);
 }
 
 function selectNet(el,addr){document.querySelectorAll('.net-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('walletAddr').textContent=addr}
-function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('.copy-btn');b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2000)}
+function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('#depositAddrModal .copy-btn');b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2000)}
 
 /* ════════════════════════════════
    DASHBOARD JS
