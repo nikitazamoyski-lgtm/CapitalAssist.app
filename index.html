@@ -3,941 +3,376 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>CapitalAssist.app — AI управляет твоим USDT</title>
+<title>CapitalAssist.app</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#00D4AA;--teal-dim:#00b890;--teal-faint:rgba(0,212,170,0.08);--teal-glow:rgba(0,212,170,0.22);
+  --amber:#F5A623;--amber-faint:rgba(245,166,35,0.10);
+  --red:#FF5858;--red-faint:rgba(255,88,88,0.10);
+  --purple:#8B7CF8;--purple-faint:rgba(139,124,248,0.10);
+  --navy:#0A0E1A;--navy2:#111727;--card:#161D2F;--card2:#1C2540;
+  --muted:#8892A4;--muted2:#B0BAC8;--white:#F0F4FF;
+  --border:rgba(255,255,255,0.07);--border-teal:rgba(0,212,170,0.22);
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4,.brand,.stat-num,.proto-name{font-family:'Space Grotesk',sans-serif}
 
-  :root {
-    --teal: #00D4AA;
-    --teal-dim: #00b890;
-    --teal-faint: rgba(0,212,170,0.08);
-    --teal-glow: rgba(0,212,170,0.18);
-    --amber: #F5A623;
-    --amber-faint: rgba(245,166,35,0.10);
-    --red: #FF5858;
-    --navy: #0A0E1A;
-    --navy2: #111727;
-    --card: #161D2F;
-    --card2: #1C2540;
-    --muted: #8892A4;
-    --muted2: #B0BAC8;
-    --white: #F0F4FF;
-    --border: rgba(255,255,255,0.07);
-    --border-teal: rgba(0,212,170,0.22);
-  }
+/* ═══ PAGE SWITCHING ═══ */
+#page-landing{display:block}
+#page-dashboard{display:none}
+#page-landing.hidden{display:none}
+#page-dashboard.active{display:block}
 
-  html { scroll-behavior: smooth; }
+/* ═══ SHARED NAV ═══ */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:13px 20px;background:rgba(10,14,26,0.92);backdrop-filter:blur(18px);border-bottom:0.5px solid var(--border)}
+.brand{font-size:17px;font-weight:700;letter-spacing:-0.3px;color:var(--white)}
+.brand span{color:var(--teal)}
+.brand small{color:var(--muted);font-weight:400;font-size:13px}
+.nav-badge{font-size:11px;font-weight:500;letter-spacing:0.4px;background:var(--teal-faint);color:var(--teal);border:0.5px solid var(--border-teal);padding:4px 10px;border-radius:20px}
+.logout-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:transparent;border:0.5px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;transition:border-color .18s,color .18s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
 
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* ═══ SHARED BUTTONS ═══ */
+.btn-primary{display:block;width:100%;padding:15px;border-radius:12px;background:var(--teal);color:#050a0f;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;letter-spacing:-0.2px}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,212,170,0.28)}
+.btn-primary:active{transform:scale(0.97)!important;background:var(--teal-dim);box-shadow:none}
+.btn-ghost{display:block;width:100%;padding:14px;border-radius:12px;background:transparent;color:var(--muted2);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;border:0.5px solid var(--border);cursor:pointer;transition:border-color .15s,color .15s}
+.btn-ghost:active{border-color:var(--teal);color:var(--teal)}
 
-  h1,h2,h3,h4,.brand,.stat-num,.proto-name {
-    font-family: 'Space Grotesk', sans-serif;
-  }
+/* ═══ SHARED MODALS ═══ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(5,8,18,0.82);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet,.bottom-sheet{width:100%;max-width:480px;background:var(--card);border-radius:24px 24px 0 0;border-top:0.5px solid rgba(255,255,255,0.1);padding:12px 24px 40px;position:relative}
+.bottom-sheet{padding-bottom:48px}
+.modal-overlay .modal-sheet,.modal-bg .bottom-sheet{animation:slideUp .32s cubic-bezier(0.34,1.26,0.64,1) both}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.sheet-handle{width:40px;height:4px;border-radius:2px;background:rgba(255,255,255,0.12);margin:0 auto 20px}
+.sheet-close{position:absolute;top:14px;right:20px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.06);border:none;color:var(--muted);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sheet-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;margin-bottom:4px}
+.sheet-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.terms-note{font-size:11px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6}
+.terms-note a{color:var(--teal);text-decoration:none}
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 20px;
-    background: rgba(10,14,26,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 0.5px solid var(--border);
-  }
-  .brand {
-    font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
-    color: var(--white);
-  }
-  .brand span { color: var(--teal); }
-  .nav-badge {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.4px;
-    background: var(--teal-faint); color: var(--teal);
-    border: 0.5px solid var(--border-teal);
-    padding: 4px 10px; border-radius: 20px;
-  }
+/* ═══════════════════════════════
+   LANDING PAGE STYLES
+═══════════════════════════════ */
+#page-landing{padding-bottom:90px}
+.hero{padding:52px 20px 40px;text-align:center;position:relative;overflow:hidden}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:24px;height:0.5px;background:var(--teal);opacity:0.5}
+h1{font-size:clamp(28px,8vw,42px);font-weight:700;line-height:1.15;letter-spacing:-0.8px;margin-bottom:16px}
+h1 em{font-style:normal;color:var(--teal)}
+.hero-sub{font-size:15px;color:var(--muted2);max-width:340px;margin:0 auto 36px;line-height:1.65}
+.flow-wrap{margin:0 -20px 36px;position:relative;height:140px;overflow:hidden}
+#flowCanvas{width:100%;height:100%;display:block}
+.hero-cta{display:flex;flex-direction:column;gap:12px;max-width:320px;margin:0 auto}
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);margin:0 0 48px}
+.stat-cell{padding:18px 10px;text-align:center;background:var(--navy)}
+.stat-num{font-size:20px;font-weight:700;letter-spacing:-0.5px;color:var(--white);display:block}
+.stat-num.teal{color:var(--teal)}.stat-num.amber{color:var(--amber)}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:0.2px;margin-top:2px;display:block}
+.section{padding:0 20px 56px}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-bottom:24px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:0.5px solid var(--border);opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.step.visible{opacity:1;transform:translateY(0)}.step:last-child{border-bottom:none}
+.step-num{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:var(--teal-faint);border:0.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--teal)}
+.step-body h3{font-size:15px;font-weight:600;margin-bottom:4px;color:var(--white)}
+.step-body p{font-size:13px;color:var(--muted2);line-height:1.55}
+.strategies{display:flex;flex-direction:column;gap:14px}
+.strategy-card{background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:20px;cursor:pointer;transition:border-color .2s,background .2s,transform .18s,box-shadow .18s;position:relative;overflow:hidden}
+.strategy-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.strategy-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.strategy-card.conservative::before{background:var(--teal)}.strategy-card.balanced::before{background:var(--amber)}.strategy-card.aggressive::before{background:var(--red)}
+.strategy-card.selected{border-color:rgba(255,255,255,0.18);background:var(--card2)}
+.strat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.strat-name{font-size:16px;font-weight:700;letter-spacing:-0.2px}
+.strat-name.c{color:var(--teal)}.strat-name.b{color:var(--amber)}.strat-name.r{color:var(--red)}
+.apy-badge{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.5px}
+.apy-badge.c{color:var(--teal)}.apy-badge.b{color:var(--amber)}.apy-badge.r{color:var(--red)}
+.strat-desc{font-size:13px;color:var(--muted2);line-height:1.55;margin-bottom:14px}
+.proto-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:11px;padding:4px 8px;border-radius:6px;font-weight:500;letter-spacing:0.2px;background:rgba(255,255,255,0.05);color:var(--muted2);border:0.5px solid var(--border)}
+.risk-meter{display:flex;gap:3px;align-items:center;margin-top:14px}
+.risk-dot{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.risk-dot.on.c{background:var(--teal)}.risk-dot.on.b{background:var(--amber)}.risk-dot.on.r{background:var(--red)}
+.risk-label{font-size:11px;color:var(--muted);margin-left:6px;letter-spacing:0.2px}
+.simulator{background:var(--card);border-radius:20px;border:0.5px solid var(--border);overflow:hidden}
+.sim-head{padding:18px 20px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sim-head-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--muted2)}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--teal);letter-spacing:0.3px}
+.live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+.sim-body{padding:20px}
+.portfolio-total{margin-bottom:24px}
+.portfolio-total .label{font-size:12px;color:var(--muted);letter-spacing:0.3px;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.portfolio-total .amount{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;letter-spacing:-1px;color:var(--white);line-height:1}
+.portfolio-total .gain{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--teal);margin-top:4px}
+.alloc-bars{display:flex;flex-direction:column;gap:10px}
+.alloc-row{display:flex;flex-direction:column;gap:4px}
+.alloc-meta{display:flex;justify-content:space-between;align-items:center}
+.alloc-name{font-size:13px;color:var(--muted2);font-weight:500}
+.alloc-pct{font-size:13px;color:var(--muted)}
+.bar-track{height:5px;border-radius:3px;background:rgba(255,255,255,0.05);overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(0.25,1,0.5,1)}
+.amount-section{background:var(--card);border-radius:20px;border:0.5px solid var(--border);padding:24px 20px}
+.amount-label{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:14px}
+.amount-input-wrap{display:flex;align-items:center;background:var(--card2);border-radius:12px;border:0.5px solid var(--border);padding:12px 16px;gap:10px;margin-bottom:16px;transition:border-color .2s}
+.amount-input-wrap:focus-within{border-color:var(--teal)}
+.currency-tag{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--muted)}
+.amount-input-wrap input{flex:1;background:transparent;border:none;outline:none;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--white);letter-spacing:-0.5px}
+.quick-amounts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.quick-btn{padding:7px 14px;border-radius:8px;background:var(--teal-faint);border:0.5px solid var(--border-teal);color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;font-family:'Space Grotesk',sans-serif}
+.quick-btn:active{background:var(--teal-glow)}
+.projection{background:var(--navy2);border-radius:12px;padding:16px;margin-bottom:20px}
+.proj-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.proj-row+.proj-row{border-top:0.5px solid var(--border)}
+.proj-key{font-size:13px;color:var(--muted2)}
+.proj-val{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--white)}
+.proj-val.teal{color:var(--teal)}
+.protocols{display:flex;flex-direction:column;gap:10px}
+.proto-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:var(--card);border:0.5px solid var(--border);transition:background .18s,transform .18s,border-color .18s}
+.proto-row:hover{background:var(--card2);transform:translateX(4px);border-color:var(--border-teal)}
+.proto-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.proto-info{flex:1;min-width:0}
+.proto-name{font-size:14px;font-weight:600;color:var(--white)}
+.proto-type{font-size:11px;color:var(--muted);margin-top:1px}
+.proto-apy{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--teal);text-align:right;flex-shrink:0}
+.proto-apy span{display:block;font-size:10px;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif}
+.security-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sec-card{background:var(--card);border-radius:14px;border:0.5px solid var(--border);padding:16px;transition:background .18s,transform .18s,border-color .18s}
+.sec-card:hover{background:var(--card2);transform:translateY(-2px);border-color:rgba(255,255,255,0.14)}
+.sec-icon{font-size:22px;margin-bottom:8px}
+.sec-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px}
+.sec-card p{font-size:11px;color:var(--muted);line-height:1.5}
+.ticker-wrap{overflow:hidden;margin:0 0 48px;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:10px 0;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2}
+.ticker-wrap::before{left:0;background:linear-gradient(to right,var(--navy),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(to left,var(--navy),transparent)}
+.ticker-inner{display:flex;gap:0;white-space:nowrap;animation:ticker 22s linear infinite}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:var(--muted);font-weight:500}
+.ticker-item strong{color:var(--teal);font-family:'Space Grotesk',sans-serif}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.sticky-bottom{position:sticky;bottom:0;z-index:50;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-top:0.5px solid var(--border)}
+.sticky-bottom .btn-primary{font-size:16px;padding:16px;box-shadow:0 0 28px rgba(0,212,170,0.22)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .55s cubic-bezier(0.22,1,0.36,1),transform .55s cubic-bezier(0.22,1,0.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:orbFloat linear infinite;opacity:0}
+@keyframes orbFloat{0%{transform:translateY(100vh) scale(0.5);opacity:0}10%{opacity:0.06}90%{opacity:0.06}100%{transform:translateY(-20vh) scale(1.2);opacity:0}}
+.card-shine{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 50%,transparent 60%);background-size:200% auto;animation:shimmer 3s linear infinite;pointer-events:none}
+@keyframes shimmer{from{background-position:-200% center}to{background-position:200% center}}
 
-  /* ── HERO ── */
-  .hero {
-    padding: 52px 20px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.8px;
-    text-transform: uppercase; color: var(--teal);
-    margin-bottom: 20px;
-  }
-  .hero-eyebrow::before, .hero-eyebrow::after {
-    content: ''; display: block; width: 24px; height: 0.5px;
-    background: var(--teal); opacity: 0.5;
-  }
-  h1 {
-    font-size: clamp(28px, 8vw, 42px);
-    font-weight: 700; line-height: 1.15;
-    letter-spacing: -0.8px;
-    margin-bottom: 16px;
-  }
-  h1 em {
-    font-style: normal; color: var(--teal);
-  }
-  .hero-sub {
-    font-size: 15px; color: var(--muted2);
-    max-width: 340px; margin: 0 auto 36px;
-    line-height: 1.65;
-  }
+/* Landing entry modal extra */
+.entry-tabs{display:flex;gap:0;background:var(--navy2);border-radius:10px;padding:3px;margin-bottom:24px}
+.entry-tab{flex:1;padding:9px;border:none;background:transparent;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--muted);border-radius:8px;cursor:pointer;transition:all .18s}
+.entry-tab.active{background:var(--card2);color:var(--white)}
+.entry-panel{display:none}.entry-panel.active{display:block}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px}
+.field input{width:100%;padding:13px 14px;background:var(--navy2);border:0.5px solid var(--border);border-radius:10px;color:var(--white);font-family:'Inter',sans-serif;font-size:15px;outline:none;transition:border-color .18s;-webkit-appearance:none}
+.field input:focus{border-color:var(--teal)}
+.field input::placeholder{color:var(--muted)}
+.social-btns{display:flex;flex-direction:column;gap:10px}
+.social-btn{display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;background:var(--navy2);border:0.5px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .18s,background .18s;color:var(--muted2);font-family:'Inter',sans-serif;font-size:14px;font-weight:500}
+.social-btn:active{border-color:rgba(255,255,255,0.2);background:var(--card2)}
+.social-icon{width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.success-overlay,.deposit-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(5,8,18,0.88);backdrop-filter:blur(10px);align-items:flex-end;justify-content:center}
+.success-overlay.open,.deposit-overlay.open{display:flex}
+.success-sheet,.deposit-sheet{width:100%;max-width:480px;background:var(--card);border-radius:24px 24px 0 0;border-top:0.5px solid rgba(0,212,170,0.3);padding:12px 24px 48px;position:relative;animation:slideUp .35s cubic-bezier(0.34,1.26,0.64,1) both}
+.success-icon{width:64px;height:64px;border-radius:50%;background:var(--teal-faint);border:1.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:28px;margin:16px auto 20px;animation:popIn .4s cubic-bezier(0.34,1.56,0.64,1) 0.1s both}
+@keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.timer-ring-wrap{display:flex;justify-content:center;margin:20px 0}
+.timer-ring{transform:rotate(-90deg)}
+.timer-circle-bg{fill:none;stroke:rgba(255,255,255,0.07);stroke-width:4}
+.timer-circle{fill:none;stroke:var(--teal);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.timer-text{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;fill:var(--white);text-anchor:middle;dominant-baseline:middle}
+.network-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.net-chip,.net-c{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;background:rgba(255,255,255,0.05);border:0.5px solid var(--border);color:var(--muted2);cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .15s,color .15s}
+.net-chip.active,.net-c.active{background:var(--teal-faint);border-color:var(--border-teal);color:var(--teal)}
+.usdt-address-box,.addr-box{background:var(--navy2);border-radius:12px;border:0.5px solid var(--border-teal);padding:14px 16px;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+.usdt-address,.addr-text{flex:1;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--teal);word-break:break-all;line-height:1.5}
+.copy-btn{flex-shrink:0;padding:8px 14px;background:var(--teal-faint);border:0.5px solid var(--border-teal);border-radius:8px;color:var(--teal);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+.copy-btn:active{background:var(--teal-glow)}
+.deposit-steps{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.dep-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted2);line-height:1.5}
+.dep-step-n{width:22px;height:22px;flex-shrink:0;border-radius:50%;background:var(--teal-faint);border:0.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--teal);margin-top:1px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-  /* Flow canvas */
-  .flow-wrap {
-    margin: 0 -20px 36px;
-    position: relative; height: 140px;
-    overflow: hidden;
-  }
-  #flowCanvas { width: 100%; height: 100%; display: block; }
+/* ═══════════════════════════════
+   DASHBOARD STYLES
+═══════════════════════════════ */
+#page-dashboard{padding-bottom:100px}
+.greeting{padding:24px 20px 0;animation:fadeUp .5s ease both}
+.greeting-line{font-size:12px;color:var(--muted);letter-spacing:0.3px;margin-bottom:4px}
+.greeting h1{font-size:22px;font-weight:700;letter-spacing:-0.4px}
+.balance-hero{margin:20px 20px 0;background:var(--card);border-radius:20px;border:0.5px solid var(--border-teal);padding:22px 20px 20px;position:relative;overflow:hidden;animation:fadeUp .5s .05s ease both}
+.balance-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:var(--teal-faint)}
+.bal-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;font-weight:500}
+.bal-amount{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;letter-spacing:-1.5px;color:var(--white);line-height:1.1;margin:6px 0 4px}
+.bal-amount .currency{font-size:20px;color:var(--muted2);font-weight:500;vertical-align:super;margin-right:4px}
+.bal-gain{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--teal)}
+.bal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.bal-btn{padding:12px;border-radius:10px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .15s,opacity .15s;border:none}
+.bal-btn:active{transform:scale(0.96)}
+.bal-btn.deposit{background:var(--teal);color:#050a0f}
+.bal-btn.withdraw{background:var(--card2);color:var(--muted2);border:0.5px solid var(--border)}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 20px 0;animation:fadeUp .5s .1s ease both}
+.stat-mini{background:var(--card);border-radius:14px;border:0.5px solid var(--border);padding:14px 12px;text-align:center}
+.stat-mini .num{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:-0.4px;display:block}
+.stat-mini .lbl{font-size:10px;color:var(--muted);margin-top:2px;display:block}
+.sect{padding:24px 20px 0;animation:fadeUp .5s ease both}
+.sect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sect-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+.sect-link{font-size:12px;color:var(--teal);cursor:pointer}
+.alloc-card{background:var(--card);border-radius:16px;border:0.5px solid var(--border);overflow:hidden}
+.alloc-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:0.5px solid var(--border);transition:background .15s;cursor:pointer}
+.alloc-item:last-child{border-bottom:none}
+.alloc-item:hover{background:var(--card2)}
+.alloc-item:active{background:var(--card2)}
+.alloc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.alloc-info{flex:1;min-width:0}
+.alloc-name{font-size:14px;font-weight:600;color:var(--white)}
+.alloc-meta{font-size:11px;color:var(--muted);margin-top:1px}
+.alloc-right{text-align:right;flex-shrink:0}
+.alloc-val{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--white)}
+.alloc-apy{font-size:11px;color:var(--teal);margin-top:1px}
+.pie-row{display:flex;align-items:center;gap:16px;padding:16px 16px 14px;border-top:0.5px solid var(--border)}
+.pie-legend{flex:1;display:flex;flex-direction:column;gap:6px}
+.pie-leg-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted2)}
+.pie-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.chart-wrap{background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:16px 16px 8px;overflow:hidden}
+.chart-period{display:flex;gap:6px;margin-bottom:14px}
+.period-btn{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;background:transparent;border:0.5px solid var(--border);color:var(--muted);cursor:pointer;transition:background .15s,color .15s;font-family:'Space Grotesk',sans-serif}
+.period-btn.active{background:var(--teal-faint);border-color:var(--border-teal);color:var(--teal)}
+.strat-toggle{display:flex;gap:0;background:var(--navy2);border-radius:12px;padding:4px}
+.strat-opt{flex:1;padding:10px 6px;border:none;background:transparent;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:background .18s,color .18s}
+.strat-opt.active{background:var(--card2);color:var(--white)}
+.strat-opt.c.active{color:var(--teal)}.strat-opt.b.active{color:var(--amber)}.strat-opt.r.active{color:var(--red)}
+.strat-info{background:var(--card);border-radius:16px;border:0.5px solid var(--border);margin-top:12px;overflow:hidden}
+.strat-info-head{padding:16px 16px 12px;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.strat-info-title{font-size:15px;font-weight:700}
+.apy-tag{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.5px}
+.strat-info-body{padding:14px 16px}
+.strat-desc-text{font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px}
+.strat-protocols{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.proto-chip{font-size:11px;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.05);border:0.5px solid var(--border);color:var(--muted2);font-weight:500}
+.risk-bar{display:flex;gap:4px;align-items:center}
+.risk-pip{width:28px;height:5px;border-radius:3px;background:var(--border)}
+.risk-label-text{font-size:11px;color:var(--muted);margin-left:8px}
+.apply-btn{width:100%;padding:13px;border-radius:10px;background:var(--teal);color:#050a0f;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-top:16px;transition:transform .15s,opacity .15s}
+.apply-btn:active{transform:scale(0.97)}
+.activity-list{display:flex;flex-direction:column;gap:0}
+.act-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:0.5px solid var(--border)}
+.act-item:last-child{border-bottom:none}
+.act-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:transform .2s}
+.act-item:active .act-icon{transform:scale(0.9)}
+.act-info{flex:1;min-width:0}
+.act-name{font-size:13px;font-weight:600;color:var(--white)}
+.act-time{font-size:11px;color:var(--muted);margin-top:1px}
+.act-amount{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;text-align:right;flex-shrink:0}
+.act-amount.plus{color:var(--teal)}.act-amount.move{color:var(--amber)}
+.live-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--teal);font-weight:500;letter-spacing:0.3px}
+.live-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+.modal-bg{display:none;position:fixed;inset:0;z-index:200;background:rgba(5,8,18,0.85);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.field-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.field label{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.3px;text-transform:uppercase}
+.field input{width:100%;padding:13px 14px;background:var(--navy2);border:0.5px solid var(--border);border-radius:10px;color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;outline:none;transition:border-color .18s;-webkit-appearance:none}
+.field input:focus{border-color:var(--teal)}
+.field input::placeholder{color:var(--muted);font-weight:400}
+.max-tag{font-size:11px;color:var(--teal);cursor:pointer;font-weight:600;letter-spacing:0.3px}
+.action-items{display:flex;flex-direction:column;gap:0}
+.action-item{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:0.5px solid var(--border);cursor:pointer;transition:opacity .15s}
+.action-item:last-child{border-bottom:none}
+.action-item:active{opacity:0.6}
+.action-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.action-title{font-size:14px;font-weight:600;color:var(--white)}
+.action-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.action-arrow{margin-left:auto;color:var(--muted);font-size:18px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;justify-content:space-around;align-items:center;background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-top:0.5px solid var(--border);padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--muted);font-weight:500;cursor:pointer;padding:4px 16px;transition:color .15s}
+.nav-item.active{color:var(--teal)}
+.nav-icon{font-size:20px;line-height:1}
 
-  .hero-cta {
-    display: flex; flex-direction: column; gap: 12px;
-    max-width: 320px; margin: 0 auto;
-  }
-  .btn-primary {
-    display: block; width: 100%;
-    padding: 15px; border-radius: 12px;
-    background: var(--teal); color: #050a0f;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px; font-weight: 600;
-    border: none; cursor: pointer;
-    transition: transform 0.15s, background 0.15s;
-    letter-spacing: -0.2px;
-  }
-  .btn-primary:active { transform: scale(0.97); background: var(--teal-dim); }
-  .btn-ghost {
-    display: block; width: 100%;
-    padding: 14px; border-radius: 12px;
-    background: transparent; color: var(--muted2);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 500;
-    border: 0.5px solid var(--border); cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  .btn-ghost:active { border-color: var(--teal); color: var(--teal); }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: var(--border);
-    border-top: 0.5px solid var(--border);
-    border-bottom: 0.5px solid var(--border);
-    margin: 0 0 48px;
-  }
-  .stat-cell {
-    padding: 18px 10px; text-align: center;
-    background: var(--navy);
-  }
-  .stat-num {
-    font-size: 20px; font-weight: 700;
-    letter-spacing: -0.5px; color: var(--white);
-    display: block;
-  }
-  .stat-num.teal { color: var(--teal); }
-  .stat-num.amber { color: var(--amber); }
-  .stat-label {
-    font-size: 11px; color: var(--muted);
-    letter-spacing: 0.2px; margin-top: 2px; display: block;
-  }
-
-  /* ── SECTION HEADERS ── */
-  .section { padding: 0 20px 56px; }
-  .sec-label {
-    font-size: 11px; font-weight: 500; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 8px;
-  }
-  h2 {
-    font-size: 24px; font-weight: 700;
-    letter-spacing: -0.5px; line-height: 1.2;
-    margin-bottom: 24px;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .steps { display: flex; flex-direction: column; gap: 0; }
-  .step {
-    display: flex; gap: 16px; align-items: flex-start;
-    padding: 20px 0;
-    border-bottom: 0.5px solid var(--border);
-    opacity: 0; transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-  .step.visible { opacity: 1; transform: translateY(0); }
-  .step:last-child { border-bottom: none; }
-  .step-num {
-    flex-shrink: 0;
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--teal-faint);
-    border: 0.5px solid var(--border-teal);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 700; color: var(--teal);
-  }
-  .step-body h3 {
-    font-size: 15px; font-weight: 600;
-    margin-bottom: 4px; color: var(--white);
-  }
-  .step-body p { font-size: 13px; color: var(--muted2); line-height: 1.55; }
-
-  /* ── STRATEGY CARDS ── */
-  .strategies { display: flex; flex-direction: column; gap: 14px; }
-  .strategy-card {
-    background: var(--card); border-radius: 16px;
-    border: 0.5px solid var(--border);
-    padding: 20px; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative; overflow: hidden;
-  }
-  .strategy-card::before {
-    content: ''; position: absolute;
-    left: 0; top: 0; bottom: 0; width: 3px;
-  }
-  .strategy-card.conservative::before { background: var(--teal); }
-  .strategy-card.balanced::before { background: var(--amber); }
-  .strategy-card.aggressive::before { background: var(--red); }
-  .strategy-card.selected {
-    border-color: rgba(255,255,255,0.18);
-    background: var(--card2);
-  }
-  .strat-header {
-    display: flex; align-items: center;
-    justify-content: space-between; margin-bottom: 12px;
-  }
-  .strat-name {
-    font-size: 16px; font-weight: 700;
-    letter-spacing: -0.2px;
-  }
-  .strat-name.c { color: var(--teal); }
-  .strat-name.b { color: var(--amber); }
-  .strat-name.r { color: var(--red); }
-  .apy-badge {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  .apy-badge.c { color: var(--teal); }
-  .apy-badge.b { color: var(--amber); }
-  .apy-badge.r { color: var(--red); }
-  .strat-desc {
-    font-size: 13px; color: var(--muted2);
-    line-height: 1.55; margin-bottom: 14px;
-  }
-  .proto-chips {
-    display: flex; flex-wrap: wrap; gap: 6px;
-  }
-  .chip {
-    font-size: 11px; padding: 4px 8px;
-    border-radius: 6px; font-weight: 500; letter-spacing: 0.2px;
-    background: rgba(255,255,255,0.05);
-    color: var(--muted2); border: 0.5px solid var(--border);
-  }
-  .risk-meter {
-    display: flex; gap: 3px; align-items: center; margin-top: 14px;
-  }
-  .risk-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--border);
-  }
-  .risk-dot.on.c { background: var(--teal); }
-  .risk-dot.on.b { background: var(--amber); }
-  .risk-dot.on.r { background: var(--red); }
-  .risk-label {
-    font-size: 11px; color: var(--muted);
-    margin-left: 6px; letter-spacing: 0.2px;
-  }
-
-  /* ── PORTFOLIO SIMULATOR ── */
-  .simulator {
-    background: var(--card); border-radius: 20px;
-    border: 0.5px solid var(--border);
-    overflow: hidden;
-  }
-  .sim-head {
-    padding: 18px 20px 14px;
-    border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .sim-head-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 600; color: var(--muted2);
-  }
-  .live-dot {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 11px; color: var(--teal); letter-spacing: 0.3px;
-  }
-  .live-dot::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--teal);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
-  .sim-body { padding: 20px; }
-  .portfolio-total {
-    margin-bottom: 24px;
-  }
-  .portfolio-total .label {
-    font-size: 12px; color: var(--muted); letter-spacing: 0.3px;
-    text-transform: uppercase; font-weight: 500; margin-bottom: 4px;
-  }
-  .portfolio-total .amount {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 34px; font-weight: 700; letter-spacing: -1px;
-    color: var(--white); line-height: 1;
-  }
-  .portfolio-total .gain {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 600; color: var(--teal);
-    margin-top: 4px;
-  }
-
-  .alloc-bars { display: flex; flex-direction: column; gap: 10px; }
-  .alloc-row { display: flex; flex-direction: column; gap: 4px; }
-  .alloc-meta {
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .alloc-name { font-size: 13px; color: var(--muted2); font-weight: 500; }
-  .alloc-pct { font-size: 13px; color: var(--muted); }
-  .bar-track {
-    height: 5px; border-radius: 3px;
-    background: rgba(255,255,255,0.05);
-    overflow: hidden;
-  }
-  .bar-fill {
-    height: 100%; border-radius: 3px;
-    transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  /* ── AMOUNT INPUT ── */
-  .amount-section {
-    background: var(--card); border-radius: 20px;
-    border: 0.5px solid var(--border);
-    padding: 24px 20px;
-  }
-  .amount-label {
-    font-size: 12px; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.8px; color: var(--muted); margin-bottom: 14px;
-  }
-  .amount-input-wrap {
-    display: flex; align-items: center;
-    background: var(--card2); border-radius: 12px;
-    border: 0.5px solid var(--border);
-    padding: 12px 16px; gap: 10px; margin-bottom: 16px;
-    transition: border-color 0.2s;
-  }
-  .amount-input-wrap:focus-within { border-color: var(--teal); }
-  .currency-tag {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px; font-weight: 700; color: var(--muted);
-  }
-  .amount-input-wrap input {
-    flex: 1; background: transparent; border: none; outline: none;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px; font-weight: 700; color: var(--white);
-    letter-spacing: -0.5px;
-  }
-  .quick-amounts {
-    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
-  }
-  .quick-btn {
-    padding: 7px 14px; border-radius: 8px;
-    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
-    color: var(--teal); font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: background 0.15s;
-    font-family: 'Space Grotesk', sans-serif;
-  }
-  .quick-btn:active { background: var(--teal-glow); }
-
-  .projection {
-    background: var(--navy2); border-radius: 12px;
-    padding: 16px; margin-bottom: 20px;
-  }
-  .proj-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 6px 0;
-  }
-  .proj-row + .proj-row {
-    border-top: 0.5px solid var(--border);
-  }
-  .proj-key { font-size: 13px; color: var(--muted2); }
-  .proj-val {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 700; color: var(--white);
-  }
-  .proj-val.teal { color: var(--teal); }
-
-  /* ── PROTOCOLS ── */
-  .protocols { display: flex; flex-direction: column; gap: 10px; }
-  .proto-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px; border-radius: 12px;
-    background: var(--card); border: 0.5px solid var(--border);
-  }
-  .proto-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 17px; flex-shrink: 0;
-  }
-  .proto-info { flex: 1; min-width: 0; }
-  .proto-name { font-size: 14px; font-weight: 600; color: var(--white); }
-  .proto-type { font-size: 11px; color: var(--muted); margin-top: 1px; }
-  .proto-apy {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px; font-weight: 700; color: var(--teal);
-    text-align: right; flex-shrink: 0;
-  }
-  .proto-apy span { display: block; font-size: 10px; color: var(--muted); font-weight: 400; font-family: 'Inter', sans-serif; }
-
-  /* ── SECURITY ── */
-  .security-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .sec-card {
-    background: var(--card); border-radius: 14px;
-    border: 0.5px solid var(--border);
-    padding: 16px;
-  }
-  .sec-icon {
-    font-size: 22px; margin-bottom: 8px;
-  }
-  .sec-card h4 {
-    font-size: 13px; font-weight: 600;
-    color: var(--white); margin-bottom: 4px;
-  }
-  .sec-card p { font-size: 11px; color: var(--muted); line-height: 1.5; }
-
-  /* ── STICKY BOTTOM ── */
-  .sticky-bottom {
-    position: sticky; bottom: 0; z-index: 50;
-    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-    background: rgba(10,14,26,0.95);
-    backdrop-filter: blur(20px);
-    border-top: 0.5px solid var(--border);
-  }
-  .sticky-bottom .btn-primary {
-    font-size: 16px; padding: 16px;
-    box-shadow: 0 0 28px rgba(0,212,170,0.22);
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero > * { animation: fadeUp 0.6s ease both; }
-  .hero-eyebrow { animation-delay: 0s; }
-  h1 { animation-delay: 0.08s; }
-  .hero-sub { animation-delay: 0.16s; }
-  .flow-wrap { animation-delay: 0.24s; }
-  .hero-cta { animation-delay: 0.32s; }
-
-  /* ── TICKER ── */
-  .ticker-wrap {
-    overflow: hidden; margin: 0 0 48px;
-    border-top: 0.5px solid var(--border);
-    border-bottom: 0.5px solid var(--border);
-    padding: 10px 0;
-    position: relative;
-  }
-  .ticker-wrap::before, .ticker-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0; width: 40px;
-    z-index: 2;
-  }
-  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--navy), transparent); }
-  .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--navy), transparent); }
-  .ticker-inner {
-    display: flex; gap: 0; white-space: nowrap;
-    animation: ticker 22s linear infinite;
-  }
-  .ticker-item {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 0 24px;
-    font-size: 12px; color: var(--muted); font-weight: 500;
-  }
-  .ticker-item strong { color: var(--teal); font-family: 'Space Grotesk', sans-serif; }
-  .ticker-item .sep { color: var(--border); }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ── ENTRY MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(5,8,18,0.82);
-    backdrop-filter: blur(8px);
-    align-items: flex-end; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-sheet {
-    width: 100%; max-width: 480px;
-    background: var(--card); border-radius: 24px 24px 0 0;
-    border-top: 0.5px solid rgba(255,255,255,0.1);
-    padding: 12px 24px 40px;
-    animation: slideUp 0.32s cubic-bezier(0.34,1.26,0.64,1) both;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  .sheet-handle {
-    width: 40px; height: 4px; border-radius: 2px;
-    background: rgba(255,255,255,0.12);
-    margin: 0 auto 24px;
-  }
-  .sheet-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px; font-weight: 700;
-    letter-spacing: -0.4px; color: var(--white);
-    margin-bottom: 4px;
-  }
-  .sheet-sub {
-    font-size: 13px; color: var(--muted);
-    margin-bottom: 24px; line-height: 1.5;
-  }
-
-  /* Entry method tabs */
-  .entry-tabs {
-    display: flex; gap: 0;
-    background: var(--navy2); border-radius: 10px;
-    padding: 3px; margin-bottom: 24px;
-  }
-  .entry-tab {
-    flex: 1; padding: 9px;
-    border: none; background: transparent;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px; font-weight: 600;
-    color: var(--muted); border-radius: 8px;
-    cursor: pointer; transition: all 0.18s;
-  }
-  .entry-tab.active {
-    background: var(--card2); color: var(--white);
-  }
-
-  /* Panels */
-  .entry-panel { display: none; }
-  .entry-panel.active { display: block; }
-
-  /* Email form */
-  .field { margin-bottom: 14px; }
-  .field label {
-    display: block; font-size: 12px; font-weight: 500;
-    color: var(--muted); margin-bottom: 6px; letter-spacing: 0.3px;
-  }
-  .field input {
-    width: 100%; padding: 13px 14px;
-    background: var(--navy2); border: 0.5px solid var(--border);
-    border-radius: 10px; color: var(--white);
-    font-family: 'Inter', sans-serif; font-size: 15px;
-    outline: none; transition: border-color 0.18s;
-    -webkit-appearance: none;
-  }
-  .field input:focus { border-color: var(--teal); }
-  .field input::placeholder { color: var(--muted); }
-  .sheet-divider {
-    display: flex; align-items: center; gap: 10px;
-    margin: 18px 0;
-  }
-  .sheet-divider::before, .sheet-divider::after {
-    content: ''; flex: 1; height: 0.5px;
-    background: var(--border);
-  }
-  .sheet-divider span {
-    font-size: 11px; color: var(--muted);
-    white-space: nowrap; letter-spacing: 0.3px;
-  }
-
-  /* Social buttons */
-  .social-btns { display: flex; flex-direction: column; gap: 10px; }
-  .social-btn {
-    display: flex; align-items: center; gap: 12px;
-    width: 100%; padding: 13px 16px;
-    background: var(--navy2); border: 0.5px solid var(--border);
-    border-radius: 10px; cursor: pointer;
-    transition: border-color 0.18s, background 0.18s;
-    color: var(--muted2);
-    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
-  }
-  .social-btn:active { border-color: rgba(255,255,255,0.2); background: var(--card2); }
-  .social-icon {
-    width: 24px; height: 24px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  /* Wallet panel */
-  .wallet-grid { display: flex; flex-direction: column; gap: 10px; }
-  .wallet-btn {
-    display: flex; align-items: center; gap: 14px;
-    width: 100%; padding: 14px 16px;
-    background: var(--navy2); border: 0.5px solid var(--border);
-    border-radius: 12px; cursor: pointer;
-    transition: border-color 0.18s, background 0.18s;
-    color: var(--white);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 600;
-  }
-  .wallet-btn:active { border-color: var(--teal); background: var(--teal-faint); }
-  .wallet-logo {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-  .wallet-info { flex: 1; text-align: left; }
-  .wallet-info small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 1px; }
-  .wallet-arrow { color: var(--muted); font-size: 18px; }
-
-  .terms-note {
-    font-size: 11px; color: var(--muted); text-align: center;
-    margin-top: 16px; line-height: 1.6;
-  }
-  .terms-note a { color: var(--teal); text-decoration: none; }
-
-  /* ── SCROLL & HOVER ANIMATIONS ── */
-  .reveal {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-left {
-    opacity: 0; transform: translateX(-20px);
-    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
-  }
-  .reveal-left.visible { opacity: 1; transform: translateX(0); }
-
-  .strategy-card {
-    transition: border-color 0.2s, background 0.2s, transform 0.18s, box-shadow 0.18s;
-  }
-  .strategy-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .proto-row {
-    transition: background 0.18s, transform 0.18s, border-color 0.18s;
-  }
-  .proto-row:hover {
-    background: var(--card2);
-    transform: translateX(4px);
-    border-color: var(--border-teal);
-  }
-  .sec-card {
-    transition: background 0.18s, transform 0.18s, border-color 0.18s;
-  }
-  .sec-card:hover {
-    background: var(--card2);
-    transform: translateY(-2px);
-    border-color: rgba(255,255,255,0.14);
-  }
-  .btn-primary {
-    transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
-  }
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0,212,170,0.28);
-  }
-  .btn-primary:active { transform: scale(0.97) !important; box-shadow: none; }
-
-  /* floating teal orbs ambient */
-  .orb {
-    position: fixed; border-radius: 50%;
-    pointer-events: none; z-index: 0;
-    animation: orbFloat linear infinite;
-    opacity: 0;
-  }
-  @keyframes orbFloat {
-    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-    10% { opacity: 0.06; }
-    90% { opacity: 0.06; }
-    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
-  }
-
-  /* card shimmer on scroll into view */
-  @keyframes shimmer {
-    from { background-position: -200% center; }
-    to { background-position: 200% center; }
-  }
-  .card-shine {
-    position: absolute; inset: 0; border-radius: inherit;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
-    background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
-    pointer-events: none;
-  }
-
-  /* ── SUCCESS MODAL ── */
-  .success-overlay {
-    display: none; position: fixed; inset: 0; z-index: 300;
-    background: rgba(5,8,18,0.88); backdrop-filter: blur(10px);
-    align-items: flex-end; justify-content: center;
-  }
-  .success-overlay.open { display: flex; }
-  .success-sheet {
-    width: 100%; max-width: 480px;
-    background: var(--card); border-radius: 24px 24px 0 0;
-    border-top: 0.5px solid rgba(0,212,170,0.3);
-    padding: 12px 24px 48px;
-    animation: slideUp 0.35s cubic-bezier(0.34,1.26,0.64,1) both;
-  }
-  .success-icon {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: var(--teal-faint); border: 1.5px solid var(--border-teal);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin: 16px auto 20px;
-    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .timer-ring-wrap {
-    display: flex; justify-content: center; margin: 20px 0;
-  }
-  .timer-ring { transform: rotate(-90deg); }
-  .timer-circle-bg { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 4; }
-  .timer-circle { fill: none; stroke: var(--teal); stroke-width: 4; stroke-linecap: round;
-    transition: stroke-dashoffset 1s linear; }
-  .timer-text {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px; font-weight: 700; color: var(--white);
-    text-anchor: middle; dominant-baseline: middle;
-  }
-
-  /* ── DEPOSIT MANUAL MODAL ── */
-  .deposit-overlay {
-    display: none; position: fixed; inset: 0; z-index: 300;
-    background: rgba(5,8,18,0.88); backdrop-filter: blur(10px);
-    align-items: flex-end; justify-content: center;
-  }
-  .deposit-overlay.open { display: flex; }
-  .deposit-sheet {
-    width: 100%; max-width: 480px;
-    background: var(--card); border-radius: 24px 24px 0 0;
-    border-top: 0.5px solid rgba(0,212,170,0.3);
-    padding: 12px 24px 48px; position: relative;
-    animation: slideUp 0.35s cubic-bezier(0.34,1.26,0.64,1) both;
-  }
-  .usdt-address-box {
-    background: var(--navy2); border-radius: 12px;
-    border: 0.5px solid var(--border-teal);
-    padding: 14px 16px; margin: 16px 0;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .usdt-address {
-    flex: 1; font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; color: var(--teal);
-    word-break: break-all; line-height: 1.5;
-  }
-  .copy-btn {
-    flex-shrink: 0; padding: 8px 14px;
-    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
-    border-radius: 8px; color: var(--teal);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; font-weight: 600; cursor: pointer;
-    transition: background 0.15s;
-  }
-  .copy-btn:active { background: var(--teal-glow); }
-  .network-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-  .net-chip {
-    padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
-    background: rgba(255,255,255,0.05); border: 0.5px solid var(--border);
-    color: var(--muted2);
-  }
-  .net-chip.active { background: var(--teal-faint); border-color: var(--border-teal); color: var(--teal); }
-  .deposit-steps { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
-  .dep-step {
-    display: flex; gap: 10px; align-items: flex-start;
-    font-size: 13px; color: var(--muted2); line-height: 1.5;
-  }
-  .dep-step-n {
-    width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
-    background: var(--teal-faint); border: 0.5px solid var(--border-teal);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--teal);
-    margin-top: 1px;
-  }
-
-  /* scrolled reveal */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="brand">Capital<span>Assist</span><span style="color:var(--muted);font-weight:400;font-size:14px;">.app</span></div>
+<!-- ═══════════════════════════════════════════
+     LANDING PAGE
+═══════════════════════════════════════════ -->
+<div id="page-landing">
+
+<nav id="nav-landing">
+  <div class="brand">Capital<span>Assist</span><small>.app</small></div>
   <div class="nav-badge">AI · Beta</div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">AI-менеджер капитала</div>
   <h1>Твой USDT<br>работает, пока<br><em>ты отдыхаешь</em></h1>
   <p class="hero-sub">ИИ сам ищет лучшую доходность среди лендинга, стейкинга и ликвидных пулов — и перекладывает деньги автоматически.</p>
-  <div class="flow-wrap">
-    <canvas id="flowCanvas"></canvas>
-  </div>
+  <div class="flow-wrap"><canvas id="flowCanvas"></canvas></div>
   <div class="hero-cta">
-    <button class="btn-primary" onclick="openModal()">Начать зарабатывать →</button>
+    <button class="btn-primary" onclick="openEntryModal()">Начать зарабатывать →</button>
     <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает?</button>
   </div>
 </section>
 
-<!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-cell">
-    <span class="stat-num teal" id="tvlNum">$0</span>
-    <span class="stat-label">TVL под управлением</span>
-  </div>
-  <div class="stat-cell">
-    <span class="stat-num amber" id="apyNum">0%</span>
-    <span class="stat-label">Средний APY сейчас</span>
-  </div>
-  <div class="stat-cell">
-    <span class="stat-num" id="protocolNum">0</span>
-    <span class="stat-label">Протоколов</span>
-  </div>
+  <div class="stat-cell"><span class="stat-num teal" id="tvlNum">$0</span><span class="stat-label">TVL под управлением</span></div>
+  <div class="stat-cell"><span class="stat-num amber" id="apyNum">0%</span><span class="stat-label">Средний APY сейчас</span></div>
+  <div class="stat-cell"><span class="stat-num" id="protocolNum">0</span><span class="stat-label">Протоколов</span></div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-inner" id="tickerInner"></div>
-</div>
+<div class="ticker-wrap"><div class="ticker-inner" id="tickerInner"></div></div>
 
-<!-- HOW IT WORKS -->
 <section class="section" id="how">
   <p class="sec-label">Принцип работы</p>
   <h2>Три шага — остальное за ИИ</h2>
   <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <h3>Выбери стратегию</h3>
-        <p>Определи, насколько ты готов рисковать. От тихой гавани до агрессивного роста — ты решаешь.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <h3>Внеси USDT</h3>
-        <p>Сумма остаётся в децентрализованных протоколах. Мы никогда не держим твои средства напрямую.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <h3>ИИ следит и реагирует</h3>
-        <p>Каждые несколько минут алгоритм анализирует рынок и перебрасывает капитал туда, где выгода выше. Ты видишь всё в реальном времени.</p>
-      </div>
-    </div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Выбери стратегию</h3><p>Определи, насколько ты готов рисковать. От тихой гавани до агрессивного роста — ты решаешь.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Внеси USDT</h3><p>Сумма остаётся в децентрализованных протоколах. Мы никогда не держим твои средства напрямую.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>ИИ следит и реагирует</h3><p>Каждые несколько минут алгоритм анализирует рынок и перебрасывает капитал туда, где выгода выше.</p></div></div>
   </div>
 </section>
 
-<!-- STRATEGIES -->
 <section class="section">
-  <p class="sec-label">Стратегии</p>
-  <h2>Выбери свой уровень</h2>
+  <p class="sec-label">Стратегии</p><h2>Выбери свой уровень</h2>
   <div class="strategies">
-
     <div class="strategy-card conservative selected" onclick="selectStrategy(this)">
-      <div class="strat-header">
-        <span class="strat-name c">Спокойная</span>
-        <span class="apy-badge c">8–14%</span>
-      </div>
+      <div class="strat-header"><span class="strat-name c">Спокойная</span><span class="apy-badge c">8–14%</span></div>
       <p class="strat-desc">Только проверенные протоколы — лендинг на AAVE, Compound. Минимальная волатильность, стабильный доход.</p>
-      <div class="proto-chips">
-        <span class="chip">AAVE</span>
-        <span class="chip">Compound</span>
-        <span class="chip">dYdX</span>
-      </div>
-      <div class="risk-meter">
-        <div class="risk-dot on c"></div>
-        <div class="risk-dot"></div>
-        <div class="risk-dot"></div>
-        <div class="risk-dot"></div>
-        <div class="risk-dot"></div>
-        <span class="risk-label">Очень низкий риск</span>
-      </div>
+      <div class="proto-chips"><span class="chip">AAVE</span><span class="chip">Compound</span><span class="chip">dYdX</span></div>
+      <div class="risk-meter"><div class="risk-dot on c"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Очень низкий риск</span></div>
     </div>
-
     <div class="strategy-card balanced" onclick="selectStrategy(this)">
-      <div class="strat-header">
-        <span class="strat-name b">Сбалансированная</span>
-        <span class="apy-badge b">18–35%</span>
-      </div>
+      <div class="strat-header"><span class="strat-name b">Сбалансированная</span><span class="apy-badge b">18–35%</span></div>
       <p class="strat-desc">Сочетание лендинга и ликвидных пулов DEX. Умеренный риск, заметно выше доход.</p>
-      <div class="proto-chips">
-        <span class="chip">Curve</span>
-        <span class="chip">Uniswap v3</span>
-        <span class="chip">Yearn</span>
-        <span class="chip">AAVE</span>
-      </div>
-      <div class="risk-meter">
-        <div class="risk-dot on b"></div>
-        <div class="risk-dot on b"></div>
-        <div class="risk-dot on b"></div>
-        <div class="risk-dot"></div>
-        <div class="risk-dot"></div>
-        <span class="risk-label">Умеренный риск</span>
-      </div>
+      <div class="proto-chips"><span class="chip">Curve</span><span class="chip">Uniswap v3</span><span class="chip">Yearn</span><span class="chip">AAVE</span></div>
+      <div class="risk-meter"><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Умеренный риск</span></div>
     </div>
-
     <div class="strategy-card aggressive" onclick="selectStrategy(this)">
-      <div class="strat-header">
-        <span class="strat-name r">Агрессивная</span>
-        <span class="apy-badge r">40–90%</span>
-      </div>
-      <p class="strat-desc">Фарминг новых пулов, высокорисковый стейкинг, оппортунистические позиции. Высокая доходность — и высокая возможная просадка.</p>
-      <div class="proto-chips">
-        <span class="chip">Pendle</span>
-        <span class="chip">Convex</span>
-        <span class="chip">GMX</span>
-        <span class="chip">Eigenlayer</span>
-      </div>
-      <div class="risk-meter">
-        <div class="risk-dot on r"></div>
-        <div class="risk-dot on r"></div>
-        <div class="risk-dot on r"></div>
-        <div class="risk-dot on r"></div>
-        <div class="risk-dot on r"></div>
-        <span class="risk-label">Высокий риск</span>
-      </div>
+      <div class="strat-header"><span class="strat-name r">Агрессивная</span><span class="apy-badge r">40–90%</span></div>
+      <p class="strat-desc">Фарминг новых пулов, высокорисковый стейкинг, оппортунистические позиции.</p>
+      <div class="proto-chips"><span class="chip">Pendle</span><span class="chip">Convex</span><span class="chip">GMX</span><span class="chip">Eigenlayer</span></div>
+      <div class="risk-meter"><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><span class="risk-label">Высокий риск</span></div>
     </div>
-
   </div>
 </section>
 
-<!-- DEPOSIT -->
 <section class="section" id="deposit">
-  <p class="sec-label">Рассчитай доход</p>
-  <h2>Сколько ты хочешь вложить?</h2>
+  <p class="sec-label">Рассчитай доход</p><h2>Сколько ты хочешь вложить?</h2>
   <div class="amount-section">
     <p class="amount-label">Сумма в USDT</p>
-    <div class="amount-input-wrap">
-      <span class="currency-tag">$</span>
-      <input type="number" id="amountInput" placeholder="1 000" value="1000" inputmode="numeric" min="10" max="10000000">
-    </div>
+    <div class="amount-input-wrap"><span class="currency-tag">$</span><input type="number" id="amountInput" placeholder="1 000" value="1000" inputmode="numeric" min="10"></div>
     <div class="quick-amounts">
       <button class="quick-btn" onclick="setAmount(500)">$500</button>
       <button class="quick-btn" onclick="setAmount(1000)">$1K</button>
@@ -945,36 +380,19 @@
       <button class="quick-btn" onclick="setAmount(10000)">$10K</button>
     </div>
     <div class="projection" id="projBox">
-      <div class="proj-row">
-        <span class="proj-key">За 30 дней</span>
-        <span class="proj-val teal" id="proj30">$9.10</span>
-      </div>
-      <div class="proj-row">
-        <span class="proj-key">За 3 месяца</span>
-        <span class="proj-val teal" id="proj90">$27.40</span>
-      </div>
-      <div class="proj-row">
-        <span class="proj-key">За год</span>
-        <span class="proj-val teal" id="proj365">$110.00</span>
-      </div>
-      <div class="proj-row">
-        <span class="proj-key">Выбранная стратегия</span>
-        <span class="proj-val" id="projStrat">Спокойная (11% APY)</span>
-      </div>
+      <div class="proj-row"><span class="proj-key">За 30 дней</span><span class="proj-val teal" id="proj30"></span></div>
+      <div class="proj-row"><span class="proj-key">За 3 месяца</span><span class="proj-val teal" id="proj90"></span></div>
+      <div class="proj-row"><span class="proj-key">За год</span><span class="proj-val teal" id="proj365"></span></div>
+      <div class="proj-row"><span class="proj-key">Стратегия</span><span class="proj-val" id="projStrat"></span></div>
     </div>
     <button class="btn-primary">Подключить кошелёк →</button>
   </div>
 </section>
 
-<!-- LIVE PORTFOLIO -->
 <section class="section">
-  <p class="sec-label">Пример портфеля</p>
-  <h2>Вот как выглядит <br>сбалансированная</h2>
+  <p class="sec-label">Пример портфеля</p><h2>Вот как выглядит сбалансированная</h2>
   <div class="simulator">
-    <div class="sim-head">
-      <span class="sim-head-title">Демо-портфель · $5 000</span>
-      <span class="live-dot">LIVE</span>
-    </div>
+    <div class="sim-head"><span class="sim-head-title">Демо-портфель · $5 000</span><span class="live-dot">LIVE</span></div>
     <div class="sim-body">
       <div class="portfolio-total">
         <div class="label">Текущая стоимость</div>
@@ -982,622 +400,482 @@
         <div class="gain" id="liveGain">+$147.32 · +2.95%</div>
       </div>
       <div class="alloc-bars">
-        <div class="alloc-row">
-          <div class="alloc-meta">
-            <span class="alloc-name">Curve 3pool</span>
-            <span class="alloc-pct">38%</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" style="background:var(--teal)" id="bar1"></div></div>
-        </div>
-        <div class="alloc-row">
-          <div class="alloc-meta">
-            <span class="alloc-name">AAVE USDT</span>
-            <span class="alloc-pct">32%</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" style="background:var(--amber)" id="bar2"></div></div>
-        </div>
-        <div class="alloc-row">
-          <div class="alloc-meta">
-            <span class="alloc-name">Yearn yUSDT</span>
-            <span class="alloc-pct">20%</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" style="background:#8B7CF8" id="bar3"></div></div>
-        </div>
-        <div class="alloc-row">
-          <div class="alloc-meta">
-            <span class="alloc-name">Uniswap v3</span>
-            <span class="alloc-pct">10%</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" style="background:#FF7A50" id="bar4"></div></div>
-        </div>
+        <div class="alloc-row"><div class="alloc-meta"><span class="alloc-name">Curve 3pool</span><span class="alloc-pct">38%</span></div><div class="bar-track"><div class="bar-fill" style="background:var(--teal)" id="bar1"></div></div></div>
+        <div class="alloc-row"><div class="alloc-meta"><span class="alloc-name">AAVE USDT</span><span class="alloc-pct">32%</span></div><div class="bar-track"><div class="bar-fill" style="background:var(--amber)" id="bar2"></div></div></div>
+        <div class="alloc-row"><div class="alloc-meta"><span class="alloc-name">Yearn yUSDT</span><span class="alloc-pct">20%</span></div><div class="bar-track"><div class="bar-fill" style="background:#8B7CF8" id="bar3"></div></div></div>
+        <div class="alloc-row"><div class="alloc-meta"><span class="alloc-name">Uniswap v3</span><span class="alloc-pct">10%</span></div><div class="bar-track"><div class="bar-fill" style="background:#FF7A50" id="bar4"></div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROTOCOLS -->
 <section class="section">
-  <p class="sec-label">Где работают деньги</p>
-  <h2>Протоколы сейчас</h2>
+  <p class="sec-label">Где работают деньги</p><h2>Протоколы сейчас</h2>
   <div class="protocols">
-    <div class="proto-row">
-      <div class="proto-icon" style="background:rgba(0,212,170,0.1);font-size:18px;">🌊</div>
-      <div class="proto-info">
-        <div class="proto-name">Curve Finance</div>
-        <div class="proto-type">Стейблкоин DEX · Лик. пул</div>
-      </div>
-      <div class="proto-apy">19.2%<span>APY</span></div>
-    </div>
-    <div class="proto-row">
-      <div class="proto-icon" style="background:rgba(144,97,247,0.1);font-size:18px;">👻</div>
-      <div class="proto-info">
-        <div class="proto-name">AAVE v3</div>
-        <div class="proto-type">Лендинг · USDT supply</div>
-      </div>
-      <div class="proto-apy">12.8%<span>APY</span></div>
-    </div>
-    <div class="proto-row">
-      <div class="proto-icon" style="background:rgba(245,166,35,0.1);font-size:18px;">🔮</div>
-      <div class="proto-info">
-        <div class="proto-name">Yearn Finance</div>
-        <div class="proto-type">Авто-стратегии · yVault</div>
-      </div>
-      <div class="proto-apy">24.1%<span>APY</span></div>
-    </div>
-    <div class="proto-row">
-      <div class="proto-icon" style="background:rgba(255,90,90,0.1);font-size:18px;">🦄</div>
-      <div class="proto-info">
-        <div class="proto-name">Uniswap v3</div>
-        <div class="proto-type">AMM · Узкий диапазон LP</div>
-      </div>
-      <div class="proto-apy">31.5%<span>APY</span></div>
-    </div>
-    <div class="proto-row">
-      <div class="proto-icon" style="background:rgba(56,189,248,0.1);font-size:18px;">📐</div>
-      <div class="proto-info">
-        <div class="proto-name">Pendle Finance</div>
-        <div class="proto-type">Yield tokenization</div>
-      </div>
-      <div class="proto-apy">41.0%<span>APY</span></div>
-    </div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(0,212,170,0.1)">🌊</div><div class="proto-info"><div class="proto-name">Curve Finance</div><div class="proto-type">Стейблкоин DEX · Лик. пул</div></div><div class="proto-apy">19.2%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(144,97,247,0.1)">👻</div><div class="proto-info"><div class="proto-name">AAVE v3</div><div class="proto-type">Лендинг · USDT supply</div></div><div class="proto-apy">12.8%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(245,166,35,0.1)">🔮</div><div class="proto-info"><div class="proto-name">Yearn Finance</div><div class="proto-type">Авто-стратегии · yVault</div></div><div class="proto-apy">24.1%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(255,90,90,0.1)">🦄</div><div class="proto-info"><div class="proto-name">Uniswap v3</div><div class="proto-type">AMM · Узкий диапазон LP</div></div><div class="proto-apy">31.5%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(56,189,248,0.1)">📐</div><div class="proto-info"><div class="proto-name">Pendle Finance</div><div class="proto-type">Yield tokenization</div></div><div class="proto-apy">41.0%<span>APY</span></div></div>
   </div>
 </section>
 
-<!-- SECURITY -->
 <section class="section">
-  <p class="sec-label">Безопасность</p>
-  <h2>Твои деньги не у нас</h2>
+  <p class="sec-label">Безопасность</p><h2>Твои деньги не у нас</h2>
   <div class="security-grid">
-    <div class="sec-card">
-      <div class="sec-icon">🔒</div>
-      <h4>Смарт-контракты</h4>
-      <p>Средства хранятся в аудированных on-chain контрактах, не на наших счетах.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">🛡</div>
-      <h4>Аудит кода</h4>
-      <p>Все наши смарт-контракты прошли независимый аудит безопасности.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">⚡</div>
-      <h4>Вывод в любой момент</h4>
-      <p>Забираешь деньги обратно когда хочешь — никаких локапов по умолчанию.</p>
-    </div>
-    <div class="sec-card">
-      <div class="sec-icon">👁</div>
-      <h4>Полная прозрачность</h4>
-      <p>Все транзакции видны on-chain. Мы не делаем ничего без твоего ведома.</p>
-    </div>
+    <div class="sec-card"><div class="sec-icon">🔒</div><h4>Смарт-контракты</h4><p>Средства хранятся в аудированных on-chain контрактах.</p></div>
+    <div class="sec-card"><div class="sec-icon">🛡</div><h4>Аудит кода</h4><p>Все смарт-контракты прошли независимый аудит.</p></div>
+    <div class="sec-card"><div class="sec-icon">⚡</div><h4>Вывод в любой момент</h4><p>Забираешь деньги когда хочешь — никаких локапов.</p></div>
+    <div class="sec-card"><div class="sec-icon">👁</div><h4>Полная прозрачность</h4><p>Все транзакции видны on-chain.</p></div>
   </div>
 </section>
 
-<!-- DISCLAIMER -->
 <section class="section">
-  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">
-    ⚠️ Криптовалютные инвестиции несут высокий риск. Указанные APY — исторические ориентиры, не гарантии. Вкладывай только то, что готов потерять. Это не финансовый совет.
-  </p>
+  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">⚠️ Криптовалютные инвестиции несут высокий риск. Указанные APY — исторические ориентиры, не гарантии. Вкладывай только то, что готов потерять.</p>
 </section>
 
-<!-- SPACE FOR STICKY BOTTOM -->
-<div style="height: 80px;"></div>
+<div style="height:80px"></div>
+<div class="sticky-bottom"><button class="btn-primary" onclick="openEntryModal()">Войти или зарегистрироваться →</button></div>
 
-<!-- STICKY BOTTOM -->
-<div class="sticky-bottom">
-  <button class="btn-primary" onclick="openModal()">Войти или зарегистрироваться →</button>
-</div>
-
-<script>
-  /* ── CANVAS FLOW ANIMATION ── */
-  const canvas = document.getElementById('flowCanvas');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  }
-  resizeCanvas();
-
-  const W = () => canvas.offsetWidth;
-  const H = () => canvas.offsetHeight;
-
-  const nodes = [
-    { label: 'USDT', x: 0.12, y: 0.5, color: '#00D4AA', r: 22 },
-    { label: 'ИИ', x: 0.45, y: 0.5, color: '#8B7CF8', r: 18 },
-    { label: 'AAVE', x: 0.75, y: 0.18, color: '#00D4AA', r: 13 },
-    { label: 'Curve', x: 0.82, y: 0.5, color: '#F5A623', r: 13 },
-    { label: 'Yearn', x: 0.73, y: 0.82, color: '#8B7CF8', r: 13 },
-  ];
-
-  const edges = [
-    { from: 0, to: 1 },
-    { from: 1, to: 2 },
-    { from: 1, to: 3 },
-    { from: 1, to: 4 },
-  ];
-
-  const particles = [];
-
-  for (let i = 0; i < 9; i++) {
-    const edge = edges[Math.floor(Math.random() * edges.length)];
-    particles.push({ edge, t: Math.random(), speed: 0.004 + Math.random() * 0.004 });
-  }
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
-
-  function drawFrame() {
-    const w = W(), h = H();
-    ctx.clearRect(0, 0, w, h);
-
-    edges.forEach(e => {
-      const a = nodes[e.from], b = nodes[e.to];
-      ctx.beginPath();
-      ctx.moveTo(a.x * w, a.y * h);
-      ctx.lineTo(b.x * w, b.y * h);
-      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    });
-
-    particles.forEach(p => {
-      p.t += p.speed;
-      if (p.t > 1) { p.t = 0; p.edge = edges[Math.floor(Math.random() * edges.length)]; }
-      const a = nodes[p.edge.from], b = nodes[p.edge.to];
-      const x = lerp(a.x * W(), b.x * W(), p.t);
-      const y = lerp(a.y * H(), b.y * H(), p.t);
-      ctx.beginPath();
-      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0,212,170,0.7)';
-      ctx.fill();
-    });
-
-    nodes.forEach(n => {
-      const x = n.x * w, y = n.y * h;
-      ctx.beginPath();
-      ctx.arc(x, y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(22,29,47,0.95)';
-      ctx.fill();
-      ctx.strokeStyle = n.color;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.fillStyle = n.color;
-      ctx.font = `bold ${n.r > 18 ? 12 : 9}px Space Grotesk, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(n.label, x, y);
-    });
-
-    requestAnimationFrame(drawFrame);
-  }
-  drawFrame();
-  window.addEventListener('resize', resizeCanvas);
-
-  /* ── COUNTER ANIMATION ── */
-  function animCount(el, target, prefix, suffix, duration) {
-    let start = null;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      const val = Math.round(ease * target);
-      el.textContent = prefix + val.toLocaleString('ru') + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animCount(document.getElementById('tvlNum'), 18400000, '$', '', 1500);
-        animCount(document.getElementById('apyNum'), 22, '', '%', 1200);
-        animCount(document.getElementById('protocolNum'), 14, '', '', 1000);
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-  observer.observe(document.querySelector('.stats-bar'));
-
-  /* ── SCROLL REVEAL FOR STEPS ── */
-  const stepObserver = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 100);
-      }
-    });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.step').forEach(s => stepObserver.observe(s));
-
-  /* ── STRATEGY SELECTOR ── */
-  const stratData = {
-    conservative: { label: 'Спокойная', apy: 0.11 },
-    balanced: { label: 'Сбалансированная', apy: 0.26 },
-    aggressive: { label: 'Агрессивная', apy: 0.65 },
-  };
-  let currentStrat = 'conservative';
-
-  function selectStrategy(card) {
-    document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    currentStrat = card.classList[1];
-    updateProjection();
-  }
-
-  /* ── PROJECTION CALCULATOR ── */
-  function updateProjection() {
-    const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-    const s = stratData[currentStrat];
-    const apy = s.apy;
-    const daily = amount * apy / 365;
-
-    const fmt = v => '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    document.getElementById('proj30').textContent = fmt(daily * 30);
-    document.getElementById('proj90').textContent = fmt(daily * 90);
-    document.getElementById('proj365').textContent = fmt(amount * apy);
-    document.getElementById('projStrat').textContent = s.label + ' (' + Math.round(apy * 100) + '% APY)';
-  }
-
-  document.getElementById('amountInput').addEventListener('input', updateProjection);
-  updateProjection();
-
-  function setAmount(v) {
-    document.getElementById('amountInput').value = v;
-    updateProjection();
-  }
-
-  /* ── ALLOCATION BARS ANIMATE ── */
-  const barObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        setTimeout(() => { document.getElementById('bar1').style.width = '38%'; }, 200);
-        setTimeout(() => { document.getElementById('bar2').style.width = '32%'; }, 350);
-        setTimeout(() => { document.getElementById('bar3').style.width = '20%'; }, 500);
-        setTimeout(() => { document.getElementById('bar4').style.width = '10%'; }, 650);
-        barObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.4 });
-  barObserver.observe(document.querySelector('.simulator'));
-
-  /* ── LIVE TICKER ── */
-  const tickers = [
-    { label: 'AAVE USDT', val: '12.8%' },
-    { label: 'Curve 3pool', val: '19.2%' },
-    { label: 'Yearn yUSDT', val: '24.1%' },
-    { label: 'Pendle PT', val: '41.0%' },
-    { label: 'Uniswap v3', val: '31.5%' },
-    { label: 'dYdX', val: '8.4%' },
-    { label: 'Convex CVX', val: '28.7%' },
-    { label: 'GMX GLP', val: '37.2%' },
-  ];
-  const inner = document.getElementById('tickerInner');
-  const makeItems = () => tickers.map(t =>
-    `<span class="ticker-item"><strong>${t.val}</strong>${t.label}<span class="sep">·</span></span>`
-  ).join('');
-  inner.innerHTML = makeItems() + makeItems();
-
-  /* ── LIVE PORTFOLIO COUNTER ── */
-  let baseAmount = 5147.32;
-  let baseGain = 147.32;
-  function tickLive() {
-    baseAmount += (Math.random() - 0.3) * 0.08;
-    baseGain = baseAmount - 5000;
-    const pct = ((baseGain / 5000) * 100).toFixed(2);
-    document.getElementById('liveAmount').textContent = '$' + baseAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    document.getElementById('liveGain').textContent = '+$' + baseGain.toFixed(2) + ' · +' + pct + '%';
-  }
-  setInterval(tickLive, 2000);
-
-  /* ── MODAL ── */
-  function openModal() {
-    document.getElementById('entryModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    document.getElementById('entryModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('entryModal')) closeModal();
-  }
-  function switchTab(name, btn) {
-    document.querySelectorAll('.entry-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.entry-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + name).classList.add('active');
-  }
-  function showToast(msg) {
-    const el = document.createElement('div');
-    el.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#00D4AA;color:#050a0f;padding:12px 24px;border-radius:12px;font-family:Space Grotesk,sans-serif;font-weight:700;font-size:14px;z-index:500;pointer-events:none;opacity:0;transition:opacity 0.3s;white-space:nowrap;max-width:90vw;text-align:center;';
-    el.textContent = msg;
-    document.body.appendChild(el);
-    requestAnimationFrame(() => { el.style.opacity = '1'; });
-    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, 3000);
-  }
-
-  function sendEmailNotify() {
-    const email = document.getElementById('userEmail').value.trim();
-    const name = document.getElementById('userName').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('userEmail').focus();
-      document.getElementById('userEmail').style.borderColor = '#FF5858';
-      setTimeout(() => { document.getElementById('userEmail').style.borderColor = ''; }, 2000);
-      return;
-    }
-    const to = 'CapitalAssist.app@proton.me';
-    const subject = encodeURIComponent('Новая заявка — CapitalAssist.app');
-    const body = encodeURIComponent(
-      'Новый пользователь оставил заявку на CapitalAssist.app\n\n' +
-      'Email: ' + email + '\n' +
-      (name ? 'Имя: ' + name + '\n' : '') +
-      '\nОтветь на это письмо, чтобы связаться с пользователем.'
-    );
-    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
-    closeModal();
-    setTimeout(() => { showToast('✓ Открываем почту — отправь письмо!'); }, 400);
-  }
-
-  function goToWalletSection() {
-    closeModal();
-    setTimeout(() => {
-      document.getElementById('deposit').scrollIntoView({ behavior: 'smooth' });
-    }, 300);
-  }
-
-  function fakeLogin() {
-    closeModal();
-    setTimeout(() => { showToast('✓ Добро пожаловать в CapitalAssist!'); }, 200);
-  }</script>
 <!-- ENTRY MODAL -->
-<div class="modal-overlay" id="entryModal" onclick="handleOverlayClick(event)">
+<div class="modal-overlay" id="entryModal" onclick="if(event.target===this)closeEntryModal()">
   <div class="modal-sheet">
-    <button class="sheet-close" onclick="closeModal()">×</button>
+    <button class="sheet-close" onclick="closeEntryModal()">×</button>
     <div class="sheet-handle"></div>
     <p class="sheet-title">Добро пожаловать</p>
     <p class="sheet-sub">Войди или создай аккаунт — это займёт 30 секунд</p>
-
     <div class="entry-tabs">
-      <button class="entry-tab active" onclick="switchTab('email', this)">Email</button>
-      <button class="entry-tab" onclick="switchTab('social', this)">Соцсети</button>
-      <button class="entry-tab" onclick="switchTab('wallet', this)">Кошелёк</button>
+      <button class="entry-tab active" onclick="switchTab('email',this)">Email</button>
+      <button class="entry-tab" onclick="switchTab('social',this)">Соцсети</button>
+      <button class="entry-tab" onclick="switchTab('wallet',this)">Кошелёк</button>
     </div>
-
-    <!-- EMAIL PANEL -->
     <div class="entry-panel active" id="panel-email">
-      <div class="field">
-        <label>Твой email</label>
-        <input type="email" id="userEmail" placeholder="you@example.com" inputmode="email" autocomplete="email">
-      </div>
-      <div class="field">
-        <label>Имя (необязательно)</label>
-        <input type="text" id="userName" placeholder="Как тебя зовут?" autocomplete="name">
-      </div>
-      <button class="btn-primary" style="margin-top:4px;" onclick="sendEmailNotify()">Отправить заявку →</button>
-      <p class="terms-note" style="margin-top:14px;">Мы получим твой email и свяжемся с тобой в течение дня</p>
+      <div class="field"><label>Твой email</label><input type="email" id="userEmail" placeholder="you@example.com" inputmode="email" autocomplete="email"></div>
+      <div class="field"><label>Имя (необязательно)</label><input type="text" id="userName" placeholder="Как тебя зовут?" autocomplete="name"></div>
+      <button class="btn-primary" style="margin-top:4px" onclick="sendEmailNotify()">Отправить заявку →</button>
+      <p class="terms-note" style="margin-top:14px">Мы получим твой email и свяжемся с тобой в течение дня</p>
     </div>
-
-    <!-- SOCIAL PANEL -->
     <div class="entry-panel" id="panel-social">
       <div class="social-btns">
-        <button class="social-btn" onclick="fakeLogin()">
-          <div class="social-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-          </div>
-          Продолжить через Google
-        </button>
-        <button class="social-btn" onclick="fakeLogin()">
-          <div class="social-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
-              <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796v8.437C19.612 23.097 24 18.1 24 12.073z"/>
-            </svg>
-          </div>
-          Продолжить через Facebook
-        </button>
-        <button class="social-btn" onclick="fakeLogin()">
-          <div class="social-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--white)">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </div>
-          Продолжить через X (Twitter)
-        </button>
-        <button class="social-btn" onclick="fakeLogin()">
-          <div class="social-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24">
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--white)"/>
-            </svg>
-          </div>
-          Продолжить через GitHub
-        </button>
+        <button class="social-btn" onclick="goToDashboard()"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>Продолжить через Google</button>
+        <button class="social-btn" onclick="goToDashboard()"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796v8.437C19.612 23.097 24 18.1 24 12.073z"/></svg></div>Продолжить через Facebook</button>
+        <button class="social-btn" onclick="goToDashboard()"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--white)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>Продолжить через X</button>
+        <button class="social-btn" onclick="goToDashboard()"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--white)"/></svg></div>Продолжить через GitHub</button>
       </div>
       <p class="terms-note">Мы не постим ничего без твоего разрешения</p>
     </div>
-
-    <!-- WALLET PANEL -->
     <div class="entry-panel" id="panel-wallet">
-      <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px;">
-        Подключи свой крипто-кошелёк напрямую — без регистрации и паролей. Твои ключи остаются у тебя.
-      </p>
-      <button class="btn-primary" onclick="goToWalletSection()">
-        Подключить кошелёк →
-      </button>
-      <p class="terms-note" style="margin-top:14px;">Поддерживаем MetaMask, WalletConnect, Coinbase и другие</p>
+      <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">Подключи свой крипто-кошелёк напрямую — без регистрации и паролей. Твои ключи остаются у тебя.</p>
+      <button class="btn-primary" onclick="closeEntryModal();document.getElementById('deposit').scrollIntoView({behavior:'smooth'})">Подключить кошелёк →</button>
+      <p class="terms-note" style="margin-top:14px">Поддерживаем MetaMask, WalletConnect, Coinbase и другие</p>
     </div>
-
-    <p class="terms-note" style="margin-top:20px;">
-      Продолжая, ты соглашаешься с <a href="#">Условиями</a> и <a href="#">Политикой конфиденциальности</a>
-    </p>
+    <p class="terms-note" style="margin-top:20px">Продолжая, ты соглашаешься с <a href="#">Условиями</a> и <a href="#">Политикой конфиденциальности</a></p>
   </div>
 </div>
 
-<!-- SUCCESS TIMER MODAL -->
+<!-- SUCCESS TIMER -->
 <div class="success-overlay" id="successModal">
   <div class="success-sheet">
-    <div class="sheet-handle" style="margin-bottom:8px;"></div>
+    <div class="sheet-handle" style="margin-bottom:8px"></div>
     <div class="success-icon">✉️</div>
-    <p class="sheet-title" style="text-align:center;">Письмо готово!</p>
-    <p class="sheet-sub" style="text-align:center;">Открой почту и нажми «Отправить» — даём тебе 30 секунд</p>
-    <div class="timer-ring-wrap">
-      <svg width="100" height="100" class="timer-ring">
-        <circle class="timer-circle-bg" cx="50" cy="50" r="42"/>
-        <circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="42"
-          stroke-dasharray="264" stroke-dashoffset="0"/>
-        <text class="timer-text" id="timerText" x="50" y="50" transform="rotate(90,50,50)">30</text>
-      </svg>
-    </div>
-    <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6;">
-      Вернись сюда после отправки — мы покажем следующий шаг
-    </p>
+    <p class="sheet-title" style="text-align:center">Письмо готово!</p>
+    <p class="sheet-sub" style="text-align:center">Открой почту и нажми «Отправить» — даём тебе 30 секунд</p>
+    <div class="timer-ring-wrap"><svg width="100" height="100" class="timer-ring"><circle class="timer-circle-bg" cx="50" cy="50" r="42"/><circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="0"/><text class="timer-text" id="timerText" x="50" y="50" transform="rotate(90,50,50)">30</text></svg></div>
+    <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">Вернись сюда после отправки — мы покажем следующий шаг</p>
   </div>
 </div>
 
-<!-- DEPOSIT MANUAL MODAL -->
-<div class="deposit-overlay" id="depositModal">
+<!-- DEPOSIT ADDR MODAL -->
+<div class="deposit-overlay" id="depositAddrModal">
   <div class="deposit-sheet">
-    <button class="sheet-close" onclick="closeDepositModal()">×</button>
-    <div class="sheet-handle" style="margin-bottom:16px;"></div>
+    <button class="sheet-close" onclick="document.getElementById('depositAddrModal').classList.remove('open')">×</button>
+    <div class="sheet-handle" style="margin-bottom:16px"></div>
     <p class="sheet-title">🎉 Отлично, всё прошло чётко!</p>
     <p class="sheet-sub">Теперь пополни баланс — переведи USDT на наш адрес</p>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase;">Выбери сеть</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase">Выбери сеть</p>
     <div class="network-chips">
-      <div class="net-chip active" onclick="selectNet(this,'TRC-20','TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
-      <div class="net-chip" onclick="selectNet(this,'ERC-20','0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
-      <div class="net-chip" onclick="selectNet(this,'BEP-20','bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
+      <div class="net-chip active" onclick="selectNet(this,'TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
+      <div class="net-chip" onclick="selectNet(this,'0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
+      <div class="net-chip" onclick="selectNet(this,'bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
     </div>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase;">Адрес кошелька</p>
-    <div class="usdt-address-box">
-      <span class="usdt-address" id="walletAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span>
-      <button class="copy-btn" onclick="copyAddr()">Копировать</button>
-    </div>
+    <div class="usdt-address-box"><span class="usdt-address" id="walletAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyLandingAddr()">Копировать</button></div>
     <div class="deposit-steps">
       <div class="dep-step"><div class="dep-step-n">1</div><span>Открой свой кошелёк (Binance, Bybit, TrustWallet и т.д.)</span></div>
       <div class="dep-step"><div class="dep-step-n">2</div><span>Выбери «Отправить USDT» и вставь адрес выше</span></div>
       <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $10 USDT</span></div>
       <div class="dep-step"><div class="dep-step-n">4</div><span>После зачисления ИИ автоматически начнёт работу</span></div>
     </div>
-    <button class="btn-primary" onclick="closeDepositModal()">Понятно, иду переводить →</button>
-    <p class="terms-note" style="margin-top:14px;">Зачисление обычно занимает 1–5 минут</p>
+    <button class="btn-primary" onclick="goToDashboard()">Понятно, иду переводить →</button>
+    <p class="terms-note" style="margin-top:14px">Зачисление обычно занимает 1–5 минут</p>
   </div>
 </div>
 
+</div><!-- /page-landing -->
+
+
+<!-- ═══════════════════════════════════════════
+     DASHBOARD PAGE
+═══════════════════════════════════════════ -->
+<div id="page-dashboard">
+
+<nav id="nav-dashboard">
+  <div class="brand">Capital<span>Assist</span><small>.app</small></div>
+  <button class="logout-btn" onclick="confirmLogout()"><span>⎋</span> Выйти</button>
+</nav>
+
+<div class="greeting"><p class="greeting-line">Добро пожаловать обратно</p><h1>Твой кабинет 👋</h1></div>
+
+<div class="balance-hero">
+  <span class="bal-label">Общий баланс</span>
+  <div class="bal-amount"><span class="currency">$</span><span id="totalBal">8 000.00</span></div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
+    <span class="bal-gain" id="totalGain">+$147.32 за сегодня</span>
+    <span class="live-badge">LIVE</span>
+  </div>
+  <div class="bal-actions">
+    <button class="bal-btn deposit" onclick="openDashDeposit()">+ Пополнить</button>
+    <button class="bal-btn withdraw" onclick="openDashWithdraw()">↑ Вывести</button>
+  </div>
+</div>
+
+<div class="dash-stats">
+  <div class="stat-mini"><span class="num" style="color:var(--teal)">22.4%</span><span class="lbl">Текущий APY</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--amber)" id="earnedStat">$147</span><span class="lbl">Заработано</span></div>
+  <div class="stat-mini"><span class="num">7</span><span class="lbl">Дней в работе</span></div>
+</div>
+
+<div class="sect">
+  <div class="sect-head"><span class="sect-title">График дохода</span><span class="live-badge">обновляется</span></div>
+  <div class="chart-wrap">
+    <div class="chart-period">
+      <button class="period-btn active" onclick="setPeriod(this,'7d')">7 дн</button>
+      <button class="period-btn" onclick="setPeriod(this,'1m')">1 мес</button>
+      <button class="period-btn" onclick="setPeriod(this,'3m')">3 мес</button>
+      <button class="period-btn" onclick="setPeriod(this,'all')">Всё</button>
+    </div>
+    <canvas id="incomeChart" height="140" style="width:100%;display:block"></canvas>
+  </div>
+</div>
+
+<div class="sect">
+  <div class="sect-head"><span class="sect-title">Куда вложены деньги</span><span class="sect-link" onclick="openDashActions()">Управлять →</span></div>
+  <div class="alloc-card">
+    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','3 040','Стейблкоин DEX — ликвидный пул 3pool. Минимальный риск, стабильный доход от торговых комиссий.','var(--teal)')"><div class="alloc-dot" style="background:var(--teal)"></div><div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Лик. пул · 3pool</div></div><div class="alloc-right"><div class="alloc-val">$3 040</div><div class="alloc-apy">19.2% APY</div></div></div>
+    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','2 560','Крупнейший протокол лендинга. Ты даёшь USDT в долг под процент — смарт-контракт следит за обеспечением.','var(--amber)')"><div class="alloc-dot" style="background:var(--amber)"></div><div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Лендинг · USDT supply</div></div><div class="alloc-right"><div class="alloc-val">$2 560</div><div class="alloc-apy">12.8% APY</div></div></div>
+    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','1 600','Автоматические стратегии: Yearn сам ищет лучшую доходность внутри DeFi и реинвестирует прибыль.','var(--purple)')"><div class="alloc-dot" style="background:var(--purple)"></div><div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Авто-стратегии · yUSDT</div></div><div class="alloc-right"><div class="alloc-val">$1 600</div><div class="alloc-apy">24.1% APY</div></div></div>
+    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','800','Узкий диапазон LP: ты предоставляешь ликвидность и зарабатываешь на комиссиях трейдеров.','#FF7A50')"><div class="alloc-dot" style="background:#FF7A50"></div><div class="alloc-info"><div class="alloc-name">Uniswap v3</div><div class="alloc-meta">AMM · LP USDT/USDC</div></div><div class="alloc-right"><div class="alloc-val">$800</div><div class="alloc-apy">31.5% APY</div></div></div>
+    <div class="pie-row">
+      <canvas id="pieChart" width="80" height="80"></canvas>
+      <div class="pie-legend">
+        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--teal)"></div>Curve — 38%</div>
+        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--amber)"></div>AAVE — 32%</div>
+        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--purple)"></div>Yearn — 20%</div>
+        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:#FF7A50"></div>Uniswap — 10%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <div class="sect-head"><span class="sect-title">Стратегия</span><span class="live-badge">активна</span></div>
+  <div class="strat-toggle">
+    <button class="strat-opt c" onclick="setStrat(this,'c')">Спокойная</button>
+    <button class="strat-opt b active" onclick="setStrat(this,'b')">Баланс</button>
+    <button class="strat-opt r" onclick="setStrat(this,'r')">Агрессив</button>
+  </div>
+  <div class="strat-info">
+    <div class="strat-info-head"><span class="strat-info-title" id="stratName">Сбалансированная</span><span class="apy-tag" id="stratApy" style="color:var(--amber)">18–35%</span></div>
+    <div class="strat-info-body">
+      <p class="strat-desc-text" id="stratDesc">Сочетание лендинга и ликвидных пулов DEX. ИИ перекладывает между протоколами каждые несколько минут — там, где выгоднее прямо сейчас.</p>
+      <div class="strat-protocols" id="stratProtos"><span class="proto-chip">Curve</span><span class="proto-chip">Uniswap v3</span><span class="proto-chip">Yearn</span><span class="proto-chip">AAVE</span></div>
+      <div class="risk-bar" id="riskBar"><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip"></div><div class="risk-pip"></div><span class="risk-label-text">Умеренный риск</span></div>
+      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">Применить стратегию →</button>
+    </div>
+  </div>
+</div>
+
+<div class="sect">
+  <div class="sect-head"><span class="sect-title">Последние операции</span></div>
+  <div class="activity-list" id="activityList"></div>
+</div>
+<div style="height:20px"></div>
+
+<!-- DASHBOARD BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active"><span class="nav-icon">📊</span><span>Портфель</span></div>
+  <div class="nav-item" onclick="openDashActions()"><span class="nav-icon">⚡</span><span>Управление</span></div>
+  <div class="nav-item"><span class="nav-icon">📈</span><span>Рынок</span></div>
+  <div class="nav-item"><span class="nav-icon">⚙️</span><span>Настройки</span></div>
+</div>
+
+<!-- DASHBOARD MODALS -->
+<div class="modal-bg" id="dashDepositModal" onclick="if(event.target===this)document.getElementById('dashDepositModal').classList.remove('open')">
+  <div class="bottom-sheet">
+    <button class="sheet-close" onclick="document.getElementById('dashDepositModal').classList.remove('open')">×</button>
+    <div class="sheet-handle"></div>
+    <p class="sheet-title">Пополнить баланс</p>
+    <p class="sheet-sub">Переведи USDT на адрес ниже — зачислится автоматически</p>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase">Сеть</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <div class="net-c active" onclick="setDashNet(this,'TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
+      <div class="net-c" onclick="setDashNet(this,'0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
+      <div class="net-c" onclick="setDashNet(this,'bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
+    </div>
+    <div class="addr-box"><span class="addr-text" id="dashDepAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyDashAddr()">Копировать</button></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Минимум</span><span style="font-weight:600">$10 USDT</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Зачисление</span><span style="font-weight:600;color:var(--teal)">1–5 минут</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Комиссия</span><span style="font-weight:600">0%</span></div>
+    </div>
+    <button class="apply-btn" onclick="document.getElementById('dashDepositModal').classList.remove('open')">Всё понятно →</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="dashWithdrawModal" onclick="if(event.target===this)document.getElementById('dashWithdrawModal').classList.remove('open')">
+  <div class="bottom-sheet">
+    <button class="sheet-close" onclick="document.getElementById('dashWithdrawModal').classList.remove('open')">×</button>
+    <div class="sheet-handle"></div>
+    <p class="sheet-title">Вывести средства</p>
+    <p class="sheet-sub">Деньги придут на твой кошелёк в течение 5 минут</p>
+    <div class="field"><div class="field-head"><label>Сумма USDT</label><span class="max-tag" onclick="document.getElementById('wdAmount').value='8000'">MAX $8 000</span></div><input type="number" id="wdAmount" placeholder="0" inputmode="decimal"></div>
+    <div class="field"><label>Адрес кошелька получателя</label><input type="text" id="wdAddr" placeholder="TRC-20 / ERC-20 адрес"></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:18px;padding:12px;background:var(--navy2);border-radius:10px"><span style="color:var(--muted)">Комиссия сети</span><span style="color:var(--amber);font-weight:600">~$1.00</span></div>
+    <button class="apply-btn" onclick="doWithdraw()">Вывести →</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="protoModal" onclick="if(event.target===this)document.getElementById('protoModal').classList.remove('open')">
+  <div class="bottom-sheet">
+    <button class="sheet-close" onclick="document.getElementById('protoModal').classList.remove('open')">×</button>
+    <div class="sheet-handle"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <p class="sheet-title" id="protoName">Curve Finance</p>
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700" id="protoApyBig"></span>
+    </div>
+    <p class="sheet-sub" id="protoDesc"></p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px" id="protoStats"></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--navy2);border-radius:10px;margin-bottom:16px"><span style="font-size:18px">🔍</span><span style="font-size:12px;color:var(--muted2)">Данные из открытых источников: DefiLlama, Dune Analytics, on-chain данные блокчейна</span></div>
+    <button class="apply-btn" onclick="document.getElementById('protoModal').classList.remove('open')">Понятно →</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="actionsModal" onclick="if(event.target===this)document.getElementById('actionsModal').classList.remove('open')">
+  <div class="bottom-sheet">
+    <button class="sheet-close" onclick="document.getElementById('actionsModal').classList.remove('open')">×</button>
+    <div class="sheet-handle"></div>
+    <p class="sheet-title">Управление</p>
+    <p class="sheet-sub">Что хочешь сделать?</p>
+    <div class="action-items">
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashDeposit()"><div class="action-icon" style="background:var(--teal-faint)">💰</div><div><div class="action-title">Пополнить баланс</div><div class="action-desc">Добавить USDT на счёт</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashWithdraw()"><div class="action-icon" style="background:var(--amber-faint)">📤</div><div><div class="action-title">Вывести средства</div><div class="action-desc">Забрать деньги на кошелёк</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open')"><div class="action-icon" style="background:var(--purple-faint)">🎯</div><div><div class="action-title">Сменить стратегию</div><div class="action-desc">Спокойная / Баланс / Агрессив</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');setTimeout(()=>showToast('🔄 $147.32 реинвестированы в Curve Finance'),200)"><div class="action-icon" style="background:var(--teal-faint)">🔄</div><div><div class="action-title">Реинвестировать доход</div><div class="action-desc">Запустить накопленные $147 в работу</div></div><span class="action-arrow">›</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="logoutModal" onclick="if(event.target===this)document.getElementById('logoutModal').classList.remove('open')">
+  <div class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <p class="sheet-title">Выйти из аккаунта?</p>
+    <p class="sheet-sub" style="margin-bottom:24px">Деньги продолжат работать — можешь зайти обратно в любой момент</p>
+    <button class="apply-btn" style="background:var(--red);margin-bottom:10px" onclick="doLogout()">Да, выйти</button>
+    <button class="apply-btn" style="background:var(--card2);color:var(--muted2)" onclick="document.getElementById('logoutModal').classList.remove('open')">Остаться</button>
+  </div>
+</div>
+
+</div><!-- /page-dashboard -->
+
+
 <script>
-  /* ── AMBIENT ORBS ── */
-  for (let i = 0; i < 4; i++) {
-    const orb = document.createElement('div');
-    orb.className = 'orb';
-    const size = 120 + Math.random() * 180;
-    orb.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*90}%;background:${Math.random()>0.5?'#00D4AA':'#8B7CF8'};animation-duration:${14+Math.random()*12}s;animation-delay:${Math.random()*10}s;`;
-    document.body.appendChild(orb);
+/* ════════════════════════════════
+   PAGE SWITCHING
+════════════════════════════════ */
+function goToDashboard() {
+  closeEntryModal();
+  document.getElementById('depositAddrModal').classList.remove('open');
+  document.getElementById('page-landing').classList.add('hidden');
+  const dash = document.getElementById('page-dashboard');
+  dash.classList.add('active');
+  window.scrollTo(0,0);
+  initDashboard();
+}
+function goToLanding() {
+  document.getElementById('page-dashboard').classList.remove('active');
+  document.getElementById('page-landing').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+/* ════════════════════════════════
+   LANDING JS
+════════════════════════════════ */
+/* Flow canvas */
+const canvas = document.getElementById('flowCanvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=canvas.offsetHeight*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio)}
+resizeCanvas();
+const nodes=[{label:'USDT',x:.12,y:.5,color:'#00D4AA',r:22},{label:'ИИ',x:.45,y:.5,color:'#8B7CF8',r:18},{label:'AAVE',x:.75,y:.18,color:'#00D4AA',r:13},{label:'Curve',x:.82,y:.5,color:'#F5A623',r:13},{label:'Yearn',x:.73,y:.82,color:'#8B7CF8',r:13}];
+const edges=[{from:0,to:1},{from:1,to:2},{from:1,to:3},{from:1,to:4}];
+const particles=[];
+for(let i=0;i<9;i++){const e=edges[Math.floor(Math.random()*edges.length)];particles.push({edge:e,t:Math.random(),speed:.004+Math.random()*.004})}
+function lerp(a,b,t){return a+(b-a)*t}
+function drawFrame(){
+  const w=canvas.offsetWidth,h=canvas.offsetHeight;
+  ctx.clearRect(0,0,w,h);
+  edges.forEach(e=>{const a=nodes[e.from],b=nodes[e.to];ctx.beginPath();ctx.moveTo(a.x*w,a.y*h);ctx.lineTo(b.x*w,b.y*h);ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=1;ctx.stroke()});
+  particles.forEach(p=>{p.t+=p.speed;if(p.t>1){p.t=0;p.edge=edges[Math.floor(Math.random()*edges.length)]}const a=nodes[p.edge.from],b=nodes[p.edge.to];const x=lerp(a.x*w,b.x*w,p.t),y=lerp(a.y*h,b.y*h,p.t);ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle='rgba(0,212,170,0.7)';ctx.fill()});
+  nodes.forEach(n=>{const x=n.x*w,y=n.y*h;ctx.beginPath();ctx.arc(x,y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(22,29,47,0.95)';ctx.fill();ctx.strokeStyle=n.color;ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle=n.color;ctx.font=`bold ${n.r>18?12:9}px Space Grotesk,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(n.label,x,y)});
+  requestAnimationFrame(drawFrame)
+}
+drawFrame();
+window.addEventListener('resize',resizeCanvas);
+
+/* Stats counter */
+function animCount(el,target,prefix,suffix,dur){let s=null;const step=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/dur,1),ease=1-Math.pow(1-p,3);el.textContent=prefix+Math.round(ease*target).toLocaleString('ru')+suffix;if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+const obsStats=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animCount(document.getElementById('tvlNum'),18400000,'$','',1500);animCount(document.getElementById('apyNum'),22,'','%',1200);animCount(document.getElementById('protocolNum'),14,'','',1000);obsStats.disconnect()}})},{threshold:.3});
+obsStats.observe(document.querySelector('.stats-bar'));
+
+/* Step reveal */
+const stepObs=new IntersectionObserver(e=>{e.forEach((x,i)=>{if(x.isIntersecting)setTimeout(()=>x.target.classList.add('visible'),i*100)})},{threshold:.2});
+document.querySelectorAll('.step').forEach(s=>stepObs.observe(s));
+
+/* Scroll reveal */
+const revealEls=document.querySelectorAll('#page-landing .section,#page-landing .stats-bar,#page-landing .ticker-wrap,#page-landing .simulator,#page-landing .amount-section,#page-landing .security-grid,#page-landing .strategies');
+revealEls.forEach(el=>el.classList.add('reveal'));
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');ro.unobserve(x.target)}})},{threshold:.08});
+revealEls.forEach(el=>ro.observe(el));
+
+/* Shimmer */
+document.querySelectorAll('.strategy-card,.simulator,.amount-section').forEach(c=>{const s=document.createElement('div');s.className='card-shine';c.appendChild(s)});
+
+/* Orbs */
+for(let i=0;i<4;i++){const orb=document.createElement('div');orb.className='orb';const size=120+Math.random()*180;orb.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*90}%;background:${Math.random()>.5?'#00D4AA':'#8B7CF8'};animation-duration:${14+Math.random()*12}s;animation-delay:${Math.random()*10}s;`;document.body.appendChild(orb)}
+
+/* Strategy selector */
+const stratDataLand={conservative:{label:'Спокойная',apy:.11},balanced:{label:'Сбалансированная',apy:.26},aggressive:{label:'Агрессивная',apy:.65}};
+let currentStratLand='conservative';
+function selectStrategy(card){document.querySelectorAll('.strategy-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');currentStratLand=card.classList[1];updateProjection()}
+function updateProjection(){const amount=parseFloat(document.getElementById('amountInput').value)||0,s=stratDataLand[currentStratLand],apy=s.apy,daily=amount*apy/365,fmt=v=>'$'+v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,' ');document.getElementById('proj30').textContent=fmt(daily*30);document.getElementById('proj90').textContent=fmt(daily*90);document.getElementById('proj365').textContent=fmt(amount*apy);document.getElementById('projStrat').textContent=s.label+' ('+Math.round(apy*100)+'% APY)'}
+document.getElementById('amountInput').addEventListener('input',updateProjection);
+function setAmount(v){document.getElementById('amountInput').value=v;updateProjection()}
+updateProjection();
+
+/* Bar animation */
+const barObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){setTimeout(()=>{document.getElementById('bar1').style.width='38%'},200);setTimeout(()=>{document.getElementById('bar2').style.width='32%'},350);setTimeout(()=>{document.getElementById('bar3').style.width='20%'},500);setTimeout(()=>{document.getElementById('bar4').style.width='10%'},650);barObs.disconnect()}})},{threshold:.4});
+barObs.observe(document.querySelector('.simulator'));
+
+/* Live demo */
+let demoAmt=5147.32,demoGain=147.32;
+function tickDemo(){demoAmt+=(Math.random()-.3)*.08;demoGain=demoAmt-5000;const pct=((demoGain/5000)*100).toFixed(2);document.getElementById('liveAmount').textContent='$'+demoAmt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,' ');document.getElementById('liveGain').textContent='+$'+demoGain.toFixed(2)+' · +'+pct+'%'}
+setInterval(tickDemo,2000);
+
+/* Ticker */
+const tickers=[{label:'AAVE USDT',val:'12.8%'},{label:'Curve 3pool',val:'19.2%'},{label:'Yearn yUSDT',val:'24.1%'},{label:'Pendle PT',val:'41.0%'},{label:'Uniswap v3',val:'31.5%'},{label:'dYdX',val:'8.4%'},{label:'Convex CVX',val:'28.7%'},{label:'GMX GLP',val:'37.2%'}];
+const inner=document.getElementById('tickerInner');
+const makeItems=()=>tickers.map(t=>`<span class="ticker-item"><strong>${t.val}</strong>${t.label}<span style="color:var(--border)">·</span></span>`).join('');
+inner.innerHTML=makeItems()+makeItems();
+
+/* Entry modal */
+function openEntryModal(){document.getElementById('entryModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeEntryModal(){document.getElementById('entryModal').classList.remove('open');document.body.style.overflow=''}
+function switchTab(name,btn){document.querySelectorAll('.entry-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.entry-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+name).classList.add('active')}
+
+/* Email send */
+let timerInterval=null;
+function sendEmailNotify(){
+  const email=document.getElementById('userEmail').value.trim();
+  const name=document.getElementById('userName').value.trim();
+  if(!email||!email.includes('@')){document.getElementById('userEmail').focus();document.getElementById('userEmail').style.borderColor='#FF5858';setTimeout(()=>{document.getElementById('userEmail').style.borderColor=''},2000);return}
+  const to='CapitalAssist.app@proton.me';
+  const subject=encodeURIComponent('Новая заявка — CapitalAssist.app');
+  const body=encodeURIComponent('Новый пользователь оставил заявку\n\nEmail: '+email+'\n'+(name?'Имя: '+name+'\n':'')+'\nОтветь чтобы связаться.');
+  window.location.href='mailto:'+to+'?subject='+subject+'&body='+body;
+  closeEntryModal();
+  setTimeout(()=>startTimer(),600);
+}
+
+function startTimer(){
+  document.getElementById('successModal').classList.add('open');
+  let secs=30;
+  const circle=document.getElementById('timerCircle'),text=document.getElementById('timerText');
+  circle.style.strokeDashoffset='0';text.textContent='30';
+  timerInterval=setInterval(()=>{
+    secs--;text.textContent=secs;
+    circle.style.strokeDashoffset=((30-secs)/30*264).toFixed(1);
+    if(secs<=0){clearInterval(timerInterval);document.getElementById('successModal').classList.remove('open');setTimeout(()=>document.getElementById('depositAddrModal').classList.add('open'),300)}
+  },1000);
+}
+
+function selectNet(el,addr){document.querySelectorAll('.net-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('walletAddr').textContent=addr}
+function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('.copy-btn');b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2000)}
+
+/* ════════════════════════════════
+   DASHBOARD JS
+════════════════════════════════ */
+let dashInited=false;
+function initDashboard(){
+  if(dashInited)return; dashInited=true;
+
+  /* Activity */
+  const acts=[{icon:'🔄',name:'ИИ переложил в Yearn',time:'2 мин назад',amount:null,label:'+24.1% APY',cls:'move'},{icon:'💹',name:'Доход начислен',time:'15 мин назад',amount:'+$3.47',cls:'plus'},{icon:'🔄',name:'ИИ переложил в Curve',time:'1 час назад',amount:null,label:'+19.2% APY',cls:'move'},{icon:'💹',name:'Доход начислен',time:'3 часа назад',amount:'+$12.80',cls:'plus'},{icon:'📥',name:'Пополнение USDT',time:'7 дней назад',amount:'+$8 000',cls:'plus'}];
+  const al=document.getElementById('activityList');
+  acts.forEach(a=>{al.innerHTML+=`<div class="act-item"><div class="act-icon" style="background:var(--card2)">${a.icon}</div><div class="act-info"><div class="act-name">${a.name}</div><div class="act-time">${a.time}</div></div><div class="act-amount ${a.cls}">${a.amount||a.label}</div></div>`});
+
+  /* Pie */
+  const pie=document.getElementById('pieChart'),pc=pie.getContext('2d');
+  const slices=[{pct:.38,color:'#00D4AA'},{pct:.32,color:'#F5A623'},{pct:.20,color:'#8B7CF8'},{pct:.10,color:'#FF7A50'}];
+  let sa=-Math.PI/2;
+  slices.forEach(s=>{const end=sa+s.pct*Math.PI*2;pc.beginPath();pc.moveTo(40,40);pc.arc(40,40,36,sa,end);pc.closePath();pc.fillStyle=s.color;pc.fill();sa=end});
+  pc.beginPath();pc.arc(40,40,22,0,Math.PI*2);pc.fillStyle='#161D2F';pc.fill();
+
+  /* Chart */
+  const datasets={'7d':[8000,8018,8031,8055,8089,8118,8147],'1m':[7800,7870,7940,8000,8050,8090,8147],'3m':[7200,7400,7600,7750,7900,8050,8147],'all':[6000,6800,7200,7600,7900,8100,8147]};
+  let curPeriod='7d';
+  window.setPeriod=function(btn,key){curPeriod=key;document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');drawChart(key)};
+  function drawChart(key){
+    const canvas=document.getElementById('incomeChart');
+    canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=140*devicePixelRatio;
+    const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
+    const W=canvas.offsetWidth,H=140,data=datasets[key];
+    const min=Math.min(...data)-50,max=Math.max(...data)+50;
+    const pts=data.map((v,i)=>({x:i/(data.length-1)*(W-20)+10,y:H-((v-min)/(max-min))*(H-20)-10}));
+    ctx.clearRect(0,0,W,H);
+    const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'rgba(0,212,170,0.18)');grad.addColorStop(1,'rgba(0,212,170,0)');
+    ctx.beginPath();ctx.moveTo(pts[0].x,H);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+    ctx.beginPath();pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#00D4AA';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+    pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle='#00D4AA';ctx.fill()});
+    const last=pts[pts.length-1];ctx.fillStyle='#00D4AA';ctx.font='bold 11px Space Grotesk,sans-serif';ctx.textAlign='right';ctx.fillText('$'+data[data.length-1].toLocaleString('ru'),last.x+2,last.y-8);
   }
+  drawChart('7d');
+  window.addEventListener('resize',()=>drawChart(curPeriod));
 
-  /* ── UNIVERSAL SCROLL REVEAL ── */
-  const revealAll = document.querySelectorAll('.section, .stats-bar, .ticker-wrap, .simulator, .amount-section, .security-grid, .strategies');
-  revealAll.forEach(el => el.classList.add('reveal'));
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  revealAll.forEach(el => ro.observe(el));
+  /* Live balance */
+  let bal=8000,gained=147.32;
+  function tickBal(){bal+=Math.random()*.06;gained+=Math.random()*.06;document.getElementById('totalBal').textContent=bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,' ');document.getElementById('totalGain').textContent='+$'+gained.toFixed(2)+' за сегодня';document.getElementById('earnedStat').textContent='$'+Math.round(gained)}
+  setInterval(tickBal,2500);
+}
 
-  /* ── CARD SHIMMER ── */
-  document.querySelectorAll('.strategy-card, .simulator, .amount-section').forEach(c => {
-    const shine = document.createElement('div');
-    shine.className = 'card-shine';
-    c.appendChild(shine);
-  });
+/* Strategy */
+const strats={c:{name:'Спокойная',apy:'8–14%',color:'var(--teal)',desc:'Только проверенные протоколы — AAVE и Compound. Минимальная волатильность.',protos:['AAVE','Compound','dYdX'],risk:1,rl:'Очень низкий'},b:{name:'Сбалансированная',apy:'18–35%',color:'var(--amber)',desc:'Сочетание лендинга и пулов DEX. ИИ перекладывает туда, где выгоднее прямо сейчас.',protos:['Curve','Uniswap v3','Yearn','AAVE'],risk:3,rl:'Умеренный'},r:{name:'Агрессивная',apy:'40–90%',color:'var(--red)',desc:'Фарминг новых пулов, высокорисковый стейкинг. Высокая доходность и просадка.',protos:['Pendle','Convex','GMX','Eigenlayer'],risk:5,rl:'Высокий'}};
+let currentStrat='b';
+function setStrat(btn,key){currentStrat=key;document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const s=strats[key];document.getElementById('stratName').textContent=s.name;document.getElementById('stratApy').textContent=s.apy;document.getElementById('stratApy').style.color=s.color;document.getElementById('stratDesc').textContent=s.desc;const pp=document.getElementById('stratProtos');pp.innerHTML=s.protos.map(p=>`<span class="proto-chip">${p}</span>`).join('');const rb=document.getElementById('riskBar');rb.innerHTML='';for(let i=0;i<5;i++){const d=document.createElement('div');d.className='risk-pip';if(i<s.risk)d.style.background=s.color;rb.appendChild(d)}const lbl=document.createElement('span');lbl.className='risk-label-text';lbl.textContent=s.rl+' риск';rb.appendChild(lbl);document.getElementById('applyBtn').style.background=s.color==='var(--red)'?'#FF5858':s.color==='var(--amber)'?'#F5A623':'#00D4AA'}
+function applyStrategy(){showToast('✓ Стратегия «'+strats[currentStrat].name+'» применена')}
 
-  /* ── TIMER STATE ── */
-  let timerInterval = null;
+/* Protocol info */
+function openProto(name,apy,amount,desc,color){document.getElementById('protoName').textContent=name;document.getElementById('protoApyBig').textContent=apy+'%';document.getElementById('protoApyBig').style.color=color;document.getElementById('protoDesc').textContent=desc;document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Вложено</span><span style="font-size:13px;font-weight:700">$${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">TVL протокола</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Аудит</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Пройден</span></div>`;document.getElementById('protoModal').classList.add('open')}
 
-  function startTimer() {
-    document.getElementById('successModal').classList.add('open');
-    let secs = 30;
-    const circle = document.getElementById('timerCircle');
-    const text = document.getElementById('timerText');
-    const circumference = 264;
-    circle.style.strokeDashoffset = '0';
-    text.textContent = '30';
+/* Dashboard modals */
+function openDashDeposit(){document.getElementById('dashDepositModal').classList.add('open')}
+function openDashWithdraw(){document.getElementById('dashWithdrawModal').classList.add('open')}
+function openDashActions(){document.getElementById('actionsModal').classList.add('open')}
+function setDashNet(el,addr){document.querySelectorAll('#dashDepositModal .net-c').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('dashDepAddr').textContent=addr}
+function copyDashAddr(){navigator.clipboard.writeText(document.getElementById('dashDepAddr').textContent).catch(()=>{});const b=document.querySelector('#dashDepositModal .copy-btn');b.textContent='✓ Готово';setTimeout(()=>b.textContent='Копировать',2000)}
+function doWithdraw(){const amt=document.getElementById('wdAmount').value,addr=document.getElementById('wdAddr').value;if(!amt||parseFloat(amt)<=0){document.getElementById('wdAmount').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);return}if(!addr){document.getElementById('wdAddr').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAddr').style.borderColor='',2000);return}document.getElementById('dashWithdrawModal').classList.remove('open');setTimeout(()=>showToast('📤 Запрос на вывод $'+parseFloat(amt).toFixed(2)+' отправлен'),300)}
+function confirmLogout(){document.getElementById('logoutModal').classList.add('open')}
+function doLogout(){document.getElementById('logoutModal').classList.remove('open');setTimeout(()=>goToLanding(),400)}
 
-    timerInterval = setInterval(() => {
-      secs--;
-      text.textContent = secs;
-      circle.style.strokeDashoffset = ((30 - secs) / 30 * circumference).toFixed(1);
-      if (secs <= 0) {
-        clearInterval(timerInterval);
-        document.getElementById('successModal').classList.remove('open');
-        setTimeout(() => {
-          document.getElementById('depositModal').classList.add('open');
-        }, 300);
-      }
-    }, 1000);
-  }
-
-  function closeDepositModal() {
-    document.getElementById('depositModal').classList.remove('open');
-  }
-
-  function selectNet(el, net, addr) {
-    document.querySelectorAll('.net-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('walletAddr').textContent = addr;
-  }
-
-  function copyAddr() {
-    const addr = document.getElementById('walletAddr').textContent;
-    navigator.clipboard.writeText(addr).catch(() => {});
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✓ Скопировано';
-    setTimeout(() => { btn.textContent = 'Копировать'; }, 2000);
-  }
-
-  /* ── PATCH sendEmailNotify to trigger timer ── */
-  const _origSend = sendEmailNotify;
-  window.sendEmailNotify = function() {
-    const email = document.getElementById('userEmail').value.trim();
-    const name = document.getElementById('userName').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('userEmail').focus();
-      document.getElementById('userEmail').style.borderColor = '#FF5858';
-      setTimeout(() => { document.getElementById('userEmail').style.borderColor = ''; }, 2000);
-      return;
-    }
-    const to = 'CapitalAssist.app@proton.me';
-    const subject = encodeURIComponent('Новая заявка — CapitalAssist.app');
-    const body = encodeURIComponent(
-      'Новый пользователь оставил заявку на CapitalAssist.app\n\n' +
-      'Email: ' + email + '\n' +
-      (name ? 'Имя: ' + name + '\n' : '') +
-      '\nОтветь на это письмо, чтобы связаться с пользователем.'
-    );
-    window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
-    closeModal();
-    setTimeout(() => { startTimer(); }, 600);
-  };
+/* Toast */
+function showToast(msg){const el=document.createElement('div');el.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#00D4AA;color:#050a0f;padding:12px 20px;border-radius:12px;font-family:Space Grotesk,sans-serif;font-weight:700;font-size:13px;z-index:999;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap;max-width:90vw;text-align:center';el.textContent=msg;document.body.appendChild(el);requestAnimationFrame(()=>el.style.opacity='1');setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),400)},2800)}
 </script>
-
 </body>
+</html>
