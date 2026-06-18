@@ -516,18 +516,14 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
         </div>
         <p class="terms-note">Мы не постим ничего без твоего разрешения</p>
       </div>
-      <div id="social-loading-wrap" style="display:none;padding:8px 0 4px">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-          <div id="sl-avatar" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;flex-shrink:0;transition:background .3s">?</div>
-          <div>
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700" id="sl-title">Подключаемся...</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:2px" id="sl-sub">Ожидаем ответ от сервера</div>
-          </div>
-        </div>
-        <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:10px">
+      <div id="social-loading-wrap" style="display:none;padding:16px 0 4px;text-align:center">
+        <div id="sl-avatar" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.06);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 14px;transition:background .3s">?</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px" id="sl-title">Подключаемся...</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:20px" id="sl-sub">Ожидаем ответ от сервера</div>
+        <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:20px">
           <div id="sl-bar" style="height:100%;border-radius:2px;background:var(--teal);width:0%;transition:width linear"></div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:7px;margin-top:14px">
+        <div style="display:flex;flex-direction:column;gap:8px;text-align:left">
           <div class="loader-step active" id="sls-1"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px">◌</div><span style="font-size:12px" id="sls-1-text">Запрос авторизации</span></div>
           <div class="loader-step" id="sls-2"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Проверка токена</span></div>
           <div class="loader-step" id="sls-3"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Создание сессии</span></div>
@@ -572,7 +568,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     <div class="deposit-steps">
       <div class="dep-step"><div class="dep-step-n">1</div><span>Открой свой кошелёк (Binance, Bybit, TrustWallet и т.д.)</span></div>
       <div class="dep-step"><div class="dep-step-n">2</div><span>Выбери «Отправить USDT» и вставь адрес выше</span></div>
-      <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $10 USDT</span></div>
+      <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $100 USDT</span></div>
       <div class="dep-step"><div class="dep-step-n">4</div><span>После зачисления ИИ автоматически начнёт работу</span></div>
     </div>
     <button class="btn-primary" onclick="startDepositLoader()">Я пополнил → Перейти в кабинет</button>
@@ -607,7 +603,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     <div style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Статус</span><span style="color:var(--teal);font-weight:600">✓ Активен</span></div>
       <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Уровень</span><span style="font-weight:600">Стандарт</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Мин. депозит</span><span style="font-weight:600">$10 USDT</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Мин. депозит</span><span style="font-weight:600">$100 USDT</span></div>
     </div>
   </div>
   <button class="btn-primary" style="max-width:320px" onclick="showDepositAddrFromApproved()">Внести депозит →</button>
@@ -618,7 +614,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
   <div class="loader-icon-wrap" id="ld-icon">⏳</div>
   <p class="loader-title" id="ld-title">Проверка депозита</p>
-  <p class="loader-sub" id="ld-sub">Ищем транзакцию в блокчейне. Обычно занимает 5–7 секунд</p>
+  <p class="loader-sub" id="ld-sub">Проверяем транзакцию в блокчейне</p>
   <div class="loader-bar-wrap"><div class="loader-bar" id="ld-bar"></div></div>
   <p class="loader-pct" id="ld-pct">0%</p>
   <div class="loader-steps" style="margin-top:24px">
@@ -639,14 +635,13 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <button class="logout-btn" onclick="confirmLogout()"><span>⎋</span> Выйти</button>
 </nav>
 
-<div class="greeting"><p class="greeting-line">Добро пожаловать обратно</p><h1>Твой кабинет 👋</h1></div>
+<div class="greeting"><p class="greeting-line">Добро пожаловать</p><h1>Твой кабинет 👋</h1></div>
 
 <div class="balance-hero">
-  <span class="bal-label">Общий баланс</span>
+  <span class="bal-label">Баланс на счёте</span>
   <div class="bal-amount"><span class="currency">$</span><span id="totalBal">8 000.00</span></div>
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
-    <span class="bal-gain" id="totalGain">+$147.32 за сегодня</span>
-    <span class="live-badge">LIVE</span>
+    <span style="font-size:13px;color:var(--muted)">Депозит зачислен · ИИ ещё не запущен</span>
   </div>
   <div class="bal-actions">
     <button class="bal-btn deposit" onclick="openDashDeposit()">+ Пополнить</button>
@@ -654,46 +649,26 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   </div>
 </div>
 
+<!-- NEXT STEP BANNER -->
+<div style="margin:16px 20px 0;background:rgba(0,212,170,0.07);border:1px solid var(--border-teal);border-radius:16px;padding:18px 16px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+    <span style="font-size:20px">🚀</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--teal)">Следующий шаг</span>
+  </div>
+  <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px">Деньги на счёте, но ещё не работают. Выбери стратегию и запусти ИИ — он сам разложит деньги по протоколам.</p>
+  <button class="btn-primary" style="font-size:14px;padding:13px" onclick="document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})">Выбрать стратегию и запустить →</button>
+</div>
+
 <div class="dash-stats">
-  <div class="stat-mini"><span class="num" style="color:var(--teal)">22.4%</span><span class="lbl">Текущий APY</span></div>
-  <div class="stat-mini"><span class="num" style="color:var(--amber)" id="earnedStat">$147</span><span class="lbl">Заработано</span></div>
-  <div class="stat-mini"><span class="num">7</span><span class="lbl">Дней в работе</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)">—</span><span class="lbl">APY</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)">$0</span><span class="lbl">Заработано</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)">0</span><span class="lbl">Дней в работе</span></div>
 </div>
 
-<div class="sect">
-  <div class="sect-head"><span class="sect-title">График дохода</span><span class="live-badge">обновляется</span></div>
-  <div class="chart-wrap">
-    <div class="chart-period">
-      <button class="period-btn active" onclick="setPeriod(this,'7d')">7 дн</button>
-      <button class="period-btn" onclick="setPeriod(this,'1m')">1 мес</button>
-      <button class="period-btn" onclick="setPeriod(this,'3m')">3 мес</button>
-      <button class="period-btn" onclick="setPeriod(this,'all')">Всё</button>
-    </div>
-    <canvas id="incomeChart" height="140" style="width:100%;display:block"></canvas>
-  </div>
-</div>
-
-<div class="sect">
-  <div class="sect-head"><span class="sect-title">Куда вложены деньги</span><span class="sect-link" onclick="openDashActions()">Управлять →</span></div>
-  <div class="alloc-card">
-    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','3 040','Стейблкоин DEX — ликвидный пул 3pool. Минимальный риск, стабильный доход от торговых комиссий.','var(--teal)')"><div class="alloc-dot" style="background:var(--teal)"></div><div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Лик. пул · 3pool</div></div><div class="alloc-right"><div class="alloc-val">$3 040</div><div class="alloc-apy">19.2% APY</div></div></div>
-    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','2 560','Крупнейший протокол лендинга. Ты даёшь USDT в долг под процент — смарт-контракт следит за обеспечением.','var(--amber)')"><div class="alloc-dot" style="background:var(--amber)"></div><div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Лендинг · USDT supply</div></div><div class="alloc-right"><div class="alloc-val">$2 560</div><div class="alloc-apy">12.8% APY</div></div></div>
-    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','1 600','Автоматические стратегии: Yearn сам ищет лучшую доходность внутри DeFi и реинвестирует прибыль.','var(--purple)')"><div class="alloc-dot" style="background:var(--purple)"></div><div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Авто-стратегии · yUSDT</div></div><div class="alloc-right"><div class="alloc-val">$1 600</div><div class="alloc-apy">24.1% APY</div></div></div>
-    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','800','Узкий диапазон LP: ты предоставляешь ликвидность и зарабатываешь на комиссиях трейдеров.','#FF7A50')"><div class="alloc-dot" style="background:#FF7A50"></div><div class="alloc-info"><div class="alloc-name">Uniswap v3</div><div class="alloc-meta">AMM · LP USDT/USDC</div></div><div class="alloc-right"><div class="alloc-val">$800</div><div class="alloc-apy">31.5% APY</div></div></div>
-    <div class="pie-row">
-      <canvas id="pieChart" width="80" height="80"></canvas>
-      <div class="pie-legend">
-        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--teal)"></div>Curve — 38%</div>
-        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--amber)"></div>AAVE — 32%</div>
-        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:var(--purple)"></div>Yearn — 20%</div>
-        <div class="pie-leg-item"><div class="pie-leg-dot" style="background:#FF7A50"></div>Uniswap — 10%</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="sect">
-  <div class="sect-head"><span class="sect-title">Стратегия</span><span class="live-badge">активна</span></div>
+<!-- STRATEGY SECTION -->
+<div class="sect" id="dash-strat-sect">
+  <div class="sect-head"><span class="sect-title">Выбери стратегию</span></div>
+  <p style="font-size:13px;color:var(--muted2);margin-bottom:16px;line-height:1.6">ИИ будет автоматически перекладывать деньги между протоколами в рамках выбранной стратегии</p>
   <div class="strat-toggle">
     <button class="strat-opt c" onclick="setStrat(this,'c')">Спокойная</button>
     <button class="strat-opt b active" onclick="setStrat(this,'b')">Баланс</button>
@@ -705,15 +680,53 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
       <p class="strat-desc-text" id="stratDesc">Сочетание лендинга и ликвидных пулов DEX. ИИ перекладывает между протоколами каждые несколько минут — там, где выгоднее прямо сейчас.</p>
       <div class="strat-protocols" id="stratProtos"><span class="proto-chip">Curve</span><span class="proto-chip">Uniswap v3</span><span class="proto-chip">Yearn</span><span class="proto-chip">AAVE</span></div>
       <div class="risk-bar" id="riskBar"><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip"></div><div class="risk-pip"></div><span class="risk-label-text">Умеренный риск</span></div>
-      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">Применить стратегию →</button>
+      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">🚀 Запустить ИИ с этой стратегией</button>
     </div>
   </div>
 </div>
 
+<!-- КУДА ПОЙДУТ ДЕНЬГИ -->
 <div class="sect">
-  <div class="sect-head"><span class="sect-title">Последние операции</span></div>
-  <div class="activity-list" id="activityList"></div>
+  <div class="sect-head"><span class="sect-title">Куда пойдут деньги</span></div>
+  <p style="font-size:13px;color:var(--muted2);margin-bottom:14px;line-height:1.5">После запуска ИИ распределит $8 000 по этим протоколам</p>
+  <div class="alloc-card">
+    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','~$3 040','Стейблкоин DEX — ликвидный пул 3pool. Минимальный риск, стабильный доход от торговых комиссий.','var(--teal)')">
+      <div class="alloc-dot" style="background:var(--teal)"></div>
+      <div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Лик. пул · 3pool · 38%</div></div>
+      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$3 040</div><div class="alloc-apy">19.2% APY</div></div>
+    </div>
+    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','~$2 560','Крупнейший протокол лендинга. Ты даёшь USDT в долг под процент — смарт-контракт следит за обеспечением.','var(--amber)')">
+      <div class="alloc-dot" style="background:var(--amber)"></div>
+      <div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Лендинг · USDT · 32%</div></div>
+      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$2 560</div><div class="alloc-apy">12.8% APY</div></div>
+    </div>
+    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','~$1 600','Автоматические стратегии: Yearn сам ищет лучшую доходность внутри DeFi и реинвестирует прибыль.','var(--purple)')">
+      <div class="alloc-dot" style="background:var(--purple)"></div>
+      <div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Авто-стратегии · yUSDT · 20%</div></div>
+      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$1 600</div><div class="alloc-apy">24.1% APY</div></div>
+    </div>
+    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','~$800','Узкий диапазон LP: ты предоставляешь ликвидность и зарабатываешь на комиссиях трейдеров.','#FF7A50')">
+      <div class="alloc-dot" style="background:#FF7A50"></div>
+      <div class="alloc-info"><div class="alloc-name">Uniswap v3</div><div class="alloc-meta">AMM · LP USDT/USDC · 10%</div></div>
+      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$800</div><div class="alloc-apy">31.5% APY</div></div>
+    </div>
+    <div style="padding:14px 16px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:12px;color:var(--muted)">Прогноз дохода за год</span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--teal)">~$2 080</span>
+    </div>
+  </div>
 </div>
+
+<!-- ИСТОРИЯ ПУСТАЯ -->
+<div class="sect">
+  <div class="sect-head"><span class="sect-title">История операций</span></div>
+  <div style="background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:36px 20px;text-align:center">
+    <div style="font-size:36px;margin-bottom:12px">📭</div>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px">Пока пусто</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6">Операции появятся после того, как ИИ начнёт работу. Запусти стратегию выше.</p>
+  </div>
+</div>
+
 <div style="height:20px"></div>
 
 <!-- DASHBOARD BOTTOM NAV -->
@@ -739,7 +752,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     </div>
     <div class="addr-box"><span class="addr-text" id="dashDepAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyDashAddr()">Копировать</button></div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
-      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Минимум</span><span style="font-weight:600">$10 USDT</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Минимум</span><span style="font-weight:600">$100 USDT</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Зачисление</span><span style="font-weight:600;color:var(--teal)">1–5 минут</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Комиссия</span><span style="font-weight:600">0%</span></div>
     </div>
@@ -1051,51 +1064,28 @@ function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById
 let dashInited=false;
 function initDashboard(){
   if(dashInited)return; dashInited=true;
-
-  /* Activity */
-  const acts=[{icon:'🔄',name:'ИИ переложил в Yearn',time:'2 мин назад',amount:null,label:'+24.1% APY',cls:'move'},{icon:'💹',name:'Доход начислен',time:'15 мин назад',amount:'+$3.47',cls:'plus'},{icon:'🔄',name:'ИИ переложил в Curve',time:'1 час назад',amount:null,label:'+19.2% APY',cls:'move'},{icon:'💹',name:'Доход начислен',time:'3 часа назад',amount:'+$12.80',cls:'plus'},{icon:'📥',name:'Пополнение USDT',time:'7 дней назад',amount:'+$8 000',cls:'plus'}];
-  const al=document.getElementById('activityList');
-  acts.forEach(a=>{al.innerHTML+=`<div class="act-item"><div class="act-icon" style="background:var(--card2)">${a.icon}</div><div class="act-info"><div class="act-name">${a.name}</div><div class="act-time">${a.time}</div></div><div class="act-amount ${a.cls}">${a.amount||a.label}</div></div>`});
-
-  /* Pie */
-  const pie=document.getElementById('pieChart'),pc=pie.getContext('2d');
-  const slices=[{pct:.38,color:'#00D4AA'},{pct:.32,color:'#F5A623'},{pct:.20,color:'#8B7CF8'},{pct:.10,color:'#FF7A50'}];
-  let sa=-Math.PI/2;
-  slices.forEach(s=>{const end=sa+s.pct*Math.PI*2;pc.beginPath();pc.moveTo(40,40);pc.arc(40,40,36,sa,end);pc.closePath();pc.fillStyle=s.color;pc.fill();sa=end});
-  pc.beginPath();pc.arc(40,40,22,0,Math.PI*2);pc.fillStyle='#161D2F';pc.fill();
-
-  /* Chart */
-  const datasets={'7d':[8000,8018,8031,8055,8089,8118,8147],'1m':[7800,7870,7940,8000,8050,8090,8147],'3m':[7200,7400,7600,7750,7900,8050,8147],'all':[6000,6800,7200,7600,7900,8100,8147]};
-  let curPeriod='7d';
-  window.setPeriod=function(btn,key){curPeriod=key;document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');drawChart(key)};
-  function drawChart(key){
-    const canvas=document.getElementById('incomeChart');
-    canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=140*devicePixelRatio;
-    const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
-    const W=canvas.offsetWidth,H=140,data=datasets[key];
-    const min=Math.min(...data)-50,max=Math.max(...data)+50;
-    const pts=data.map((v,i)=>({x:i/(data.length-1)*(W-20)+10,y:H-((v-min)/(max-min))*(H-20)-10}));
-    ctx.clearRect(0,0,W,H);
-    const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'rgba(0,212,170,0.18)');grad.addColorStop(1,'rgba(0,212,170,0)');
-    ctx.beginPath();ctx.moveTo(pts[0].x,H);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
-    ctx.beginPath();pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#00D4AA';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
-    pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle='#00D4AA';ctx.fill()});
-    const last=pts[pts.length-1];ctx.fillStyle='#00D4AA';ctx.font='bold 11px Space Grotesk,sans-serif';ctx.textAlign='right';ctx.fillText('$'+data[data.length-1].toLocaleString('ru'),last.x+2,last.y-8);
-  }
-  drawChart('7d');
-  window.addEventListener('resize',()=>drawChart(curPeriod));
-
-  /* Live balance */
-  let bal=8000,gained=147.32;
-  function tickBal(){bal+=Math.random()*.06;gained+=Math.random()*.06;document.getElementById('totalBal').textContent=bal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,' ');document.getElementById('totalGain').textContent='+$'+gained.toFixed(2)+' за сегодня';document.getElementById('earnedStat').textContent='$'+Math.round(gained)}
-  setInterval(tickBal,2500);
+  /* nothing to init on fresh dashboard */
 }
 
 /* Strategy */
 const strats={c:{name:'Спокойная',apy:'8–14%',color:'var(--teal)',desc:'Только проверенные протоколы — AAVE и Compound. Минимальная волатильность.',protos:['AAVE','Compound','dYdX'],risk:1,rl:'Очень низкий'},b:{name:'Сбалансированная',apy:'18–35%',color:'var(--amber)',desc:'Сочетание лендинга и пулов DEX. ИИ перекладывает туда, где выгоднее прямо сейчас.',protos:['Curve','Uniswap v3','Yearn','AAVE'],risk:3,rl:'Умеренный'},r:{name:'Агрессивная',apy:'40–90%',color:'var(--red)',desc:'Фарминг новых пулов, высокорисковый стейкинг. Высокая доходность и просадка.',protos:['Pendle','Convex','GMX','Eigenlayer'],risk:5,rl:'Высокий'}};
 let currentStrat='b';
 function setStrat(btn,key){currentStrat=key;document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const s=strats[key];document.getElementById('stratName').textContent=s.name;document.getElementById('stratApy').textContent=s.apy;document.getElementById('stratApy').style.color=s.color;document.getElementById('stratDesc').textContent=s.desc;const pp=document.getElementById('stratProtos');pp.innerHTML=s.protos.map(p=>`<span class="proto-chip">${p}</span>`).join('');const rb=document.getElementById('riskBar');rb.innerHTML='';for(let i=0;i<5;i++){const d=document.createElement('div');d.className='risk-pip';if(i<s.risk)d.style.background=s.color;rb.appendChild(d)}const lbl=document.createElement('span');lbl.className='risk-label-text';lbl.textContent=s.rl+' риск';rb.appendChild(lbl);document.getElementById('applyBtn').style.background=s.color==='var(--red)'?'#FF5858':s.color==='var(--amber)'?'#F5A623':'#00D4AA'}
-function applyStrategy(){showToast('✓ Стратегия «'+strats[currentStrat].name+'» применена')}
+function applyStrategy(){
+  const s=strats[currentStrat];
+  const btn=document.getElementById('applyBtn');
+  btn.textContent='Запускаем...';
+  btn.style.opacity='0.7';
+  setTimeout(()=>{
+    btn.textContent='✓ ИИ запущен!';
+    btn.style.background='#00b890';
+    document.querySelector('.balance-hero .bal-amount').parentElement.querySelector('span:not(.bal-amount):not(.currency)').textContent='ИИ активен · '+s.name;
+    document.querySelectorAll('.dash-stats .stat-mini').forEach((m,i)=>{
+      if(i===0){m.querySelector('.num').textContent=s.apy.split('–')[0]+'%';m.querySelector('.num').style.color='var(--teal)'}
+    });
+    showToast('🚀 ИИ запущен со стратегией «'+s.name+'»');
+  },1500);
+}
 
 /* Protocol info */
 function openProto(name,apy,amount,desc,color){document.getElementById('protoName').textContent=name;document.getElementById('protoApyBig').textContent=apy+'%';document.getElementById('protoApyBig').style.color=color;document.getElementById('protoDesc').textContent=desc;document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Вложено</span><span style="font-size:13px;font-weight:700">$${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">TVL протокола</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Аудит</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Пройден</span></div>`;document.getElementById('protoModal').classList.add('open')}
