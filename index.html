@@ -344,7 +344,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 
 <nav id="nav-landing">
   <div class="brand">Capital<span>Assist</span><small>.app</small></div>
-  <div class="nav-badge" id="navBadge" style="display:flex;align-items:center;gap:4px"><i class="ti" style="font-size:13px">🛡️</i> Verified</div>
+  <div class="nav-badge" id="navBadge" style="display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="currentColor" stroke-width="2"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified</div>
 </nav>
 
 <section class="hero">
@@ -426,7 +426,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
       <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:10px">Where your money goes</p>
       <div id="calcAllocList" style="display:flex;flex-direction:column;gap:8px"></div>
     </div>
-    <p id="apySourceNote" style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5">⚪ Loading live APY data...</p>
+    <p id="apySourceNote" style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5">Loading live APY data...</p>
 
     <div class="projection" id="projBox">
       <div class="proj-row"><span class="proj-key">Daily income</span><span class="proj-val teal" id="projDay"></span></div>
@@ -467,26 +467,26 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 <section class="section">
   <p class="sec-label">Where the money works</p><h2>Protocols right now</h2>
   <div class="protocols">
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(0,212,170,0.1)">🌊</div><div class="proto-info"><div class="proto-name">Curve Finance</div><div class="proto-type">Stablecoin DEX · Liquidity pool</div></div><div class="proto-apy" id="protoApy-curve">19.2%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(144,97,247,0.1)">👻</div><div class="proto-info"><div class="proto-name">AAVE v3</div><div class="proto-type">Lending · USDT supply</div></div><div class="proto-apy" id="protoApy-aave">12.8%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(245,166,35,0.1)">🔮</div><div class="proto-info"><div class="proto-name">Yearn Finance</div><div class="proto-type">Auto strategies · yVault</div></div><div class="proto-apy" id="protoApy-yearn">24.1%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(255,90,90,0.1)">🦄</div><div class="proto-info"><div class="proto-name">Uniswap v3</div><div class="proto-type">AMM · Narrow-range LP</div></div><div class="proto-apy" id="protoApy-uniswap">31.5%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(56,189,248,0.1)">📐</div><div class="proto-info"><div class="proto-name">Pendle Finance</div><div class="proto-type">Yield tokenization</div></div><div class="proto-apy" id="protoApy-pendle">41.0%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(0,212,170,0.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12c2-5 4-8 8-8s6 3 8 8c-2 5-4 8-8 8s-6-3-8-8z" stroke="#00D4AA" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" fill="#00D4AA"/></svg></div><div class="proto-info"><div class="proto-name">Curve Finance</div><div class="proto-type">Stablecoin DEX · Liquidity pool</div></div><div class="proto-apy" id="protoApy-curve">19.2%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(144,97,247,0.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4l7 16H5L12 4z" stroke="#B39DFF" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10.5L16 17H8L12 10.5z" fill="#B39DFF"/></svg></div><div class="proto-info"><div class="proto-name">AAVE v3</div><div class="proto-type">Lending · USDT supply</div></div><div class="proto-apy" id="protoApy-aave">12.8%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(245,166,35,0.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#F5A623" stroke-width="1.6"/><circle cx="12" cy="12" r="7" stroke="#F5A623" stroke-width="1.8"/></svg></div><div class="proto-info"><div class="proto-name">Yearn Finance</div><div class="proto-type">Auto strategies · yVault</div></div><div class="proto-apy" id="protoApy-yearn">24.1%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(255,90,90,0.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="9" r="5.5" stroke="#FF5C8A" stroke-width="1.8"/><circle cx="15" cy="15" r="5.5" stroke="#FF5C8A" stroke-width="1.8"/></svg></div><div class="proto-info"><div class="proto-name">Uniswap v3</div><div class="proto-type">AMM · Narrow-range LP</div></div><div class="proto-apy" id="protoApy-uniswap">31.5%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(56,189,248,0.1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 17L12 5l8 12" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17h8" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="proto-info"><div class="proto-name">Pendle Finance</div><div class="proto-type">Yield tokenization</div></div><div class="proto-apy" id="protoApy-pendle">41.0%<span>APY</span></div></div>
   </div>
 </section>
 
 <section class="section">
   <p class="sec-label">Security</p><h2>Your money isn't with us</h2>
   <div class="security-grid">
-    <div class="sec-card"><div class="sec-icon">🔒</div><h4>Smart contracts</h4><p>Funds are held in audited on-chain contracts.</p></div>
-    <div class="sec-card"><div class="sec-icon">🛡</div><h4>Code audits</h4><p>All smart contracts have passed independent audits.</p></div>
-    <div class="sec-card"><div class="sec-icon">⚡</div><h4>Withdraw anytime</h4><p>Take your money out whenever you want — no lock-ups.</p></div>
-    <div class="sec-card"><div class="sec-icon">👁</div><h4>Full transparency</h4><p>Every transaction is visible on-chain.</p></div>
+    <div class="sec-card"><div class="sec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="#00D4AA" stroke-width="1.8"/><path d="M8 11V7a4 4 0 018 0v4" stroke="#00D4AA" stroke-width="1.8"/></svg></div><h4>Smart contracts</h4><p>Funds are held in audited on-chain contracts.</p></div>
+    <div class="sec-card"><div class="sec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="#00D4AA" stroke-width="1.8"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="#00D4AA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>Code audits</h4><p>All smart contracts have passed independent audits.</p></div>
+    <div class="sec-card"><div class="sec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke="#00D4AA" stroke-width="1.8" stroke-linejoin="round"/></svg></div><h4>Withdraw anytime</h4><p>Take your money out whenever you want — no lock-ups.</p></div>
+    <div class="sec-card"><div class="sec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" stroke="#00D4AA" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="#00D4AA" stroke-width="1.8"/></svg></div><h4>Full transparency</h4><p>Every transaction is visible on-chain.</p></div>
   </div>
 </section>
 
 <section class="section">
-  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">⚠️ Cryptocurrency investments carry high risk. Listed APYs are historical benchmarks, not guarantees. Only invest what you can afford to lose.</p>
+  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;display:flex;align-items:flex-start;gap:6px;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px"><path d="M12 3l10 18H2L12 3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1" fill="currentColor"/></svg><span>Cryptocurrency investments carry high risk. Listed APYs are historical benchmarks, not guarantees. Only invest what you can afford to lose.</span></p>
 </section>
 
 <div style="height:80px"></div>
@@ -513,7 +513,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
       </div>
       <div id="email-loading-wrap" style="display:none;padding:8px 0 4px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
-          <div id="el-avatar" style="width:40px;height:40px;border-radius:50%;background:var(--teal-faint);border:1.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">✉️</div>
+          <div id="el-avatar" style="width:40px;height:40px;border-radius:50%;background:var(--teal-faint);border:1.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div>
             <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700" id="el-title">Submitting application...</div>
             <div style="font-size:12px;color:var(--muted);margin-top:2px" id="el-sub">Connecting to server</div>
@@ -566,7 +566,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 <div class="success-overlay" id="successModal">
   <div class="success-sheet">
     <div class="sheet-handle" style="margin-bottom:8px"></div>
-    <div class="success-icon">✉️</div>
+    <div class="success-icon" style="color:var(--teal)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <p class="sheet-title" style="text-align:center">Email is ready!</p>
     <p class="sheet-sub" style="text-align:center">Open your mail app and hit send — you have 30 seconds</p>
     <div class="timer-ring-wrap"><svg width="100" height="100" class="timer-ring"><circle class="timer-circle-bg" cx="50" cy="50" r="42"/><circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="0"/><text class="timer-text" id="timerText" x="50" y="50" transform="rotate(90,50,50)">30</text></svg></div>
@@ -579,7 +579,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="deposit-sheet">
     <button class="sheet-close" onclick="document.getElementById('depositAddrModal').classList.remove('open')">×</button>
     <div class="sheet-handle" style="margin-bottom:16px"></div>
-    <p class="sheet-title">🎉 You're all set!</p>
+    <p class="sheet-title">You're all set!</p>
     <p class="sheet-sub">Now fund your balance — send USDT to our address</p>
     <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase">Choose network</p>
     <div class="network-chips">
@@ -604,7 +604,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 <!-- ═══ LOADER 1: Application review → Approved ═══ -->
 <div class="loader-screen" id="loader-review">
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
-  <div class="loader-icon-wrap">🔍</div>
+  <div class="loader-icon-wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="color:var(--teal)"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
   <p class="loader-title" id="lr-title">Reviewing your application</p>
   <p class="loader-sub" id="lr-sub">Our team is checking your details. This takes up to 1 minute</p>
   <div class="loader-bar-wrap"><div class="loader-bar" id="lr-bar"></div></div>
@@ -621,7 +621,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
   <div class="approved-card">
     <div class="approved-badge">Application approved</div>
-    <p class="loader-title" style="text-align:left;margin-bottom:6px">You're approved! 🎉</p>
+    <p class="loader-title" style="text-align:left;margin-bottom:6px">You're approved!</p>
     <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">You can now make a deposit and start earning with the AI manager</p>
     <div style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Status</span><span style="color:var(--teal);font-weight:600">✓ Active</span></div>
@@ -658,34 +658,50 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <button class="logout-btn" onclick="confirmLogout()"><span>⎋</span> Log out</button>
 </nav>
 
-<div class="greeting"><p class="greeting-line">Welcome</p><h1>Your dashboard 👋</h1></div>
+<div class="greeting"><p class="greeting-line">Welcome</p><h1>Your dashboard</h1></div>
 
+<!-- BALANCE SPLIT: Available vs Working -->
 <div class="balance-hero">
-  <span class="bal-label">Account balance</span>
-  <div class="bal-amount"><span class="currency">$</span><span id="totalBal">8 000.00</span></div>
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
-    <span style="font-size:13px;color:var(--muted)">Deposit received · AI not yet started</span>
+  <span class="bal-label">Total balance</span>
+  <div class="bal-amount"><span class="currency">$</span><span id="totalBal">8,000.00</span></div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="font-size:13px;color:var(--muted)" id="balStatusLine">Not invested yet</span>
   </div>
+
+  <!-- Available / Working split -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+    <div style="background:var(--navy2);border-radius:12px;padding:12px;border:0.5px solid var(--border)">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:4px;display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 119.5 4 7 7 0 0020 14.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Available</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--white)" id="availableBal">$8,000.00</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px">Not earning</div>
+    </div>
+    <div style="background:var(--teal-faint);border-radius:12px;padding:12px;border:0.5px solid var(--border-teal)">
+      <div style="font-size:10px;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:4px;display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Working</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--teal)" id="workingBal">$0.00</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px" id="workingApyLabel">Earning 0% APY</div>
+    </div>
+  </div>
+
   <div class="bal-actions">
     <button class="bal-btn deposit" onclick="openDashDeposit()">+ Deposit</button>
     <button class="bal-btn withdraw" onclick="openDashWithdraw()">↑ Withdraw</button>
   </div>
 </div>
 
-<!-- NEXT STEP BANNER -->
-<div style="margin:16px 20px 0;background:rgba(0,212,170,0.07);border:1px solid var(--border-teal);border-radius:16px;padding:18px 16px">
+<!-- NEXT STEP BANNER (hidden once AI is launched) -->
+<div id="nextStepBanner" style="margin:16px 20px 0;background:rgba(0,212,170,0.07);border:1px solid var(--border-teal);border-radius:16px;padding:18px 16px">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-    <span style="font-size:20px">🚀</span>
+    <span style="display:flex;color:var(--teal)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2c3 1.5 5 5 5 9 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-7.5 5-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="1.6" fill="currentColor"/><path d="M9 16l-2 4M15 16l2 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
     <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--teal)">Next step</span>
   </div>
-  <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px">Your funds are in your account but not yet working. Choose a strategy and launch the AI — it will allocate your funds across protocols automatically.</p>
-  <button class="btn-primary" style="font-size:14px;padding:13px" onclick="document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})">Choose a strategy and launch →</button>
+  <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px">Your funds are available but not yet working. Pick a strategy below, see exactly where the money goes, then launch the AI.</p>
+  <button class="btn-primary" style="font-size:14px;padding:13px" onclick="document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})">Choose a strategy →</button>
 </div>
 
 <div class="dash-stats">
-  <div class="stat-mini"><span class="num" style="color:var(--muted)">—</span><span class="lbl">APY</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)" id="apyStatVal">—</span><span class="lbl">APY</span></div>
   <div class="stat-mini"><span class="num" style="color:var(--muted)" id="earnedStatVal">$0</span><span class="lbl">Earned</span></div>
-  <div class="stat-mini"><span class="num" style="color:var(--muted)">0</span><span class="lbl">Days active</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)" id="daysStatVal">0</span><span class="lbl">Days active</span></div>
 </div>
 
 <!-- STRATEGY SECTION -->
@@ -697,13 +713,38 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     <button class="strat-opt b active" onclick="setStrat(this,'b')">Balanced</button>
     <button class="strat-opt r" onclick="setStrat(this,'r')">Aggressive</button>
   </div>
+
   <div class="strat-info">
     <div class="strat-info-head"><span class="strat-info-title" id="stratName">Balanced</span><span class="apy-tag" id="stratApy" style="color:var(--amber)">18–35%</span></div>
     <div class="strat-info-body">
       <p class="strat-desc-text" id="stratDesc">A mix of lending and DEX liquidity pools. AI moves capital between protocols every few minutes — wherever returns are best right now.</p>
-      <div class="strat-protocols" id="stratProtos"><span class="proto-chip">Curve</span><span class="proto-chip">Uniswap v3</span><span class="proto-chip">Yearn</span><span class="proto-chip">AAVE</span></div>
+
+      <!-- PIE CHART + LIST: where the money will go -->
+      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin:16px 0 10px">Where your money will go</p>
+      <div style="display:flex;align-items:center;gap:16px;background:var(--navy2);border-radius:12px;padding:14px;margin-bottom:16px">
+        <canvas id="stratPieChart" width="84" height="84" style="flex-shrink:0"></canvas>
+        <div id="stratPieLegend" style="flex:1;display:flex;flex-direction:column;gap:7px;min-width:0"></div>
+      </div>
+
       <div class="risk-bar" id="riskBar"><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip"></div><div class="risk-pip"></div><span class="risk-label-text">Moderate risk</span></div>
-      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">🚀 Launch AI with this strategy</button>
+
+      <!-- PERIOD SELECTOR FOR PROJECTION -->
+      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin:18px 0 8px">Projected earnings period</p>
+      <div class="chart-period" style="margin-bottom:10px">
+        <button class="period-btn" onclick="setProjPeriod(this,1)">1 mo</button>
+        <button class="period-btn active" onclick="setProjPeriod(this,3)">3 mo</button>
+        <button class="period-btn" onclick="setProjPeriod(this,6)">6 mo</button>
+        <button class="period-btn" onclick="setProjPeriod(this,12)">1 yr</button>
+      </div>
+      <div style="background:var(--navy2);border-radius:12px;padding:14px;margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;color:var(--muted)" id="projPeriodLabel">Estimated profit in 3 months</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--teal)" id="projPeriodValue">~$0.00</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5">This only affects the forecast above — you can withdraw your funds at any time, with no lock-up period.</p>
+
+      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">Launch AI with this strategy</button>
 
       <!-- LIVE EARNINGS COUNTER (hidden until launch) -->
       <div id="liveEarnBox" style="display:none;margin-top:16px;background:var(--navy2);border-radius:12px;padding:16px;border:0.5px solid var(--border-teal)">
@@ -718,56 +759,38 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   </div>
 </div>
 
-<!-- WHERE THE MONEY WILL GO -->
-<div class="sect">
-  <div class="sect-head"><span class="sect-title">Where the money will go</span></div>
-  <p style="font-size:13px;color:var(--muted2);margin-bottom:14px;line-height:1.5">Once launched, the AI will allocate $8,000 across these protocols</p>
-  <div class="alloc-card">
-    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','~$3 040','Stablecoin DEX — the 3pool liquidity pool. Minimal risk, steady income from trading fees.','var(--teal)')">
-      <div class="alloc-dot" style="background:var(--teal)"></div>
-      <div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Liquidity pool · 3pool · 38%</div></div>
-      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$3 040</div><div class="alloc-apy">19.2% APY</div></div>
-    </div>
-    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','~$2 560','The largest lending protocol. You lend USDT for interest — a smart contract manages the collateral.','var(--amber)')">
-      <div class="alloc-dot" style="background:var(--amber)"></div>
-      <div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Lending · USDT · 32%</div></div>
-      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$2 560</div><div class="alloc-apy">12.8% APY</div></div>
-    </div>
-    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','~$1 600','Automated strategies: Yearn searches DeFi for the best yield and reinvests profits.','var(--purple)')">
-      <div class="alloc-dot" style="background:var(--purple)"></div>
-      <div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Auto strategies · yUSDT · 20%</div></div>
-      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$1 600</div><div class="alloc-apy">24.1% APY</div></div>
-    </div>
-    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','~$800','Narrow-range LP: you provide liquidity and earn from trader fees.','#FF7A50')">
-      <div class="alloc-dot" style="background:#FF7A50"></div>
-      <div class="alloc-info"><div class="alloc-name">Uniswap v3</div><div class="alloc-meta">AMM · LP USDT/USDC · 10%</div></div>
-      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$800</div><div class="alloc-apy">31.5% APY</div></div>
-    </div>
-    <div style="padding:14px 16px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:12px;color:var(--muted)">Projected yearly income</span>
-      <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--teal)">~$2 080</span>
-    </div>
-  </div>
+<!-- ACTIVE ALLOCATION (visible only after launch) -->
+<div class="sect" id="activeAllocSect" style="display:none">
+  <div class="sect-head"><span class="sect-title">Where your money is working</span><span class="live-badge">LIVE</span></div>
+  <div class="alloc-card" id="activeAllocList"></div>
+</div>
+
+<!-- PROTOCOL DETAILS (preview before launch) -->
+<div class="sect" id="previewAllocSect">
+  <div class="sect-head"><span class="sect-title">Protocol details</span></div>
+  <p style="font-size:13px;color:var(--muted2);margin-bottom:14px;line-height:1.5">Tap a protocol below for more info — this preview updates as you change strategy</p>
+  <div class="alloc-card" id="previewAllocList"></div>
 </div>
 
 <!-- EMPTY HISTORY -->
 <div class="sect">
   <div class="sect-head"><span class="sect-title">Transaction history</span></div>
-  <div style="background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:36px 20px;text-align:center">
-    <div style="font-size:36px;margin-bottom:12px">📭</div>
+  <div id="historyEmptyState" style="background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:36px 20px;text-align:center">
+    <div style="display:flex;justify-content:center;margin-bottom:12px;color:var(--muted)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 8l4-5h10l4 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 8h6a3 3 0 006 0h6" stroke="currentColor" stroke-width="1.6"/></svg></div>
     <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px">Nothing here yet</p>
     <p style="font-size:13px;color:var(--muted);line-height:1.6">Transactions will appear once the AI starts working. Launch a strategy above.</p>
   </div>
+  <div class="activity-list" id="historyList" style="display:none"></div>
 </div>
 
 <div style="height:20px"></div>
 
 <!-- DASHBOARD BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav-item active"><span class="nav-icon">📊</span><span>Portfolio</span></div>
-  <div class="nav-item" onclick="openDashActions()"><span class="nav-icon">⚡</span><span>Manage</span></div>
-  <div class="nav-item"><span class="nav-icon">📈</span><span>Market</span></div>
-  <div class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></div>
+  <div class="nav-item active"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span>Portfolio</span></div>
+  <div class="nav-item" onclick="openDashActions()"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span>Manage</span></div>
+  <div class="nav-item"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Market</span></div>
+  <div class="nav-item"><span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span>Settings</span></div>
 </div>
 
 <!-- DASHBOARD MODALS -->
@@ -799,7 +822,11 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     <div class="sheet-handle"></div>
     <p class="sheet-title">Withdraw funds</p>
     <p class="sheet-sub">Funds will arrive in your wallet within 5 minutes</p>
-    <div class="field"><div class="field-head"><label>Amount in USDT</label><span class="max-tag" onclick="document.getElementById('wdAmount').value='8000'">MAX $8 000</span></div><input type="number" id="wdAmount" placeholder="0" inputmode="decimal"></div>
+    <div class="field">
+      <div class="field-head"><label>Amount in USDT</label><span class="max-tag" onclick="setMaxWithdraw()">MAX</span></div>
+      <input type="number" id="wdAmount" placeholder="0" inputmode="decimal">
+      <div style="font-size:11px;color:var(--muted);margin-top:6px" id="wdAvailableNote">Available: $8,000.00</div>
+    </div>
     <div class="field"><label>Recipient wallet address</label><input type="text" id="wdAddr" placeholder="TRC-20 / ERC-20 address"></div>
     <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:18px;padding:12px;background:var(--navy2);border-radius:10px"><span style="color:var(--muted)">Network fee</span><span style="color:var(--amber);font-weight:600">~$1.00</span></div>
     <button class="apply-btn" onclick="doWithdraw()">Withdraw →</button>
@@ -816,7 +843,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     </div>
     <p class="sheet-sub" id="protoDesc"></p>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px" id="protoStats"></div>
-    <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--navy2);border-radius:10px;margin-bottom:16px"><span style="font-size:18px">🔍</span><span style="font-size:12px;color:var(--muted2)">Data from public sources: DefiLlama, Dune Analytics, on-chain blockchain data</span></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--navy2);border-radius:10px;margin-bottom:16px"><span style="display:flex;color:var(--muted2);flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span style="font-size:12px;color:var(--muted2)">Data from public sources: DefiLlama, Dune Analytics, on-chain blockchain data</span></div>
     <button class="apply-btn" onclick="document.getElementById('protoModal').classList.remove('open')">Got it →</button>
   </div>
 </div>
@@ -828,10 +855,10 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     <p class="sheet-title">Manage</p>
     <p class="sheet-sub">What would you like to do?</p>
     <div class="action-items">
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashDeposit()"><div class="action-icon" style="background:var(--teal-faint)">💰</div><div><div class="action-title">Add funds</div><div class="action-desc">Add USDT to your account</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashWithdraw()"><div class="action-icon" style="background:var(--amber-faint)">📤</div><div><div class="action-title">Withdraw funds</div><div class="action-desc">Withdraw funds to your wallet</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open')"><div class="action-icon" style="background:var(--purple-faint)">🎯</div><div><div class="action-title">Change strategy</div><div class="action-desc">Conservative / Balanced / Aggressive</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');setTimeout(()=>showToast('🔄 $147.32 reinvested into Curve Finance'),200)"><div class="action-icon" style="background:var(--teal-faint)">🔄</div><div><div class="action-title">Reinvest earnings</div><div class="action-desc">Put your accumulated $147 to work</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashDeposit()"><div class="action-icon" style="background:var(--teal-faint);color:var(--teal)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="14" r="1.2" fill="currentColor"/></svg></div><div><div class="action-title">Add funds</div><div class="action-desc">Add USDT to your account</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashWithdraw()"><div class="action-icon" style="background:var(--amber-faint);color:var(--amber)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 14v5a2 2 0 002 2h12a2 2 0 002-2v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 14V3M8 7l4-4 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="action-title">Withdraw funds</div><div class="action-desc">Withdraw funds to your wallet</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})"><div class="action-icon" style="background:var(--purple-faint);color:var(--purple)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div><div><div class="action-title">Change strategy</div><div class="action-desc">Conservative / Balanced / Aggressive</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" id="reinvestAction" onclick="doReinvest()"><div class="action-icon" style="background:var(--teal-faint);color:var(--teal)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9a8 8 0 0114-4.5M20 4v5h-5M20 15a8 8 0 01-14 4.5M4 20v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="action-title">Reinvest earnings</div><div class="action-desc" id="reinvestDesc">Put your accumulated earnings to work</div></div><span class="action-arrow">›</span></div>
     </div>
   </div>
 </div>
@@ -850,6 +877,30 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 
 
 <script>
+/* ── ICON LIBRARY (inline SVG, no emoji, no third-party logos) ── */
+const ICONS={
+  shield:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  rocket:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2c3 1.5 5 5 5 9 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-7.5 5-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="1.6" fill="currentColor"/><path d="M9 16l-2 4M15 16l2 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  bolt:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+  warning:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l10 18H2L12 3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1" fill="currentColor"/></svg>',
+  outbox:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 14v5a2 2 0 002 2h12a2 2 0 002-2v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 14V3M8 7l4-4 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  refresh:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 9a8 8 0 0114-4.5M20 4v5h-5M20 15a8 8 0 01-14 4.5M4 20v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  mail:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  party:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 19l3-10 11 3-10 11-4-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17" cy="5" r="1.2" fill="currentColor"/><circle cx="20" cy="9" r="1" fill="currentColor"/><circle cx="14" cy="3" r="1" fill="currentColor"/></svg>',
+  search:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7"/><path d="M7.5 12.5l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  wave:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/></svg>',
+  moon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 119.5 4 7 7 0 0020 14.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+  inbox:'<svg width="34" height="34" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 8l4-5h10l4 5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 8h6a3 3 0 006 0h6" stroke="currentColor" stroke-width="1.6"/></svg>',
+  chartBar:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  trend:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  gear:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  wallet:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="14" r="1.2" fill="currentColor"/></svg>',
+  target:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>',
+  eye:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>',
+};
+function icon(name,extraStyle){return `<span style="display:inline-flex;${extraStyle||''}">${ICONS[name]||''}</span>`}
+
 /* ════════════════════════════════
    PAGE SWITCHING
 ════════════════════════════════ */
@@ -987,9 +1038,9 @@ function updateLiveBadge(){
   const el=document.getElementById('apySourceNote');
   if(!el)return;
   if(apyDataIsLive){
-    el.innerHTML='🟢 Live APY from <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a> · updated on page load';
+    el.innerHTML='<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:4px"></span>Live APY from <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a> · updated on page load';
   }else{
-    el.innerHTML='⚪ Showing reference APY (live data unavailable right now) · source: <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a>';
+    el.innerHTML='<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--muted);margin-right:4px"></span>Showing reference APY (live data unavailable right now) · source: <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a>';
   }
 }
 function getAllocationForRisk(risk){
@@ -1149,7 +1200,8 @@ function startEmailLoader() {
     steps[2].classList.remove('active'); steps[2].classList.add('done'); steps[2].querySelector('.loader-step-dot').textContent = '✓';
     document.getElementById('el-title').textContent = 'Done!';
     document.getElementById('el-sub').textContent = 'Moving to your application...';
-    document.getElementById('el-avatar').textContent = '✅';
+    document.getElementById('el-avatar').innerHTML = ICONS.check;
+    document.getElementById('el-avatar').style.color='var(--teal)';
     setTimeout(() => { closeEntryModal(); startReviewLoader(); }, 800);
   }, dur);
 }
@@ -1242,61 +1294,314 @@ function selectNet(el,addr){document.querySelectorAll('.net-chip').forEach(c=>c.
 function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('#depositAddrModal .copy-btn');b.textContent='✓ Copied';setTimeout(()=>b.textContent='Copy',2000)}
 
 /* ════════════════════════════════
-   DASHBOARD JS
+   DASHBOARD JS — account state model
 ════════════════════════════════ */
+const account = {
+  total: 8000,
+  available: 8000,
+  working: 0,
+  earned: 0,
+  daysActive: 0,
+  isLaunched: false,
+};
 let dashInited=false;
 function initDashboard(){
   if(dashInited)return; dashInited=true;
-  /* nothing to init on fresh dashboard */
+  renderBalances();
+  setStrat(document.querySelector('.strat-opt.b'),'b'); // init preview with default strategy
 }
 
-/* Strategy */
-const strats={c:{name:'Conservative',apy:'8–14%',color:'var(--teal)',desc:'Only proven protocols — AAVE and Compound. Minimal volatility.',protos:['AAVE','Compound','dYdX'],risk:1,rl:'Very low'},b:{name:'Balanced',apy:'18–35%',color:'var(--amber)',desc:'A mix of lending and DEX pools. AI moves capital wherever returns are best right now.',protos:['Curve','Uniswap v3','Yearn','AAVE'],risk:3,rl:'Moderate'},r:{name:'Aggressive',apy:'40–90%',color:'var(--red)',desc:'Farming new pools, high-risk staking. High returns and high drawdown risk.',protos:['Pendle','Convex','GMX','Eigenlayer'],risk:5,rl:'High'}};
+function fmtMoney(v){
+  return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function renderBalances(){
+  document.getElementById('totalBal').textContent=account.total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('availableBal').textContent=fmtMoney(account.available);
+  document.getElementById('workingBal').textContent=fmtMoney(account.working);
+  document.getElementById('wdAvailableNote').textContent='Available: '+fmtMoney(account.available);
+  if(account.isLaunched){
+    const s=strats[currentStrat];
+    document.getElementById('balStatusLine').textContent='AI active · '+s.name+' strategy';
+    document.getElementById('workingApyLabel').textContent='Earning '+s.apy+' APY';
+  } else {
+    document.getElementById('balStatusLine').textContent=account.total>0?'Not invested yet':'No funds yet';
+    document.getElementById('workingApyLabel').textContent='Earning 0% APY';
+  }
+}
+
+/* Strategy data + live protocol composition per strategy */
+const strats={
+  c:{name:'Conservative',apy:'8–14%',apyMid:11,color:'var(--teal)',colorHex:'#00D4AA',desc:'Only proven protocols — AAVE and Compound. Minimal volatility.',risk:1,rl:'Very low',
+    protos:[
+      {name:'AAVE v3',pct:55,apy:12.8,color:'#00D4AA',type:'Lending · USDT supply',desc:'The largest lending protocol. You lend USDT for interest — a smart contract manages the collateral.'},
+      {name:'Compound',pct:30,apy:9.4,color:'#5DCAA5',type:'Lending · USDC supply',desc:'A long-standing, heavily audited lending protocol. Conservative collateral requirements.'},
+      {name:'dYdX',pct:15,apy:8.4,color:'#8B7CF8',type:'Money market',desc:'On-chain money market with conservative risk parameters.'},
+    ]},
+  b:{name:'Balanced',apy:'18–35%',apyMid:26,color:'var(--amber)',colorHex:'#F5A623',desc:'A mix of lending and DEX pools. AI moves capital wherever returns are best right now.',risk:3,rl:'Moderate',
+    protos:[
+      {name:'Curve Finance',pct:38,apy:19.2,color:'#00D4AA',type:'Liquidity pool · 3pool',desc:'Stablecoin DEX — the 3pool liquidity pool. Minimal risk, steady income from trading fees.'},
+      {name:'AAVE v3',pct:32,apy:12.8,color:'#F5A623',type:'Lending · USDT',desc:'The largest lending protocol. You lend USDT for interest — a smart contract manages the collateral.'},
+      {name:'Yearn Finance',pct:20,apy:24.1,color:'#8B7CF8',type:'Auto strategies · yUSDT',desc:'Automated strategies: Yearn searches DeFi for the best yield and reinvests profits.'},
+      {name:'Uniswap v3',pct:10,apy:31.5,color:'#FF7A50',type:'AMM · LP USDT/USDC',desc:'Narrow-range LP: you provide liquidity and earn from trader fees.'},
+    ]},
+  r:{name:'Aggressive',apy:'40–90%',apyMid:65,color:'var(--red)',colorHex:'#FF5858',desc:'Farming new pools, high-risk staking. High returns and high drawdown risk.',risk:5,rl:'High',
+    protos:[
+      {name:'Pendle',pct:35,apy:48.0,color:'#FF5858',type:'Yield token',desc:'Trades future yield as a tradable token. Higher complexity, higher potential return.'},
+      {name:'Convex',pct:30,apy:38.5,color:'#D4537E',type:'Farming',desc:'Boosts Curve LP rewards through token incentives. Returns depend on incentive emissions.'},
+      {name:'GMX',pct:20,apy:37.2,color:'#8B7CF8',type:'Perp DEX LP',desc:'Liquidity for a leveraged perpetuals exchange. Returns come from trader losses and fees — can be volatile.'},
+      {name:'Uniswap v3',pct:15,apy:31.5,color:'#FF7A50',type:'AMM · Narrow LP',desc:'Narrow-range LP: higher fee capture, but exposed to impermanent loss if price moves out of range.'},
+    ]},
+};
 let currentStrat='b';
-function setStrat(btn,key){currentStrat=key;document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const s=strats[key];document.getElementById('stratName').textContent=s.name;document.getElementById('stratApy').textContent=s.apy;document.getElementById('stratApy').style.color=s.color;document.getElementById('stratDesc').textContent=s.desc;const pp=document.getElementById('stratProtos');pp.innerHTML=s.protos.map(p=>`<span class="proto-chip">${p}</span>`).join('');const rb=document.getElementById('riskBar');rb.innerHTML='';for(let i=0;i<5;i++){const d=document.createElement('div');d.className='risk-pip';if(i<s.risk)d.style.background=s.color;rb.appendChild(d)}const lbl=document.createElement('span');lbl.className='risk-label-text';lbl.textContent=s.rl+' risk';rb.appendChild(lbl);document.getElementById('applyBtn').style.background=s.color==='var(--red)'?'#FF5858':s.color==='var(--amber)'?'#F5A623':'#00D4AA'}
+let currentProjMonths=3;
+
+function setStrat(btn,key){
+  currentStrat=key;
+  document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const s=strats[key];
+  document.getElementById('stratName').textContent=s.name;
+  document.getElementById('stratApy').textContent=s.apy;
+  document.getElementById('stratApy').style.color=s.color;
+  document.getElementById('stratDesc').textContent=s.desc;
+
+  const rb=document.getElementById('riskBar');
+  rb.innerHTML='';
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');
+    d.className='risk-pip';
+    if(i<s.risk)d.style.background=s.color;
+    rb.appendChild(d);
+  }
+  const lbl=document.createElement('span');
+  lbl.className='risk-label-text';
+  lbl.textContent=s.rl+' risk';
+  rb.appendChild(lbl);
+
+  document.getElementById('applyBtn').style.background=s.colorHex;
+  document.getElementById('applyBtn').textContent='🚀 Launch AI with this strategy';
+  document.getElementById('applyBtn').style.opacity='1';
+
+  renderStratPie(s);
+  renderPreviewAllocList(s);
+  renderProjection();
+}
+
+/* Pie chart for strategy preview */
+function renderStratPie(s){
+  const canvas=document.getElementById('stratPieChart');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const cx=42,cy=42,r=36;
+  ctx.clearRect(0,0,84,84);
+  let start=-Math.PI/2;
+  s.protos.forEach(p=>{
+    const end=start+(p.pct/100)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,end);
+    ctx.closePath();
+    ctx.fillStyle=p.color;
+    ctx.fill();
+    start=end;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,21,0,Math.PI*2);
+  ctx.fillStyle='#111727';
+  ctx.fill();
+
+  const legend=document.getElementById('stratPieLegend');
+  legend.innerHTML=s.protos.map(p=>`
+    <div style="display:flex;align-items:center;gap:7px;font-size:12px">
+      <div style="width:8px;height:8px;border-radius:50%;background:${p.color};flex-shrink:0"></div>
+      <span style="color:var(--white);font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</span>
+      <span style="color:var(--muted);flex-shrink:0">${p.pct}%</span>
+    </div>`).join('');
+}
+
+/* Preview allocation list (before launch) — tappable for protocol info */
+function renderPreviewAllocList(s){
+  const list=document.getElementById('previewAllocList');
+  const amount=account.available>0?account.available:account.total;
+  list.innerHTML=s.protos.map(p=>{
+    const dollars=amount*p.pct/100;
+    const descEsc=p.desc.replace(/'/g,"\\'");
+    return `<div class="alloc-item" onclick="openProto('${p.name}','${p.apy}','~${fmtMoney(dollars)}','${descEsc}','${p.color}')">
+      <div class="alloc-dot" style="background:${p.color}"></div>
+      <div class="alloc-info"><div class="alloc-name">${p.name}</div><div class="alloc-meta">${p.type} · ${p.pct}%</div></div>
+      <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~${fmtMoney(dollars)}</div><div class="alloc-apy">${p.apy}% APY</div></div>
+    </div>`;
+  }).join('');
+}
+
+/* Active allocation list (after launch) — same data, different framing */
+function renderActiveAllocList(s){
+  const list=document.getElementById('activeAllocList');
+  list.innerHTML=s.protos.map(p=>{
+    const dollars=account.working*p.pct/100;
+    const descEsc=p.desc.replace(/'/g,"\\'");
+    return `<div class="alloc-item" onclick="openProto('${p.name}','${p.apy}','${fmtMoney(dollars)}','${descEsc}','${p.color}')">
+      <div class="alloc-dot" style="background:${p.color}"></div>
+      <div class="alloc-info"><div class="alloc-name">${p.name}</div><div class="alloc-meta">${p.type} · ${p.pct}%</div></div>
+      <div class="alloc-right"><div class="alloc-val">${fmtMoney(dollars)}</div><div class="alloc-apy">${p.apy}% APY</div></div>
+    </div>`;
+  }).join('');
+}
+
+/* Period selector — only affects the forecast, never blocks withdrawals */
+function setProjPeriod(btn,months){
+  currentProjMonths=months;
+  document.querySelectorAll('#dash-strat-sect .period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProjection();
+}
+function renderProjection(){
+  const s=strats[currentStrat];
+  const amount=account.available>0?account.available:account.total;
+  const apy=s.apyMid/100;
+  const monthlyRate=apy/12;
+  const profit=amount*(Math.pow(1+monthlyRate,currentProjMonths)-1);
+  const labelMap={1:'1 month',3:'3 months',6:'6 months',12:'1 year'};
+  document.getElementById('projPeriodLabel').textContent='Estimated profit in '+labelMap[currentProjMonths];
+  document.getElementById('projPeriodValue').textContent='~'+fmtMoney(profit);
+}
+
+/* Launch strategy */
 let liveEarnInterval=null;
 function applyStrategy(){
   const s=strats[currentStrat];
   const btn=document.getElementById('applyBtn');
+  if(account.available<=0){
+    showToast('⚠️ No available funds to invest — add a deposit first');
+    return;
+  }
   btn.textContent='Launching...';
   btn.style.opacity='0.7';
   setTimeout(()=>{
     btn.textContent='✓ AI launched!';
     btn.style.background='#00b890';
-    document.querySelector('.balance-hero .bal-amount').parentElement.querySelector('span:not(.bal-amount):not(.currency)').textContent='AI active · '+s.name;
-    document.querySelectorAll('.dash-stats .stat-mini').forEach((m,i)=>{
-      if(i===0){m.querySelector('.num').textContent=s.apy.split('–')[0]+'%';m.querySelector('.num').style.color='var(--teal)'}
-    });
+
+    // Move all available funds into "working"
+    account.working += account.available;
+    account.available = 0;
+    account.isLaunched = true;
+    account.daysActive = 0;
+    renderBalances();
+
+    document.getElementById('apyStatVal').textContent=s.apy;
+    document.getElementById('apyStatVal').style.color='var(--teal)';
+    document.getElementById('daysStatVal').textContent='0';
+    document.getElementById('daysStatVal').style.color='var(--white)';
+
+    document.getElementById('nextStepBanner').style.display='none';
+    document.getElementById('activeAllocSect').style.display='block';
+    document.getElementById('previewAllocSect').style.display='none';
+    renderActiveAllocList(s);
+
     showToast('🚀 AI launched with the «'+s.name+'» strategy');
     startLiveEarnings(s);
-  },1500);
+    addHistoryEvent('🚀','AI launched','Just now','','move');
+  },1200);
 }
+
 function startLiveEarnings(s){
   const box=document.getElementById('liveEarnBox');
   box.style.display='block';
-  const amount=8000;
-  const apyLow=parseFloat(s.apy.split('–')[0])/100;
-  const perSec=amount*apyLow/365/86400;
+  const apyLow=s.apyMid/100;
+  const perSec=account.working*apyLow/365/86400;
   document.getElementById('liveEarnRate').textContent='accruing ~$'+perSec.toFixed(5)+' / sec';
-  let earned=0;
   if(liveEarnInterval)clearInterval(liveEarnInterval);
   liveEarnInterval=setInterval(()=>{
-    earned+=perSec*0.2;
-    document.getElementById('liveEarnAmount').textContent='+$'+earned.toFixed(4);
-    document.getElementById('earnedStatVal') && (document.getElementById('earnedStatVal').textContent='$'+earned.toFixed(2));
+    const tick=perSec*0.2;
+    account.earned+=tick;
+    account.working+=tick; // earnings compound into working balance
+    document.getElementById('liveEarnAmount').textContent='+'+fmtMoney(account.earned);
+    document.getElementById('earnedStatVal').textContent=fmtMoney(account.earned);
+    document.getElementById('earnedStatVal').style.color='var(--amber)';
+    document.getElementById('workingBal').textContent=fmtMoney(account.working);
+    document.getElementById('totalBal').textContent=(account.available+account.working).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('wdAvailableNote').textContent='Available: '+fmtMoney(account.available);
   },200);
 }
 
-/* Protocol info */
-function openProto(name,apy,amount,desc,color){document.getElementById('protoName').textContent=name;document.getElementById('protoApyBig').textContent=apy+'%';document.getElementById('protoApyBig').style.color=color;document.getElementById('protoDesc').textContent=desc;document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Invested</span><span style="font-size:13px;font-weight:700">$${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Protocol TVL</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Audit</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Passed</span></div>`;document.getElementById('protoModal').classList.add('open')}
+function addHistoryEvent(icon,name,time,amount,cls){
+  document.getElementById('historyEmptyState').style.display='none';
+  const list=document.getElementById('historyList');
+  list.style.display='flex';
+  const row=document.createElement('div');
+  row.className='act-item';
+  row.innerHTML=`<div class="act-icon" style="background:var(--card2)">${icon}</div><div class="act-info"><div class="act-name">${name}</div><div class="act-time">${time}</div></div><div class="act-amount ${cls}">${amount}</div>`;
+  list.prepend(row);
+}
+
+/* Protocol info modal */
+function openProto(name,apy,amount,desc,color){
+  document.getElementById('protoName').textContent=name;
+  document.getElementById('protoApyBig').textContent=apy+'%';
+  document.getElementById('protoApyBig').style.color=color;
+  document.getElementById('protoDesc').textContent=desc;
+  document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Allocation</span><span style="font-size:13px;font-weight:700">${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Protocol TVL</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Audit</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Passed</span></div>`;
+  document.getElementById('protoModal').classList.add('open');
+}
 
 /* Dashboard modals */
 function openDashDeposit(){document.getElementById('dashDepositModal').classList.add('open')}
-function openDashWithdraw(){document.getElementById('dashWithdrawModal').classList.add('open')}
+function openDashWithdraw(){
+  document.getElementById('wdAvailableNote').textContent='Available: '+fmtMoney(account.available);
+  document.getElementById('dashWithdrawModal').classList.add('open');
+}
 function openDashActions(){document.getElementById('actionsModal').classList.add('open')}
 function setDashNet(el,addr){document.querySelectorAll('#dashDepositModal .net-c').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('dashDepAddr').textContent=addr}
 function copyDashAddr(){navigator.clipboard.writeText(document.getElementById('dashDepAddr').textContent).catch(()=>{});const b=document.querySelector('#dashDepositModal .copy-btn');b.textContent='✓ Done';setTimeout(()=>b.textContent='Copy',2000)}
-function doWithdraw(){const amt=document.getElementById('wdAmount').value,addr=document.getElementById('wdAddr').value;if(!amt||parseFloat(amt)<=0){document.getElementById('wdAmount').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);return}if(!addr){document.getElementById('wdAddr').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAddr').style.borderColor='',2000);return}document.getElementById('dashWithdrawModal').classList.remove('open');setTimeout(()=>showToast('📤 Withdrawal request for $'+parseFloat(amt).toFixed(2)+' submitted'),300)}
+
+/* MAX now pulls the real available balance instead of a hardcoded number */
+function setMaxWithdraw(){
+  document.getElementById('wdAmount').value=account.available.toFixed(2);
+}
+
+function doWithdraw(){
+  const amt=parseFloat(document.getElementById('wdAmount').value);
+  const addr=document.getElementById('wdAddr').value;
+  if(!amt||amt<=0){
+    document.getElementById('wdAmount').style.borderColor='#FF5858';
+    setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);
+    return;
+  }
+  if(amt>account.available){
+    document.getElementById('wdAmount').style.borderColor='#FF5858';
+    showToast('⚠️ Amount exceeds your available balance ('+fmtMoney(account.available)+')');
+    setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);
+    return;
+  }
+  if(!addr){
+    document.getElementById('wdAddr').style.borderColor='#FF5858';
+    setTimeout(()=>document.getElementById('wdAddr').style.borderColor='',2000);
+    return;
+  }
+  account.available-=amt;
+  account.total-=amt;
+  renderBalances();
+  document.getElementById('dashWithdrawModal').classList.remove('open');
+  addHistoryEvent('📤','Withdrawal','Just now','-'+fmtMoney(amt),'move');
+  setTimeout(()=>showToast('📤 Withdrawal request for '+fmtMoney(amt)+' submitted'),300);
+}
+
+function doReinvest(){
+  document.getElementById('actionsModal').classList.remove('open');
+  if(account.earned<=0){
+    setTimeout(()=>showToast('Nothing to reinvest yet — earnings will accrue once AI is launched'),200);
+    return;
+  }
+  const amt=account.earned;
+  account.earned=0;
+  document.getElementById('earnedStatVal').textContent='$0';
+  setTimeout(()=>{
+    showToast('🔄 '+fmtMoney(amt)+' reinvested into your active strategy');
+    addHistoryEvent('🔄','Earnings reinvested','Just now',fmtMoney(amt),'plus');
+  },200);
+}
+
 function confirmLogout(){document.getElementById('logoutModal').classList.add('open')}
 function doLogout(){document.getElementById('logoutModal').classList.remove('open');setTimeout(()=>goToLanding(),400)}
 
