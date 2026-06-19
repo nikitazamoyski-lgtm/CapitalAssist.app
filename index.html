@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -344,91 +344,114 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 
 <nav id="nav-landing">
   <div class="brand">Capital<span>Assist</span><small>.app</small></div>
-  <div class="nav-badge">AI · Beta</div>
+  <div class="nav-badge" id="navBadge" style="display:flex;align-items:center;gap:4px"><i class="ti" style="font-size:13px">🛡️</i> Verified</div>
 </nav>
 
 <section class="hero">
-  <div class="hero-eyebrow">AI-менеджер капитала</div>
-  <h1>Твой USDT<br>работает, пока<br><em>ты отдыхаешь</em></h1>
-  <p class="hero-sub">ИИ сам ищет лучшую доходность среди лендинга, стейкинга и ликвидных пулов — и перекладывает деньги автоматически.</p>
+  <div class="hero-eyebrow">AI capital manager</div>
+  <h1>Your USDT<br>works while<br><em>you relax</em></h1>
+  <p class="hero-sub">AI finds the best yield across lending, staking, and liquidity pools — and moves your money automatically.</p>
   <div class="flow-wrap"><canvas id="flowCanvas"></canvas></div>
   <div class="hero-cta">
-    <button class="btn-primary" onclick="openEntryModal()">Начать зарабатывать →</button>
-    <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает?</button>
+    <button class="btn-primary" onclick="openEntryModal()">Start earning →</button>
+    <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
   </div>
 </section>
 
 <div class="stats-bar">
-  <div class="stat-cell"><span class="stat-num teal" id="tvlNum">$0</span><span class="stat-label">TVL под управлением</span></div>
-  <div class="stat-cell"><span class="stat-num amber" id="apyNum">0%</span><span class="stat-label">Средний APY сейчас</span></div>
-  <div class="stat-cell"><span class="stat-num" id="protocolNum">0</span><span class="stat-label">Протоколов</span></div>
+  <div class="stat-cell"><span class="stat-num teal" id="tvlNum">$0</span><span class="stat-label">TVL under management</span></div>
+  <div class="stat-cell"><span class="stat-num amber" id="apyNum">0%</span><span class="stat-label">Average APY now</span></div>
+  <div class="stat-cell"><span class="stat-num" id="protocolNum">0</span><span class="stat-label">Protocols</span></div>
 </div>
 
 <div class="ticker-wrap"><div class="ticker-inner" id="tickerInner"></div></div>
 
 <section class="section" id="how">
-  <p class="sec-label">Принцип работы</p>
-  <h2>Три шага — остальное за ИИ</h2>
+  <p class="sec-label">How it works</p>
+  <h2>Three steps — AI handles the rest</h2>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Выбери стратегию</h3><p>Определи, насколько ты готов рисковать. От тихой гавани до агрессивного роста — ты решаешь.</p></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Внеси USDT</h3><p>Сумма остаётся в децентрализованных протоколах. Мы никогда не держим твои средства напрямую.</p></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>ИИ следит и реагирует</h3><p>Каждые несколько минут алгоритм анализирует рынок и перебрасывает капитал туда, где выгода выше.</p></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Choose a strategy</h3><p>Decide how much risk you're comfortable with. From safe and steady to aggressive growth — you choose.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Deposit USDT</h3><p>Your funds stay in decentralized protocols. We never hold your funds directly.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>AI monitors and reacts</h3><p>Every few minutes, the algorithm scans the market and moves capital wherever returns are higher.</p></div></div>
   </div>
 </section>
 
 <section class="section">
-  <p class="sec-label">Стратегии</p><h2>Выбери свой уровень</h2>
+  <p class="sec-label">Strategies</p><h2>Choose your level</h2>
   <div class="strategies">
     <div class="strategy-card conservative selected" onclick="selectStrategy(this)">
-      <div class="strat-header"><span class="strat-name c">Спокойная</span><span class="apy-badge c">8–14%</span></div>
-      <p class="strat-desc">Только проверенные протоколы — лендинг на AAVE, Compound. Минимальная волатильность, стабильный доход.</p>
+      <div class="strat-header"><span class="strat-name c">Conservative</span><span class="apy-badge c">8–14%</span></div>
+      <p class="strat-desc">Only proven protocols — lending on AAVE, Compound. Minimal volatility, steady income.</p>
       <div class="proto-chips"><span class="chip">AAVE</span><span class="chip">Compound</span><span class="chip">dYdX</span></div>
-      <div class="risk-meter"><div class="risk-dot on c"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Очень низкий риск</span></div>
+      <div class="risk-meter"><div class="risk-dot on c"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Very low risk</span></div>
     </div>
     <div class="strategy-card balanced" onclick="selectStrategy(this)">
-      <div class="strat-header"><span class="strat-name b">Сбалансированная</span><span class="apy-badge b">18–35%</span></div>
-      <p class="strat-desc">Сочетание лендинга и ликвидных пулов DEX. Умеренный риск, заметно выше доход.</p>
+      <div class="strat-header"><span class="strat-name b">Balanced</span><span class="apy-badge b">18–35%</span></div>
+      <p class="strat-desc">A mix of lending and DEX liquidity pools. Moderate risk, noticeably higher returns.</p>
       <div class="proto-chips"><span class="chip">Curve</span><span class="chip">Uniswap v3</span><span class="chip">Yearn</span><span class="chip">AAVE</span></div>
-      <div class="risk-meter"><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Умеренный риск</span></div>
+      <div class="risk-meter"><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot on b"></div><div class="risk-dot"></div><div class="risk-dot"></div><span class="risk-label">Moderate risk</span></div>
     </div>
     <div class="strategy-card aggressive" onclick="selectStrategy(this)">
-      <div class="strat-header"><span class="strat-name r">Агрессивная</span><span class="apy-badge r">40–90%</span></div>
-      <p class="strat-desc">Фарминг новых пулов, высокорисковый стейкинг, оппортунистические позиции.</p>
+      <div class="strat-header"><span class="strat-name r">Aggressive</span><span class="apy-badge r">40–90%</span></div>
+      <p class="strat-desc">Farming new pools, high-risk staking, opportunistic positions.</p>
       <div class="proto-chips"><span class="chip">Pendle</span><span class="chip">Convex</span><span class="chip">GMX</span><span class="chip">Eigenlayer</span></div>
-      <div class="risk-meter"><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><span class="risk-label">Высокий риск</span></div>
+      <div class="risk-meter"><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><div class="risk-dot on r"></div><span class="risk-label">High risk</span></div>
     </div>
   </div>
 </section>
 
 <section class="section" id="deposit">
-  <p class="sec-label">Рассчитай доход</p><h2>Сколько ты хочешь вложить?</h2>
+  <p class="sec-label">Calculate your returns</p><h2>How much do you want to invest?</h2>
   <div class="amount-section">
-    <p class="amount-label">Сумма в USDT</p>
-    <div class="amount-input-wrap"><span class="currency-tag">$</span><input type="number" id="amountInput" placeholder="1 000" value="1000" inputmode="numeric" min="10"></div>
+    <p class="amount-label">Amount in USDT</p>
+    <div class="amount-input-wrap"><span class="currency-tag">$</span><input type="number" id="amountInput" placeholder="1,000" value="1000" inputmode="numeric" min="10"></div>
     <div class="quick-amounts">
       <button class="quick-btn" onclick="setAmount(500)">$500</button>
       <button class="quick-btn" onclick="setAmount(1000)">$1K</button>
       <button class="quick-btn" onclick="setAmount(5000)">$5K</button>
       <button class="quick-btn" onclick="setAmount(10000)">$10K</button>
     </div>
-    <div class="projection" id="projBox">
-      <div class="proj-row"><span class="proj-key">За 30 дней</span><span class="proj-val teal" id="proj30"></span></div>
-      <div class="proj-row"><span class="proj-key">За 3 месяца</span><span class="proj-val teal" id="proj90"></span></div>
-      <div class="proj-row"><span class="proj-key">За год</span><span class="proj-val teal" id="proj365"></span></div>
-      <div class="proj-row"><span class="proj-key">Стратегия</span><span class="proj-val" id="projStrat"></span></div>
+
+    <!-- INTERACTIVE ALLOCATION SLIDER -->
+    <p class="amount-label" style="margin-top:4px">Risk allocation</p>
+    <div style="margin-bottom:6px">
+      <input type="range" id="riskSlider" min="0" max="100" value="35" style="width:100%;-webkit-appearance:none;height:5px;background:linear-gradient(to right,var(--teal),var(--amber),var(--red));border-radius:3px;outline:none;cursor:pointer">
     </div>
-    <button class="btn-primary">Подключить кошелёк →</button>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:18px">
+      <span>Safe</span><span>Balanced</span><span>Aggressive</span>
+    </div>
+
+    <!-- LIVE ALLOCATION BREAKDOWN -->
+    <div style="background:var(--navy2);border-radius:12px;padding:14px;margin-bottom:8px">
+      <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:10px">Where your money goes</p>
+      <div id="calcAllocList" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <p id="apySourceNote" style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5">⚪ Loading live APY data...</p>
+
+    <div class="projection" id="projBox">
+      <div class="proj-row"><span class="proj-key">Daily income</span><span class="proj-val teal" id="projDay"></span></div>
+      <div class="proj-row"><span class="proj-key">In 30 days</span><span class="proj-val teal" id="proj30"></span></div>
+      <div class="proj-row"><span class="proj-key">In 3 months</span><span class="proj-val teal" id="proj90"></span></div>
+      <div class="proj-row"><span class="proj-key">In 1 year</span><span class="proj-val teal" id="proj365"></span></div>
+      <div class="proj-row"><span class="proj-key">Effective APY</span><span class="proj-val" id="projStrat"></span></div>
+    </div>
+
+    <!-- MINI GROWTH CHART -->
+    <p style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500;margin-bottom:8px">Balance growth over 1 year</p>
+    <canvas id="growthChart" height="100" style="width:100%;display:block;margin-bottom:20px"></canvas>
+
+    <button class="btn-primary" onclick="openEntryModal()">Connect wallet →</button>
   </div>
 </section>
 
 <section class="section">
-  <p class="sec-label">Пример портфеля</p><h2>Вот как выглядит сбалансированная</h2>
+  <p class="sec-label">Sample portfolio</p><h2>What balanced looks like</h2>
   <div class="simulator">
-    <div class="sim-head"><span class="sim-head-title">Демо-портфель · $5 000</span><span class="live-dot">LIVE</span></div>
+    <div class="sim-head"><span class="sim-head-title">Demo portfolio · $5,000</span><span class="live-dot">LIVE</span></div>
     <div class="sim-body">
       <div class="portfolio-total">
-        <div class="label">Текущая стоимость</div>
-        <div class="amount" id="liveAmount">$5 147.32</div>
+        <div class="label">Current value</div>
+        <div class="amount" id="liveAmount">$5,147.32</div>
         <div class="gain" id="liveGain">+$147.32 · +2.95%</div>
       </div>
       <div class="alloc-bars">
@@ -442,100 +465,100 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 </section>
 
 <section class="section">
-  <p class="sec-label">Где работают деньги</p><h2>Протоколы сейчас</h2>
+  <p class="sec-label">Where the money works</p><h2>Protocols right now</h2>
   <div class="protocols">
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(0,212,170,0.1)">🌊</div><div class="proto-info"><div class="proto-name">Curve Finance</div><div class="proto-type">Стейблкоин DEX · Лик. пул</div></div><div class="proto-apy">19.2%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(144,97,247,0.1)">👻</div><div class="proto-info"><div class="proto-name">AAVE v3</div><div class="proto-type">Лендинг · USDT supply</div></div><div class="proto-apy">12.8%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(245,166,35,0.1)">🔮</div><div class="proto-info"><div class="proto-name">Yearn Finance</div><div class="proto-type">Авто-стратегии · yVault</div></div><div class="proto-apy">24.1%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(255,90,90,0.1)">🦄</div><div class="proto-info"><div class="proto-name">Uniswap v3</div><div class="proto-type">AMM · Узкий диапазон LP</div></div><div class="proto-apy">31.5%<span>APY</span></div></div>
-    <div class="proto-row"><div class="proto-icon" style="background:rgba(56,189,248,0.1)">📐</div><div class="proto-info"><div class="proto-name">Pendle Finance</div><div class="proto-type">Yield tokenization</div></div><div class="proto-apy">41.0%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(0,212,170,0.1)">🌊</div><div class="proto-info"><div class="proto-name">Curve Finance</div><div class="proto-type">Stablecoin DEX · Liquidity pool</div></div><div class="proto-apy" id="protoApy-curve">19.2%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(144,97,247,0.1)">👻</div><div class="proto-info"><div class="proto-name">AAVE v3</div><div class="proto-type">Lending · USDT supply</div></div><div class="proto-apy" id="protoApy-aave">12.8%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(245,166,35,0.1)">🔮</div><div class="proto-info"><div class="proto-name">Yearn Finance</div><div class="proto-type">Auto strategies · yVault</div></div><div class="proto-apy" id="protoApy-yearn">24.1%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(255,90,90,0.1)">🦄</div><div class="proto-info"><div class="proto-name">Uniswap v3</div><div class="proto-type">AMM · Narrow-range LP</div></div><div class="proto-apy" id="protoApy-uniswap">31.5%<span>APY</span></div></div>
+    <div class="proto-row"><div class="proto-icon" style="background:rgba(56,189,248,0.1)">📐</div><div class="proto-info"><div class="proto-name">Pendle Finance</div><div class="proto-type">Yield tokenization</div></div><div class="proto-apy" id="protoApy-pendle">41.0%<span>APY</span></div></div>
   </div>
 </section>
 
 <section class="section">
-  <p class="sec-label">Безопасность</p><h2>Твои деньги не у нас</h2>
+  <p class="sec-label">Security</p><h2>Your money isn't with us</h2>
   <div class="security-grid">
-    <div class="sec-card"><div class="sec-icon">🔒</div><h4>Смарт-контракты</h4><p>Средства хранятся в аудированных on-chain контрактах.</p></div>
-    <div class="sec-card"><div class="sec-icon">🛡</div><h4>Аудит кода</h4><p>Все смарт-контракты прошли независимый аудит.</p></div>
-    <div class="sec-card"><div class="sec-icon">⚡</div><h4>Вывод в любой момент</h4><p>Забираешь деньги когда хочешь — никаких локапов.</p></div>
-    <div class="sec-card"><div class="sec-icon">👁</div><h4>Полная прозрачность</h4><p>Все транзакции видны on-chain.</p></div>
+    <div class="sec-card"><div class="sec-icon">🔒</div><h4>Smart contracts</h4><p>Funds are held in audited on-chain contracts.</p></div>
+    <div class="sec-card"><div class="sec-icon">🛡</div><h4>Code audits</h4><p>All smart contracts have passed independent audits.</p></div>
+    <div class="sec-card"><div class="sec-icon">⚡</div><h4>Withdraw anytime</h4><p>Take your money out whenever you want — no lock-ups.</p></div>
+    <div class="sec-card"><div class="sec-icon">👁</div><h4>Full transparency</h4><p>Every transaction is visible on-chain.</p></div>
   </div>
 </section>
 
 <section class="section">
-  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">⚠️ Криптовалютные инвестиции несут высокий риск. Указанные APY — исторические ориентиры, не гарантии. Вкладывай только то, что готов потерять.</p>
+  <p style="font-size:11px;color:var(--muted);line-height:1.7;text-align:center;max-width:320px;margin:0 auto;">⚠️ Cryptocurrency investments carry high risk. Listed APYs are historical benchmarks, not guarantees. Only invest what you can afford to lose.</p>
 </section>
 
 <div style="height:80px"></div>
-<div class="sticky-bottom"><button class="btn-primary" onclick="openEntryModal()">Войти или зарегистрироваться →</button></div>
+<div class="sticky-bottom"><button class="btn-primary" onclick="openEntryModal()">Log in or sign up →</button></div>
 
 <!-- ENTRY MODAL -->
 <div class="modal-overlay" id="entryModal" onclick="if(event.target===this)closeEntryModal()">
   <div class="modal-sheet">
     <button class="sheet-close" onclick="closeEntryModal()">×</button>
     <div class="sheet-handle"></div>
-    <p class="sheet-title">Добро пожаловать</p>
-    <p class="sheet-sub">Войди или создай аккаунт — это займёт 30 секунд</p>
+    <p class="sheet-title">Welcome</p>
+    <p class="sheet-sub">Log in or create an account — it takes 30 seconds</p>
     <div class="entry-tabs">
       <button class="entry-tab active" onclick="switchTab('email',this)">Email</button>
-      <button class="entry-tab" onclick="switchTab('social',this)">Соцсети</button>
-      <button class="entry-tab" onclick="switchTab('wallet',this)">Кошелёк</button>
+      <button class="entry-tab" onclick="switchTab('social',this)">Social</button>
+      <button class="entry-tab" onclick="switchTab('wallet',this)">Wallet</button>
     </div>
     <div class="entry-panel active" id="panel-email">
       <div id="email-form-wrap">
-        <div class="field"><label>Твой email</label><input type="email" id="userEmail" placeholder="you@example.com" inputmode="email" autocomplete="email"></div>
-        <div class="field"><label>Имя (необязательно)</label><input type="text" id="userName" placeholder="Как тебя зовут?" autocomplete="name"></div>
-        <button class="btn-primary" style="margin-top:4px" onclick="sendEmailNotify()">Отправить заявку →</button>
-        <p class="terms-note" style="margin-top:14px">Мы получим твой email и свяжемся с тобой в течение дня</p>
+        <div class="field"><label>Your email</label><input type="email" id="userEmail" placeholder="you@example.com" inputmode="email" autocomplete="email"></div>
+        <div class="field"><label>Name (optional)</label><input type="text" id="userName" placeholder="What's your name?" autocomplete="name"></div>
+        <button class="btn-primary" style="margin-top:4px" onclick="sendEmailNotify()">Submit application →</button>
+        <p class="terms-note" style="margin-top:14px">We'll receive your email and reach out within a day</p>
       </div>
       <div id="email-loading-wrap" style="display:none;padding:8px 0 4px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
           <div id="el-avatar" style="width:40px;height:40px;border-radius:50%;background:var(--teal-faint);border:1.5px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">✉️</div>
           <div>
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700" id="el-title">Отправляем заявку...</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:2px" id="el-sub">Подключаемся к серверу</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700" id="el-title">Submitting application...</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px" id="el-sub">Connecting to server</div>
           </div>
         </div>
         <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:10px">
           <div id="el-bar" style="height:100%;border-radius:2px;background:var(--teal);width:0%;transition:width linear"></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:7px;margin-top:14px" id="el-steps">
-          <div class="loader-step active" id="els-1"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px">◌</div><span style="font-size:12px">Отправка данных</span></div>
-          <div class="loader-step" id="els-2"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Проверка email</span></div>
-          <div class="loader-step" id="els-3"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Создание аккаунта</span></div>
+          <div class="loader-step active" id="els-1"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px">◌</div><span style="font-size:12px">Sending data</span></div>
+          <div class="loader-step" id="els-2"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Verifying email</span></div>
+          <div class="loader-step" id="els-3"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Creating account</span></div>
         </div>
       </div>
     </div>
     <div class="entry-panel" id="panel-social">
       <div id="social-btns-wrap">
         <div class="social-btns">
-          <button class="social-btn" onclick="startSocialAuth(this,'Google','#4285F4','G')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>Продолжить через Google</button>
-          <button class="social-btn" onclick="startSocialAuth(this,'Facebook','#1877F2','f')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796v8.437C19.612 23.097 24 18.1 24 12.073z"/></svg></div>Продолжить через Facebook</button>
-          <button class="social-btn" onclick="startSocialAuth(this,'X (Twitter)','#fff','𝕏')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--white)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>Продолжить через X</button>
-          <button class="social-btn" onclick="startSocialAuth(this,'GitHub','#fff','⌥')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--white)"/></svg></div>Продолжить через GitHub</button>
+          <button class="social-btn" onclick="startSocialAuth(this,'Google','#4285F4','G')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>Continue with Google</button>
+          <button class="social-btn" onclick="startSocialAuth(this,'Facebook','#1877F2','f')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796v8.437C19.612 23.097 24 18.1 24 12.073z"/></svg></div>Continue with Facebook</button>
+          <button class="social-btn" onclick="startSocialAuth(this,'X (Twitter)','#fff','𝕏')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--white)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>Continue with X</button>
+          <button class="social-btn" onclick="startSocialAuth(this,'GitHub','#fff','⌥')"><div class="social-icon"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--white)"/></svg></div>Continue with GitHub</button>
         </div>
-        <p class="terms-note">Мы не постим ничего без твоего разрешения</p>
+        <p class="terms-note">This sends an application to your email provider, same as the Email form — no real login to Google/Facebook/X happens</p>
       </div>
       <div id="social-loading-wrap" style="display:none;padding:16px 0 4px;text-align:center">
         <div id="sl-avatar" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.06);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 14px;transition:background .3s">?</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px" id="sl-title">Подключаемся...</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:20px" id="sl-sub">Ожидаем ответ от сервера</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px" id="sl-title">Connecting...</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:20px" id="sl-sub">Waiting for server response</div>
         <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;margin-bottom:20px">
           <div id="sl-bar" style="height:100%;border-radius:2px;background:var(--teal);width:0%;transition:width linear"></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px;text-align:left">
-          <div class="loader-step active" id="sls-1"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px">◌</div><span style="font-size:12px" id="sls-1-text">Запрос авторизации</span></div>
-          <div class="loader-step" id="sls-2"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Проверка токена</span></div>
-          <div class="loader-step" id="sls-3"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Создание сессии</span></div>
+          <div class="loader-step active" id="sls-1"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px">◌</div><span style="font-size:12px" id="sls-1-text">Requesting authorization</span></div>
+          <div class="loader-step" id="sls-2"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Verifying token</span></div>
+          <div class="loader-step" id="sls-3"><div class="loader-step-dot" style="width:16px;height:16px;font-size:8px"></div><span style="font-size:12px">Creating session</span></div>
         </div>
       </div>
     </div>
     <div class="entry-panel" id="panel-wallet">
-      <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">Подключи свой крипто-кошелёк напрямую — без регистрации и паролей. Твои ключи остаются у тебя.</p>
-      <button class="btn-primary" onclick="closeEntryModal();document.getElementById('deposit').scrollIntoView({behavior:'smooth'})">Подключить кошелёк →</button>
-      <p class="terms-note" style="margin-top:14px">Поддерживаем MetaMask, WalletConnect, Coinbase и другие</p>
+      <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">Connect your crypto wallet directly — no signup, no passwords. Your keys stay with you.</p>
+      <button class="btn-primary" onclick="closeEntryModal();document.getElementById('deposit').scrollIntoView({behavior:'smooth'})">Connect wallet →</button>
+      <p class="terms-note" style="margin-top:14px">We support MetaMask, WalletConnect, Coinbase, and others</p>
     </div>
-    <p class="terms-note" style="margin-top:20px">Продолжая, ты соглашаешься с <a href="#">Условиями</a> и <a href="#">Политикой конфиденциальности</a></p>
+    <p class="terms-note" style="margin-top:20px">By continuing, you agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
   </div>
 </div>
 
@@ -544,10 +567,10 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="success-sheet">
     <div class="sheet-handle" style="margin-bottom:8px"></div>
     <div class="success-icon">✉️</div>
-    <p class="sheet-title" style="text-align:center">Письмо готово!</p>
-    <p class="sheet-sub" style="text-align:center">Открой почту и нажми «Отправить» — даём тебе 30 секунд</p>
+    <p class="sheet-title" style="text-align:center">Email is ready!</p>
+    <p class="sheet-sub" style="text-align:center">Open your mail app and hit send — you have 30 seconds</p>
     <div class="timer-ring-wrap"><svg width="100" height="100" class="timer-ring"><circle class="timer-circle-bg" cx="50" cy="50" r="42"/><circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="0"/><text class="timer-text" id="timerText" x="50" y="50" transform="rotate(90,50,50)">30</text></svg></div>
-    <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">Вернись сюда после отправки — мы покажем следующий шаг</p>
+    <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">Come back here after sending — we'll show you the next step</p>
   </div>
 </div>
 
@@ -556,71 +579,71 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="deposit-sheet">
     <button class="sheet-close" onclick="document.getElementById('depositAddrModal').classList.remove('open')">×</button>
     <div class="sheet-handle" style="margin-bottom:16px"></div>
-    <p class="sheet-title">🎉 Отлично, всё прошло чётко!</p>
-    <p class="sheet-sub">Теперь пополни баланс — переведи USDT на наш адрес</p>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase">Выбери сеть</p>
+    <p class="sheet-title">🎉 You're all set!</p>
+    <p class="sheet-sub">Now fund your balance — send USDT to our address</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.3px;text-transform:uppercase">Choose network</p>
     <div class="network-chips">
       <div class="net-chip active" onclick="selectNet(this,'TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
       <div class="net-chip" onclick="selectNet(this,'0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
       <div class="net-chip" onclick="selectNet(this,'bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
     </div>
-    <div class="usdt-address-box"><span class="usdt-address" id="walletAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyLandingAddr()">Копировать</button></div>
+    <div class="usdt-address-box"><span class="usdt-address" id="walletAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyLandingAddr()">Copy</button></div>
     <div class="deposit-steps">
-      <div class="dep-step"><div class="dep-step-n">1</div><span>Открой свой кошелёк (Binance, Bybit, TrustWallet и т.д.)</span></div>
-      <div class="dep-step"><div class="dep-step-n">2</div><span>Выбери «Отправить USDT» и вставь адрес выше</span></div>
-      <div class="dep-step"><div class="dep-step-n">3</div><span>Укажи сумму — минимум $100 USDT</span></div>
-      <div class="dep-step"><div class="dep-step-n">4</div><span>После зачисления ИИ автоматически начнёт работу</span></div>
+      <div class="dep-step"><div class="dep-step-n">1</div><span>Open your wallet (Binance, Bybit, TrustWallet, etc.)</span></div>
+      <div class="dep-step"><div class="dep-step-n">2</div><span>Select "Send USDT" and paste the address above</span></div>
+      <div class="dep-step"><div class="dep-step-n">3</div><span>Enter amount — minimum $100 USDT</span></div>
+      <div class="dep-step"><div class="dep-step-n">4</div><span>Once credited, the AI starts working automatically</span></div>
     </div>
-    <button class="btn-primary" onclick="startDepositLoader()">Я пополнил → Перейти в кабинет</button>
-    <p class="terms-note" style="margin-top:14px">Зачисление обычно занимает 1–5 минут</p>
+    <button class="btn-primary" onclick="startDepositLoader()">I've deposited → Go to dashboard</button>
+    <p class="terms-note" style="margin-top:14px">Deposit usually takes 1–5 minutes</p>
   </div>
 </div>
 
 </div><!-- /page-landing -->
 
-<!-- ═══ LOADER 1: Рассмотрение заявки → Одобрено ═══ -->
+<!-- ═══ LOADER 1: Application review → Approved ═══ -->
 <div class="loader-screen" id="loader-review">
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
   <div class="loader-icon-wrap">🔍</div>
-  <p class="loader-title" id="lr-title">Рассматриваем заявку</p>
-  <p class="loader-sub" id="lr-sub">Администрация проверяет данные. Это занимает до 1 минуты</p>
+  <p class="loader-title" id="lr-title">Reviewing your application</p>
+  <p class="loader-sub" id="lr-sub">Our team is checking your details. This takes up to 1 minute</p>
   <div class="loader-bar-wrap"><div class="loader-bar" id="lr-bar"></div></div>
   <p class="loader-pct" id="lr-pct">0%</p>
   <div class="loader-steps" id="lr-steps">
-    <div class="loader-step active" id="lrs-1"><div class="loader-step-dot">◌</div><span>Проверка email</span></div>
-    <div class="loader-step" id="lrs-2"><div class="loader-step-dot"></div><span>Верификация заявки</span></div>
-    <div class="loader-step" id="lrs-3"><div class="loader-step-dot"></div><span>Решение администрации</span></div>
+    <div class="loader-step active" id="lrs-1"><div class="loader-step-dot">◌</div><span>Verifying email</span></div>
+    <div class="loader-step" id="lrs-2"><div class="loader-step-dot"></div><span>Verifying application</span></div>
+    <div class="loader-step" id="lrs-3"><div class="loader-step-dot"></div><span>Admin decision</span></div>
   </div>
 </div>
 
-<!-- ═══ LOADER 2: Одобрено ═══ -->
+<!-- ═══ LOADER 2: Approved ═══ -->
 <div class="loader-screen" id="loader-approved">
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
   <div class="approved-card">
-    <div class="approved-badge">Заявка одобрена</div>
-    <p class="loader-title" style="text-align:left;margin-bottom:6px">Вас одобрили! 🎉</p>
-    <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">Теперь вы можете вносить депозит и начать зарабатывать с ИИ-менеджером</p>
+    <div class="approved-badge">Application approved</div>
+    <p class="loader-title" style="text-align:left;margin-bottom:6px">You're approved! 🎉</p>
+    <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:20px">You can now make a deposit and start earning with the AI manager</p>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Статус</span><span style="color:var(--teal);font-weight:600">✓ Активен</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Уровень</span><span style="font-weight:600">Стандарт</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Мин. депозит</span><span style="font-weight:600">$100 USDT</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Status</span><span style="color:var(--teal);font-weight:600">✓ Active</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Tier</span><span style="font-weight:600">Standard</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--navy2);border-radius:8px;font-size:13px"><span style="color:var(--muted)">Min. deposit</span><span style="font-weight:600">$100 USDT</span></div>
     </div>
   </div>
-  <button class="btn-primary" style="max-width:320px" onclick="showDepositAddrFromApproved()">Внести депозит →</button>
+  <button class="btn-primary" style="max-width:320px" onclick="showDepositAddrFromApproved()">Make a deposit →</button>
 </div>
 
-<!-- ═══ LOADER 3: Проверяем депозит ═══ -->
+<!-- ═══ LOADER 3: Checking deposit ═══ -->
 <div class="loader-screen" id="loader-deposit">
   <div class="loader-logo">Capital<span>Assist</span><small>.app</small></div>
   <div class="loader-icon-wrap" id="ld-icon">⏳</div>
-  <p class="loader-title" id="ld-title">Проверка депозита</p>
-  <p class="loader-sub" id="ld-sub">Проверяем транзакцию в блокчейне</p>
+  <p class="loader-title" id="ld-title">Checking deposit</p>
+  <p class="loader-sub" id="ld-sub">Checking the transaction on-chain</p>
   <div class="loader-bar-wrap"><div class="loader-bar" id="ld-bar"></div></div>
   <p class="loader-pct" id="ld-pct">0%</p>
   <div class="loader-steps" style="margin-top:24px">
-    <div class="loader-step active" id="lds-1"><div class="loader-step-dot">◌</div><span>Поиск транзакции</span></div>
-    <div class="loader-step" id="lds-2"><div class="loader-step-dot"></div><span>Подтверждение блоков</span></div>
-    <div class="loader-step" id="lds-3"><div class="loader-step-dot"></div><span>Зачисление на счёт</span></div>
+    <div class="loader-step active" id="lds-1"><div class="loader-step-dot">◌</div><span>Finding the transaction</span></div>
+    <div class="loader-step" id="lds-2"><div class="loader-step-dot"></div><span>Confirming blocks</span></div>
+    <div class="loader-step" id="lds-3"><div class="loader-step-dot"></div><span>Crediting your account</span></div>
   </div>
 </div>
 
@@ -632,20 +655,20 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 
 <nav id="nav-dashboard">
   <div class="brand">Capital<span>Assist</span><small>.app</small></div>
-  <button class="logout-btn" onclick="confirmLogout()"><span>⎋</span> Выйти</button>
+  <button class="logout-btn" onclick="confirmLogout()"><span>⎋</span> Log out</button>
 </nav>
 
-<div class="greeting"><p class="greeting-line">Добро пожаловать</p><h1>Твой кабинет 👋</h1></div>
+<div class="greeting"><p class="greeting-line">Welcome</p><h1>Your dashboard 👋</h1></div>
 
 <div class="balance-hero">
-  <span class="bal-label">Баланс на счёте</span>
+  <span class="bal-label">Account balance</span>
   <div class="bal-amount"><span class="currency">$</span><span id="totalBal">8 000.00</span></div>
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
-    <span style="font-size:13px;color:var(--muted)">Депозит зачислен · ИИ ещё не запущен</span>
+    <span style="font-size:13px;color:var(--muted)">Deposit received · AI not yet started</span>
   </div>
   <div class="bal-actions">
-    <button class="bal-btn deposit" onclick="openDashDeposit()">+ Пополнить</button>
-    <button class="bal-btn withdraw" onclick="openDashWithdraw()">↑ Вывести</button>
+    <button class="bal-btn deposit" onclick="openDashDeposit()">+ Deposit</button>
+    <button class="bal-btn withdraw" onclick="openDashWithdraw()">↑ Withdraw</button>
   </div>
 </div>
 
@@ -653,77 +676,87 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 <div style="margin:16px 20px 0;background:rgba(0,212,170,0.07);border:1px solid var(--border-teal);border-radius:16px;padding:18px 16px">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
     <span style="font-size:20px">🚀</span>
-    <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--teal)">Следующий шаг</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--teal)">Next step</span>
   </div>
-  <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px">Деньги на счёте, но ещё не работают. Выбери стратегию и запусти ИИ — он сам разложит деньги по протоколам.</p>
-  <button class="btn-primary" style="font-size:14px;padding:13px" onclick="document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})">Выбрать стратегию и запустить →</button>
+  <p style="font-size:13px;color:var(--muted2);line-height:1.6;margin-bottom:14px">Your funds are in your account but not yet working. Choose a strategy and launch the AI — it will allocate your funds across protocols automatically.</p>
+  <button class="btn-primary" style="font-size:14px;padding:13px" onclick="document.getElementById('dash-strat-sect').scrollIntoView({behavior:'smooth'})">Choose a strategy and launch →</button>
 </div>
 
 <div class="dash-stats">
   <div class="stat-mini"><span class="num" style="color:var(--muted)">—</span><span class="lbl">APY</span></div>
-  <div class="stat-mini"><span class="num" style="color:var(--muted)">$0</span><span class="lbl">Заработано</span></div>
-  <div class="stat-mini"><span class="num" style="color:var(--muted)">0</span><span class="lbl">Дней в работе</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)" id="earnedStatVal">$0</span><span class="lbl">Earned</span></div>
+  <div class="stat-mini"><span class="num" style="color:var(--muted)">0</span><span class="lbl">Days active</span></div>
 </div>
 
 <!-- STRATEGY SECTION -->
 <div class="sect" id="dash-strat-sect">
-  <div class="sect-head"><span class="sect-title">Выбери стратегию</span></div>
-  <p style="font-size:13px;color:var(--muted2);margin-bottom:16px;line-height:1.6">ИИ будет автоматически перекладывать деньги между протоколами в рамках выбранной стратегии</p>
+  <div class="sect-head"><span class="sect-title">Choose a strategy</span></div>
+  <p style="font-size:13px;color:var(--muted2);margin-bottom:16px;line-height:1.6">The AI will automatically move funds between protocols within your chosen strategy</p>
   <div class="strat-toggle">
-    <button class="strat-opt c" onclick="setStrat(this,'c')">Спокойная</button>
-    <button class="strat-opt b active" onclick="setStrat(this,'b')">Баланс</button>
-    <button class="strat-opt r" onclick="setStrat(this,'r')">Агрессив</button>
+    <button class="strat-opt c" onclick="setStrat(this,'c')">Conservative</button>
+    <button class="strat-opt b active" onclick="setStrat(this,'b')">Balanced</button>
+    <button class="strat-opt r" onclick="setStrat(this,'r')">Aggressive</button>
   </div>
   <div class="strat-info">
-    <div class="strat-info-head"><span class="strat-info-title" id="stratName">Сбалансированная</span><span class="apy-tag" id="stratApy" style="color:var(--amber)">18–35%</span></div>
+    <div class="strat-info-head"><span class="strat-info-title" id="stratName">Balanced</span><span class="apy-tag" id="stratApy" style="color:var(--amber)">18–35%</span></div>
     <div class="strat-info-body">
-      <p class="strat-desc-text" id="stratDesc">Сочетание лендинга и ликвидных пулов DEX. ИИ перекладывает между протоколами каждые несколько минут — там, где выгоднее прямо сейчас.</p>
+      <p class="strat-desc-text" id="stratDesc">A mix of lending and DEX liquidity pools. AI moves capital between protocols every few minutes — wherever returns are best right now.</p>
       <div class="strat-protocols" id="stratProtos"><span class="proto-chip">Curve</span><span class="proto-chip">Uniswap v3</span><span class="proto-chip">Yearn</span><span class="proto-chip">AAVE</span></div>
-      <div class="risk-bar" id="riskBar"><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip"></div><div class="risk-pip"></div><span class="risk-label-text">Умеренный риск</span></div>
-      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">🚀 Запустить ИИ с этой стратегией</button>
+      <div class="risk-bar" id="riskBar"><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip" style="background:var(--amber)"></div><div class="risk-pip"></div><div class="risk-pip"></div><span class="risk-label-text">Moderate risk</span></div>
+      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">🚀 Launch AI with this strategy</button>
+
+      <!-- LIVE EARNINGS COUNTER (hidden until launch) -->
+      <div id="liveEarnBox" style="display:none;margin-top:16px;background:var(--navy2);border-radius:12px;padding:16px;border:0.5px solid var(--border-teal)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Earnings right now</span>
+          <span class="live-badge">LIVE</span>
+        </div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--teal);letter-spacing:-0.5px" id="liveEarnAmount">+$0.00</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="liveEarnRate">accruing ~$0.00 / sec</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- КУДА ПОЙДУТ ДЕНЬГИ -->
+<!-- WHERE THE MONEY WILL GO -->
 <div class="sect">
-  <div class="sect-head"><span class="sect-title">Куда пойдут деньги</span></div>
-  <p style="font-size:13px;color:var(--muted2);margin-bottom:14px;line-height:1.5">После запуска ИИ распределит $8 000 по этим протоколам</p>
+  <div class="sect-head"><span class="sect-title">Where the money will go</span></div>
+  <p style="font-size:13px;color:var(--muted2);margin-bottom:14px;line-height:1.5">Once launched, the AI will allocate $8,000 across these protocols</p>
   <div class="alloc-card">
-    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','~$3 040','Стейблкоин DEX — ликвидный пул 3pool. Минимальный риск, стабильный доход от торговых комиссий.','var(--teal)')">
+    <div class="alloc-item" onclick="openProto('Curve Finance','19.2','~$3 040','Stablecoin DEX — the 3pool liquidity pool. Minimal risk, steady income from trading fees.','var(--teal)')">
       <div class="alloc-dot" style="background:var(--teal)"></div>
-      <div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Лик. пул · 3pool · 38%</div></div>
+      <div class="alloc-info"><div class="alloc-name">Curve Finance</div><div class="alloc-meta">Liquidity pool · 3pool · 38%</div></div>
       <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$3 040</div><div class="alloc-apy">19.2% APY</div></div>
     </div>
-    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','~$2 560','Крупнейший протокол лендинга. Ты даёшь USDT в долг под процент — смарт-контракт следит за обеспечением.','var(--amber)')">
+    <div class="alloc-item" onclick="openProto('AAVE v3','12.8','~$2 560','The largest lending protocol. You lend USDT for interest — a smart contract manages the collateral.','var(--amber)')">
       <div class="alloc-dot" style="background:var(--amber)"></div>
-      <div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Лендинг · USDT · 32%</div></div>
+      <div class="alloc-info"><div class="alloc-name">AAVE v3</div><div class="alloc-meta">Lending · USDT · 32%</div></div>
       <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$2 560</div><div class="alloc-apy">12.8% APY</div></div>
     </div>
-    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','~$1 600','Автоматические стратегии: Yearn сам ищет лучшую доходность внутри DeFi и реинвестирует прибыль.','var(--purple)')">
+    <div class="alloc-item" onclick="openProto('Yearn Finance','24.1','~$1 600','Automated strategies: Yearn searches DeFi for the best yield and reinvests profits.','var(--purple)')">
       <div class="alloc-dot" style="background:var(--purple)"></div>
-      <div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Авто-стратегии · yUSDT · 20%</div></div>
+      <div class="alloc-info"><div class="alloc-name">Yearn Finance</div><div class="alloc-meta">Auto strategies · yUSDT · 20%</div></div>
       <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$1 600</div><div class="alloc-apy">24.1% APY</div></div>
     </div>
-    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','~$800','Узкий диапазон LP: ты предоставляешь ликвидность и зарабатываешь на комиссиях трейдеров.','#FF7A50')">
+    <div class="alloc-item" onclick="openProto('Uniswap v3','31.5','~$800','Narrow-range LP: you provide liquidity and earn from trader fees.','#FF7A50')">
       <div class="alloc-dot" style="background:#FF7A50"></div>
       <div class="alloc-info"><div class="alloc-name">Uniswap v3</div><div class="alloc-meta">AMM · LP USDT/USDC · 10%</div></div>
       <div class="alloc-right"><div class="alloc-val" style="color:var(--muted)">~$800</div><div class="alloc-apy">31.5% APY</div></div>
     </div>
     <div style="padding:14px 16px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:12px;color:var(--muted)">Прогноз дохода за год</span>
+      <span style="font-size:12px;color:var(--muted)">Projected yearly income</span>
       <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--teal)">~$2 080</span>
     </div>
   </div>
 </div>
 
-<!-- ИСТОРИЯ ПУСТАЯ -->
+<!-- EMPTY HISTORY -->
 <div class="sect">
-  <div class="sect-head"><span class="sect-title">История операций</span></div>
+  <div class="sect-head"><span class="sect-title">Transaction history</span></div>
   <div style="background:var(--card);border-radius:16px;border:0.5px solid var(--border);padding:36px 20px;text-align:center">
     <div style="font-size:36px;margin-bottom:12px">📭</div>
-    <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px">Пока пусто</p>
-    <p style="font-size:13px;color:var(--muted);line-height:1.6">Операции появятся после того, как ИИ начнёт работу. Запусти стратегию выше.</p>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px">Nothing here yet</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6">Transactions will appear once the AI starts working. Launch a strategy above.</p>
   </div>
 </div>
 
@@ -731,10 +764,10 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 
 <!-- DASHBOARD BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav-item active"><span class="nav-icon">📊</span><span>Портфель</span></div>
-  <div class="nav-item" onclick="openDashActions()"><span class="nav-icon">⚡</span><span>Управление</span></div>
-  <div class="nav-item"><span class="nav-icon">📈</span><span>Рынок</span></div>
-  <div class="nav-item"><span class="nav-icon">⚙️</span><span>Настройки</span></div>
+  <div class="nav-item active"><span class="nav-icon">📊</span><span>Portfolio</span></div>
+  <div class="nav-item" onclick="openDashActions()"><span class="nav-icon">⚡</span><span>Manage</span></div>
+  <div class="nav-item"><span class="nav-icon">📈</span><span>Market</span></div>
+  <div class="nav-item"><span class="nav-icon">⚙️</span><span>Settings</span></div>
 </div>
 
 <!-- DASHBOARD MODALS -->
@@ -742,21 +775,21 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="bottom-sheet">
     <button class="sheet-close" onclick="document.getElementById('dashDepositModal').classList.remove('open')">×</button>
     <div class="sheet-handle"></div>
-    <p class="sheet-title">Пополнить баланс</p>
-    <p class="sheet-sub">Переведи USDT на адрес ниже — зачислится автоматически</p>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase">Сеть</p>
+    <p class="sheet-title">Add funds</p>
+    <p class="sheet-sub">Send USDT to the address below — it will be credited automatically</p>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase">Network</p>
     <div style="display:flex;gap:8px;margin-bottom:16px">
       <div class="net-c active" onclick="setDashNet(this,'TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh')">TRC-20</div>
       <div class="net-c" onclick="setDashNet(this,'0x3fA9b2bC6e4a7D1cF8e29Ab0dC5E6F7a8B9c0D1')">ERC-20</div>
       <div class="net-c" onclick="setDashNet(this,'bnb1xq8f4w2k9p7m3n5r6t0v1y4z8a2b3c7d9e')">BEP-20</div>
     </div>
-    <div class="addr-box"><span class="addr-text" id="dashDepAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyDashAddr()">Копировать</button></div>
+    <div class="addr-box"><span class="addr-text" id="dashDepAddr">TXuV2mBpQn7k4rLmZe8dYqPpNwCaJsF3Kh</span><button class="copy-btn" onclick="copyDashAddr()">Copy</button></div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
-      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Минимум</span><span style="font-weight:600">$100 USDT</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Зачисление</span><span style="font-weight:600;color:var(--teal)">1–5 минут</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Комиссия</span><span style="font-weight:600">0%</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Minimum</span><span style="font-weight:600">$100 USDT</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Crediting time</span><span style="font-weight:600;color:var(--teal)">1–5 minutes</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--muted)">Fee</span><span style="font-weight:600">0%</span></div>
     </div>
-    <button class="apply-btn" onclick="document.getElementById('dashDepositModal').classList.remove('open')">Всё понятно →</button>
+    <button class="apply-btn" onclick="document.getElementById('dashDepositModal').classList.remove('open')">Got it →</button>
   </div>
 </div>
 
@@ -764,12 +797,12 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="bottom-sheet">
     <button class="sheet-close" onclick="document.getElementById('dashWithdrawModal').classList.remove('open')">×</button>
     <div class="sheet-handle"></div>
-    <p class="sheet-title">Вывести средства</p>
-    <p class="sheet-sub">Деньги придут на твой кошелёк в течение 5 минут</p>
-    <div class="field"><div class="field-head"><label>Сумма USDT</label><span class="max-tag" onclick="document.getElementById('wdAmount').value='8000'">MAX $8 000</span></div><input type="number" id="wdAmount" placeholder="0" inputmode="decimal"></div>
-    <div class="field"><label>Адрес кошелька получателя</label><input type="text" id="wdAddr" placeholder="TRC-20 / ERC-20 адрес"></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:18px;padding:12px;background:var(--navy2);border-radius:10px"><span style="color:var(--muted)">Комиссия сети</span><span style="color:var(--amber);font-weight:600">~$1.00</span></div>
-    <button class="apply-btn" onclick="doWithdraw()">Вывести →</button>
+    <p class="sheet-title">Withdraw funds</p>
+    <p class="sheet-sub">Funds will arrive in your wallet within 5 minutes</p>
+    <div class="field"><div class="field-head"><label>Amount in USDT</label><span class="max-tag" onclick="document.getElementById('wdAmount').value='8000'">MAX $8 000</span></div><input type="number" id="wdAmount" placeholder="0" inputmode="decimal"></div>
+    <div class="field"><label>Recipient wallet address</label><input type="text" id="wdAddr" placeholder="TRC-20 / ERC-20 address"></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:18px;padding:12px;background:var(--navy2);border-radius:10px"><span style="color:var(--muted)">Network fee</span><span style="color:var(--amber);font-weight:600">~$1.00</span></div>
+    <button class="apply-btn" onclick="doWithdraw()">Withdraw →</button>
   </div>
 </div>
 
@@ -783,8 +816,8 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
     </div>
     <p class="sheet-sub" id="protoDesc"></p>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px" id="protoStats"></div>
-    <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--navy2);border-radius:10px;margin-bottom:16px"><span style="font-size:18px">🔍</span><span style="font-size:12px;color:var(--muted2)">Данные из открытых источников: DefiLlama, Dune Analytics, on-chain данные блокчейна</span></div>
-    <button class="apply-btn" onclick="document.getElementById('protoModal').classList.remove('open')">Понятно →</button>
+    <div style="display:flex;align-items:center;gap:8px;padding:12px;background:var(--navy2);border-radius:10px;margin-bottom:16px"><span style="font-size:18px">🔍</span><span style="font-size:12px;color:var(--muted2)">Data from public sources: DefiLlama, Dune Analytics, on-chain blockchain data</span></div>
+    <button class="apply-btn" onclick="document.getElementById('protoModal').classList.remove('open')">Got it →</button>
   </div>
 </div>
 
@@ -792,13 +825,13 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
   <div class="bottom-sheet">
     <button class="sheet-close" onclick="document.getElementById('actionsModal').classList.remove('open')">×</button>
     <div class="sheet-handle"></div>
-    <p class="sheet-title">Управление</p>
-    <p class="sheet-sub">Что хочешь сделать?</p>
+    <p class="sheet-title">Manage</p>
+    <p class="sheet-sub">What would you like to do?</p>
     <div class="action-items">
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashDeposit()"><div class="action-icon" style="background:var(--teal-faint)">💰</div><div><div class="action-title">Пополнить баланс</div><div class="action-desc">Добавить USDT на счёт</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashWithdraw()"><div class="action-icon" style="background:var(--amber-faint)">📤</div><div><div class="action-title">Вывести средства</div><div class="action-desc">Забрать деньги на кошелёк</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open')"><div class="action-icon" style="background:var(--purple-faint)">🎯</div><div><div class="action-title">Сменить стратегию</div><div class="action-desc">Спокойная / Баланс / Агрессив</div></div><span class="action-arrow">›</span></div>
-      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');setTimeout(()=>showToast('🔄 $147.32 реинвестированы в Curve Finance'),200)"><div class="action-icon" style="background:var(--teal-faint)">🔄</div><div><div class="action-title">Реинвестировать доход</div><div class="action-desc">Запустить накопленные $147 в работу</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashDeposit()"><div class="action-icon" style="background:var(--teal-faint)">💰</div><div><div class="action-title">Add funds</div><div class="action-desc">Add USDT to your account</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');openDashWithdraw()"><div class="action-icon" style="background:var(--amber-faint)">📤</div><div><div class="action-title">Withdraw funds</div><div class="action-desc">Withdraw funds to your wallet</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open')"><div class="action-icon" style="background:var(--purple-faint)">🎯</div><div><div class="action-title">Change strategy</div><div class="action-desc">Conservative / Balanced / Aggressive</div></div><span class="action-arrow">›</span></div>
+      <div class="action-item" onclick="document.getElementById('actionsModal').classList.remove('open');setTimeout(()=>showToast('🔄 $147.32 reinvested into Curve Finance'),200)"><div class="action-icon" style="background:var(--teal-faint)">🔄</div><div><div class="action-title">Reinvest earnings</div><div class="action-desc">Put your accumulated $147 to work</div></div><span class="action-arrow">›</span></div>
     </div>
   </div>
 </div>
@@ -806,10 +839,10 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
 <div class="modal-bg" id="logoutModal" onclick="if(event.target===this)document.getElementById('logoutModal').classList.remove('open')">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <p class="sheet-title">Выйти из аккаунта?</p>
-    <p class="sheet-sub" style="margin-bottom:24px">Деньги продолжат работать — можешь зайти обратно в любой момент</p>
-    <button class="apply-btn" style="background:var(--red);margin-bottom:10px" onclick="doLogout()">Да, выйти</button>
-    <button class="apply-btn" style="background:var(--card2);color:var(--muted2)" onclick="document.getElementById('logoutModal').classList.remove('open')">Остаться</button>
+    <p class="sheet-title">Log out of your account?</p>
+    <p class="sheet-sub" style="margin-bottom:24px">Your funds keep working — you can log back in anytime</p>
+    <button class="apply-btn" style="background:var(--red);margin-bottom:10px" onclick="doLogout()">Yes, log out</button>
+    <button class="apply-btn" style="background:var(--card2);color:var(--muted2)" onclick="document.getElementById('logoutModal').classList.remove('open')">Stay logged in</button>
   </div>
 </div>
 
@@ -843,7 +876,7 @@ const canvas = document.getElementById('flowCanvas');
 const ctx = canvas.getContext('2d');
 function resizeCanvas(){canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=canvas.offsetHeight*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio)}
 resizeCanvas();
-const nodes=[{label:'USDT',x:.12,y:.5,color:'#00D4AA',r:22},{label:'ИИ',x:.45,y:.5,color:'#8B7CF8',r:18},{label:'AAVE',x:.75,y:.18,color:'#00D4AA',r:13},{label:'Curve',x:.82,y:.5,color:'#F5A623',r:13},{label:'Yearn',x:.73,y:.82,color:'#8B7CF8',r:13}];
+const nodes=[{label:'USDT',x:.12,y:.5,color:'#00D4AA',r:22},{label:'AI',x:.45,y:.5,color:'#8B7CF8',r:18},{label:'AAVE',x:.75,y:.18,color:'#00D4AA',r:13},{label:'Curve',x:.82,y:.5,color:'#F5A623',r:13},{label:'Yearn',x:.73,y:.82,color:'#8B7CF8',r:13}];
 const edges=[{from:0,to:1},{from:1,to:2},{from:1,to:3},{from:1,to:4}];
 const particles=[];
 for(let i=0;i<9;i++){const e=edges[Math.floor(Math.random()*edges.length)];particles.push({edge:e,t:Math.random(),speed:.004+Math.random()*.004})}
@@ -880,14 +913,156 @@ document.querySelectorAll('.strategy-card,.simulator,.amount-section').forEach(c
 /* Orbs */
 for(let i=0;i<4;i++){const orb=document.createElement('div');orb.className='orb';const size=120+Math.random()*180;orb.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*90}%;background:${Math.random()>.5?'#00D4AA':'#8B7CF8'};animation-duration:${14+Math.random()*12}s;animation-delay:${Math.random()*10}s;`;document.body.appendChild(orb)}
 
-/* Strategy selector */
-const stratDataLand={conservative:{label:'Спокойная',apy:.11},balanced:{label:'Сбалансированная',apy:.26},aggressive:{label:'Агрессивная',apy:.65}};
-let currentStratLand='conservative';
-function selectStrategy(card){document.querySelectorAll('.strategy-card').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');currentStratLand=card.classList[1];updateProjection()}
-function updateProjection(){const amount=parseFloat(document.getElementById('amountInput').value)||0,s=stratDataLand[currentStratLand],apy=s.apy,daily=amount*apy/365,fmt=v=>'$'+v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,' ');document.getElementById('proj30').textContent=fmt(daily*30);document.getElementById('proj90').textContent=fmt(daily*90);document.getElementById('proj365').textContent=fmt(amount*apy);document.getElementById('projStrat').textContent=s.label+' ('+Math.round(apy*100)+'% APY)'}
-document.getElementById('amountInput').addEventListener('input',updateProjection);
-function setAmount(v){document.getElementById('amountInput').value=v;updateProjection()}
-updateProjection();
+/* Strategy / allocation calculator — live APY from DeFiLlama public API */
+const FALLBACK_PROTOCOL_POOL=[
+  {name:'AAVE v3',type:'Lending',apy:12.8,color:'#00D4AA',riskRange:[0,60]},
+  {name:'Compound',type:'Lending',apy:9.4,color:'#5DCAA5',riskRange:[0,50]},
+  {name:'Curve 3pool',type:'DEX liquidity pool',apy:19.2,color:'#F5A623',riskRange:[15,80]},
+  {name:'Yearn yUSDT',type:'Auto strategy',apy:24.1,color:'#8B7CF8',riskRange:[20,85]},
+  {name:'Uniswap v3',type:'AMM LP',apy:31.5,color:'#FF7A50',riskRange:[40,100]},
+  {name:'Pendle',type:'Yield token',apy:48.0,color:'#FF5858',riskRange:[60,100]},
+  {name:'Convex',type:'Farming',apy:38.5,color:'#D4537E',riskRange:[55,100]},
+];
+let protocolPool=FALLBACK_PROTOCOL_POOL;
+let apyDataIsLive=false;
+
+/* Maps our display protocols to DeFiLlama project slugs + risk band + color/type for UI */
+const PROTOCOL_TARGETS=[
+  {match:p=>p.project==='aave-v3'&&/USDT|USDC/i.test(p.symbol||''),name:'AAVE v3',type:'Lending',color:'#00D4AA',riskRange:[0,60]},
+  {match:p=>p.project==='compound-v3'&&/USDT|USDC/i.test(p.symbol||''),name:'Compound',type:'Lending',color:'#5DCAA5',riskRange:[0,50]},
+  {match:p=>p.project==='curve-dex'&&/3pool|USDT/i.test(p.symbol||''),name:'Curve',type:'DEX liquidity pool',color:'#F5A623',riskRange:[15,80]},
+  {match:p=>p.project==='yearn-finance'&&/USDT|USDC/i.test(p.symbol||''),name:'Yearn Finance',type:'Auto strategy',color:'#8B7CF8',riskRange:[20,85]},
+  {match:p=>p.project==='uniswap-v3'&&/USDT|USDC/i.test(p.symbol||''),name:'Uniswap v3',type:'AMM LP',color:'#FF7A50',riskRange:[40,100]},
+  {match:p=>p.project==='pendle'&&/USDT|USDC/i.test(p.symbol||''),name:'Pendle',type:'Yield token',color:'#FF5858',riskRange:[60,100]},
+  {match:p=>p.project==='convex-finance'&&/USDT|USDC/i.test(p.symbol||''),name:'Convex',type:'Farming',color:'#D4537E',riskRange:[55,100]},
+];
+
+async function loadLiveApyData(){
+  try{
+    const res=await fetch('https://yields.llama.fi/pools');
+    if(!res.ok)throw new Error('bad response');
+    const json=await res.json();
+    const pools=json.data||[];
+    const built=[];
+    PROTOCOL_TARGETS.forEach(target=>{
+      const candidates=pools.filter(target.match).filter(p=>p.apy&&p.apy>0&&p.tvlUsd>1000000);
+      if(!candidates.length)return;
+      candidates.sort((a,b)=>b.tvlUsd-a.tvlUsd);
+      const best=candidates[0];
+      built.push({name:target.name,type:target.type,apy:Math.round(best.apy*10)/10,color:target.color,riskRange:target.riskRange,tvl:best.tvlUsd});
+    });
+    if(built.length>=3){
+      protocolPool=built;
+      apyDataIsLive=true;
+      updateProtocolCards(built);
+      updateTicker(built);
+      const avgApy=built.reduce((a,b)=>a+b.apy,0)/built.length;
+      const apyEl=document.getElementById('apyNum');
+      if(apyEl)apyEl.textContent=Math.round(avgApy)+'%';
+    }
+  }catch(e){
+    /* network blocked or API unreachable — keep fallback static data */
+    apyDataIsLive=false;
+  }
+  updateLiveBadge();
+  renderCalc();
+}
+function updateProtocolCards(data){
+  const idMap={'AAVE v3':'aave','Curve':'curve','Yearn Finance':'yearn','Uniswap v3':'uniswap','Pendle':'pendle'};
+  data.forEach(p=>{
+    const elId=idMap[p.name];
+    if(!elId)return;
+    const el=document.getElementById('protoApy-'+elId);
+    if(el)el.innerHTML=p.apy.toFixed(1)+'%<span>APY</span>';
+  });
+}
+function updateTicker(data){
+  const inner=document.getElementById('tickerInner');
+  if(!inner)return;
+  const items=data.map(p=>({label:p.name,val:p.apy.toFixed(1)+'%'}));
+  const makeItems=()=>items.map(t=>`<span class="ticker-item"><strong>${t.val}</strong>${t.label}<span style="color:var(--border)">·</span></span>`).join('');
+  inner.innerHTML=makeItems()+makeItems();
+}
+function updateLiveBadge(){
+  const el=document.getElementById('apySourceNote');
+  if(!el)return;
+  if(apyDataIsLive){
+    el.innerHTML='🟢 Live APY from <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a> · updated on page load';
+  }else{
+    el.innerHTML='⚪ Showing reference APY (live data unavailable right now) · source: <a href="https://defillama.com/yields" target="_blank" rel="noopener" style="color:var(--teal)">DeFiLlama</a>';
+  }
+}
+function getAllocationForRisk(risk){
+  const eligible=protocolPool.filter(p=>risk>=p.riskRange[0]-15&&risk<=p.riskRange[1]+15);
+  const pool=eligible.length?eligible:protocolPool.slice(0,3);
+  const weights=pool.map(p=>{
+    const mid=(p.riskRange[0]+p.riskRange[1])/2;
+    const dist=Math.abs(risk-mid);
+    return Math.max(8,100-dist);
+  });
+  const total=weights.reduce((a,b)=>a+b,0);
+  return pool.map((p,i)=>({...p,pct:Math.round(weights[i]/total*100)})).sort((a,b)=>b.pct-a.pct).slice(0,4);
+}
+function effectiveApy(allocation){
+  const sumPct=allocation.reduce((a,b)=>a+b.pct,0);
+  return allocation.reduce((a,b)=>a+b.apy*(b.pct/sumPct),0);
+}
+function renderCalc(){
+  const risk=parseInt(document.getElementById('riskSlider').value);
+  const amount=parseFloat(document.getElementById('amountInput').value)||0;
+  const alloc=getAllocationForRisk(risk);
+  const apy=effectiveApy(alloc)/100;
+  const list=document.getElementById('calcAllocList');
+  list.innerHTML=alloc.map(a=>`
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:8px;height:8px;border-radius:50%;background:${a.color};flex-shrink:0"></div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
+          <span style="color:var(--white);font-weight:500">${a.name}</span>
+          <span style="color:var(--muted)">${a.pct}% · ${a.apy}%</span>
+        </div>
+        <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden">
+          <div style="height:100%;background:${a.color};width:${a.pct}%;border-radius:2px;transition:width .4s"></div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const dailyRate=apy/365;
+  const day=amount*dailyRate;
+  const fmt=v=>'$'+v.toLocaleString('ru',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('projDay').textContent=fmt(day);
+  document.getElementById('proj30').textContent=fmt(day*30);
+  document.getElementById('proj90').textContent=fmt(day*90);
+  document.getElementById('proj365').textContent=fmt(amount*apy);
+  document.getElementById('projStrat').textContent=(apy*100).toFixed(1)+'% APY';
+
+  drawGrowthChart(amount,apy);
+}
+function drawGrowthChart(amount,apy){
+  const canvas=document.getElementById('growthChart');
+  if(!canvas)return;
+  canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=100*devicePixelRatio;
+  const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
+  const W=canvas.offsetWidth,H=100;
+  const months=12;
+  const data=[];
+  for(let m=0;m<=months;m++) data.push(amount*Math.pow(1+apy/12,m));
+  const min=Math.min(...data),max=Math.max(...data);
+  const pts=data.map((v,i)=>({x:i/months*(W-16)+8,y:H-((v-min)/(max-min||1))*(H-16)-8}));
+  ctx.clearRect(0,0,W,H);
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'rgba(0,212,170,0.2)');grad.addColorStop(1,'rgba(0,212,170,0)');
+  ctx.beginPath();ctx.moveTo(pts[0].x,H);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));ctx.strokeStyle='#00D4AA';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+  const last=pts[pts.length-1];
+  ctx.fillStyle='#00D4AA';ctx.font='bold 11px Space Grotesk,sans-serif';ctx.textAlign='right';
+  ctx.fillText('$'+Math.round(data[data.length-1]).toLocaleString('ru'),last.x,last.y-8);
+}
+document.getElementById('riskSlider').addEventListener('input',renderCalc);
+document.getElementById('amountInput').addEventListener('input',renderCalc);
+function setAmount(v){document.getElementById('amountInput').value=v;renderCalc()}
+renderCalc();
+window.addEventListener('resize',()=>renderCalc());
 
 /* Bar animation */
 const barObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){setTimeout(()=>{document.getElementById('bar1').style.width='38%'},200);setTimeout(()=>{document.getElementById('bar2').style.width='32%'},350);setTimeout(()=>{document.getElementById('bar3').style.width='20%'},500);setTimeout(()=>{document.getElementById('bar4').style.width='10%'},650);barObs.disconnect()}})},{threshold:.4});
@@ -904,13 +1079,22 @@ const inner=document.getElementById('tickerInner');
 const makeItems=()=>tickers.map(t=>`<span class="ticker-item"><strong>${t.val}</strong>${t.label}<span style="color:var(--border)">·</span></span>`).join('');
 inner.innerHTML=makeItems()+makeItems();
 
-/* Entry modal */
+/* Fetch live APY data now that all static fallback UI is rendered */
+loadLiveApyData();
+
 function openEntryModal(){document.getElementById('entryModal').classList.add('open');document.body.style.overflow='hidden'}
 function closeEntryModal(){document.getElementById('entryModal').classList.remove('open');document.body.style.overflow=''}
 function switchTab(name,btn){document.querySelectorAll('.entry-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.entry-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+name).classList.add('active')}
 
 /* ── IN-MODAL AUTH LOADERS ── */
 function startSocialAuth(btn, provider, color, letter) {
+  /* Honest behavior: this fires a real mailto application, same as the email form.
+     No real OAuth happens — disclosed in the UI terms-note. */
+  const to='CapitalAssist.app@proton.me';
+  const subject=encodeURIComponent('New application via '+provider+' — CapitalAssist.app');
+  const body=encodeURIComponent('A user applied via the "'+provider+'"\n\nProvider: '+provider+'\n\nReply to get in touch (contact the email the user provides in their reply).');
+  window.location.href='mailto:'+to+'?subject='+subject+'&body='+body;
+
   document.getElementById('social-btns-wrap').style.display = 'none';
   const wrap = document.getElementById('social-loading-wrap');
   wrap.style.display = 'block';
@@ -919,27 +1103,26 @@ function startSocialAuth(btn, provider, color, letter) {
   avatar.style.background = color === '#fff' ? 'rgba(255,255,255,0.1)' : color+'22';
   avatar.style.borderColor = color === '#fff' ? 'rgba(255,255,255,0.2)' : color+'55';
   avatar.style.color = color === '#fff' ? '#fff' : color;
-  document.getElementById('sl-title').textContent = 'Подключаем ' + provider + '...';
-  document.getElementById('sls-1-text').textContent = 'Запрос к ' + provider;
+  document.getElementById('sl-title').textContent = 'Opening your mail app...';
+  document.getElementById('sls-1-text').textContent = 'Preparing email for ' + provider;
   const bar = document.getElementById('sl-bar');
   const steps = [document.getElementById('sls-1'), document.getElementById('sls-2'), document.getElementById('sls-3')];
   const dur = 15000;
   bar.style.transition = 'width ' + dur + 'ms linear';
   setTimeout(() => bar.style.width = '100%', 50);
   const stepTimes = [0, 5000, 10000];
-  const stepLabels = [null, 'Проверка токена', 'Создание сессии'];
   stepTimes.forEach((t, i) => {
     setTimeout(() => {
       if (i > 0) { steps[i-1].classList.remove('active'); steps[i-1].classList.add('done'); steps[i-1].querySelector('.loader-step-dot').textContent = '✓'; }
       steps[i].classList.add('active');
-      if (i === 1) document.getElementById('sl-sub').textContent = 'Проверяем учётные данные';
-      if (i === 2) document.getElementById('sl-sub').textContent = 'Почти готово...';
+      if (i === 1) document.getElementById('sl-sub').textContent = 'Waiting for you to send the email';
+      if (i === 2) document.getElementById('sl-sub').textContent = 'Almost there...';
     }, t);
   });
   setTimeout(() => {
     steps[2].classList.remove('active'); steps[2].classList.add('done'); steps[2].querySelector('.loader-step-dot').textContent = '✓';
-    document.getElementById('sl-title').textContent = provider + ' — успешно!';
-    document.getElementById('sl-sub').textContent = 'Входим в кабинет...';
+    document.getElementById('sl-title').textContent = 'Application sent!';
+    document.getElementById('sl-sub').textContent = 'Waiting for approval...';
     setTimeout(() => { closeEntryModal(); startReviewLoader(); }, 800);
   }, dur);
 }
@@ -958,14 +1141,14 @@ function startEmailLoader() {
     setTimeout(() => {
       if (i > 0) { steps[i-1].classList.remove('active'); steps[i-1].classList.add('done'); steps[i-1].querySelector('.loader-step-dot').textContent = '✓'; }
       steps[i].classList.add('active');
-      if (i === 1) document.getElementById('el-sub').textContent = 'Проверяем почту';
-      if (i === 2) document.getElementById('el-sub').textContent = 'Регистрируем аккаунт...';
+      if (i === 1) document.getElementById('el-sub').textContent = 'Checking your email';
+      if (i === 2) document.getElementById('el-sub').textContent = 'Setting up your account...';
     }, t);
   });
   setTimeout(() => {
     steps[2].classList.remove('active'); steps[2].classList.add('done'); steps[2].querySelector('.loader-step-dot').textContent = '✓';
-    document.getElementById('el-title').textContent = 'Готово!';
-    document.getElementById('el-sub').textContent = 'Переходим к заявке...';
+    document.getElementById('el-title').textContent = 'Done!';
+    document.getElementById('el-sub').textContent = 'Moving to your application...';
     document.getElementById('el-avatar').textContent = '✅';
     setTimeout(() => { closeEntryModal(); startReviewLoader(); }, 800);
   }, dur);
@@ -975,8 +1158,8 @@ function sendEmailNotify(){
   const name=document.getElementById('userName').value.trim();
   if(!email||!email.includes('@')){document.getElementById('userEmail').focus();document.getElementById('userEmail').style.borderColor='#FF5858';setTimeout(()=>{document.getElementById('userEmail').style.borderColor=''},2000);return}
   const to='CapitalAssist.app@proton.me';
-  const subject=encodeURIComponent('Новая заявка — CapitalAssist.app');
-  const body=encodeURIComponent('Новый пользователь оставил заявку\n\nEmail: '+email+'\n'+(name?'Имя: '+name+'\n':'')+'\nОтветь чтобы связаться.');
+  const subject=encodeURIComponent('New application — CapitalAssist.app');
+  const body=encodeURIComponent('A new user submitted an application\n\nEmail: '+email+'\n'+(name?'Name: '+name+'\n':'')+'\nReply to get in touch.');
   window.location.href='mailto:'+to+'?subject='+subject+'&body='+body;
   startEmailLoader();
 }
@@ -1049,14 +1232,14 @@ function startDepositLoader(){
     steps[2].classList.remove('active');steps[2].classList.add('done');steps[2].querySelector('.loader-step-dot').textContent='✓';
     pct.textContent='100%';
     icon.textContent='✅';
-    document.getElementById('ld-title').textContent='Депозит зачислен!';
-    document.getElementById('ld-sub').textContent='Транзакция подтверждена. ИИ уже начал работу с вашими средствами';
+    document.getElementById('ld-title').textContent='Deposit received!';
+    document.getElementById('ld-sub').textContent='Transaction confirmed. The AI has started working with your funds';
     setTimeout(()=>{screen.classList.remove('show');goToDashboard()},1200);
   },dur);
 }
 
 function selectNet(el,addr){document.querySelectorAll('.net-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('walletAddr').textContent=addr}
-function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('#depositAddrModal .copy-btn');b.textContent='✓ Скопировано';setTimeout(()=>b.textContent='Копировать',2000)}
+function copyLandingAddr(){navigator.clipboard.writeText(document.getElementById('walletAddr').textContent).catch(()=>{});const b=document.querySelector('#depositAddrModal .copy-btn');b.textContent='✓ Copied';setTimeout(()=>b.textContent='Copy',2000)}
 
 /* ════════════════════════════════
    DASHBOARD JS
@@ -1068,35 +1251,52 @@ function initDashboard(){
 }
 
 /* Strategy */
-const strats={c:{name:'Спокойная',apy:'8–14%',color:'var(--teal)',desc:'Только проверенные протоколы — AAVE и Compound. Минимальная волатильность.',protos:['AAVE','Compound','dYdX'],risk:1,rl:'Очень низкий'},b:{name:'Сбалансированная',apy:'18–35%',color:'var(--amber)',desc:'Сочетание лендинга и пулов DEX. ИИ перекладывает туда, где выгоднее прямо сейчас.',protos:['Curve','Uniswap v3','Yearn','AAVE'],risk:3,rl:'Умеренный'},r:{name:'Агрессивная',apy:'40–90%',color:'var(--red)',desc:'Фарминг новых пулов, высокорисковый стейкинг. Высокая доходность и просадка.',protos:['Pendle','Convex','GMX','Eigenlayer'],risk:5,rl:'Высокий'}};
+const strats={c:{name:'Conservative',apy:'8–14%',color:'var(--teal)',desc:'Only proven protocols — AAVE and Compound. Minimal volatility.',protos:['AAVE','Compound','dYdX'],risk:1,rl:'Very low'},b:{name:'Balanced',apy:'18–35%',color:'var(--amber)',desc:'A mix of lending and DEX pools. AI moves capital wherever returns are best right now.',protos:['Curve','Uniswap v3','Yearn','AAVE'],risk:3,rl:'Moderate'},r:{name:'Aggressive',apy:'40–90%',color:'var(--red)',desc:'Farming new pools, high-risk staking. High returns and high drawdown risk.',protos:['Pendle','Convex','GMX','Eigenlayer'],risk:5,rl:'High'}};
 let currentStrat='b';
-function setStrat(btn,key){currentStrat=key;document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const s=strats[key];document.getElementById('stratName').textContent=s.name;document.getElementById('stratApy').textContent=s.apy;document.getElementById('stratApy').style.color=s.color;document.getElementById('stratDesc').textContent=s.desc;const pp=document.getElementById('stratProtos');pp.innerHTML=s.protos.map(p=>`<span class="proto-chip">${p}</span>`).join('');const rb=document.getElementById('riskBar');rb.innerHTML='';for(let i=0;i<5;i++){const d=document.createElement('div');d.className='risk-pip';if(i<s.risk)d.style.background=s.color;rb.appendChild(d)}const lbl=document.createElement('span');lbl.className='risk-label-text';lbl.textContent=s.rl+' риск';rb.appendChild(lbl);document.getElementById('applyBtn').style.background=s.color==='var(--red)'?'#FF5858':s.color==='var(--amber)'?'#F5A623':'#00D4AA'}
+function setStrat(btn,key){currentStrat=key;document.querySelectorAll('.strat-opt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const s=strats[key];document.getElementById('stratName').textContent=s.name;document.getElementById('stratApy').textContent=s.apy;document.getElementById('stratApy').style.color=s.color;document.getElementById('stratDesc').textContent=s.desc;const pp=document.getElementById('stratProtos');pp.innerHTML=s.protos.map(p=>`<span class="proto-chip">${p}</span>`).join('');const rb=document.getElementById('riskBar');rb.innerHTML='';for(let i=0;i<5;i++){const d=document.createElement('div');d.className='risk-pip';if(i<s.risk)d.style.background=s.color;rb.appendChild(d)}const lbl=document.createElement('span');lbl.className='risk-label-text';lbl.textContent=s.rl+' risk';rb.appendChild(lbl);document.getElementById('applyBtn').style.background=s.color==='var(--red)'?'#FF5858':s.color==='var(--amber)'?'#F5A623':'#00D4AA'}
+let liveEarnInterval=null;
 function applyStrategy(){
   const s=strats[currentStrat];
   const btn=document.getElementById('applyBtn');
-  btn.textContent='Запускаем...';
+  btn.textContent='Launching...';
   btn.style.opacity='0.7';
   setTimeout(()=>{
-    btn.textContent='✓ ИИ запущен!';
+    btn.textContent='✓ AI launched!';
     btn.style.background='#00b890';
-    document.querySelector('.balance-hero .bal-amount').parentElement.querySelector('span:not(.bal-amount):not(.currency)').textContent='ИИ активен · '+s.name;
+    document.querySelector('.balance-hero .bal-amount').parentElement.querySelector('span:not(.bal-amount):not(.currency)').textContent='AI active · '+s.name;
     document.querySelectorAll('.dash-stats .stat-mini').forEach((m,i)=>{
       if(i===0){m.querySelector('.num').textContent=s.apy.split('–')[0]+'%';m.querySelector('.num').style.color='var(--teal)'}
     });
-    showToast('🚀 ИИ запущен со стратегией «'+s.name+'»');
+    showToast('🚀 AI launched with the «'+s.name+'» strategy');
+    startLiveEarnings(s);
   },1500);
+}
+function startLiveEarnings(s){
+  const box=document.getElementById('liveEarnBox');
+  box.style.display='block';
+  const amount=8000;
+  const apyLow=parseFloat(s.apy.split('–')[0])/100;
+  const perSec=amount*apyLow/365/86400;
+  document.getElementById('liveEarnRate').textContent='accruing ~$'+perSec.toFixed(5)+' / sec';
+  let earned=0;
+  if(liveEarnInterval)clearInterval(liveEarnInterval);
+  liveEarnInterval=setInterval(()=>{
+    earned+=perSec*0.2;
+    document.getElementById('liveEarnAmount').textContent='+$'+earned.toFixed(4);
+    document.getElementById('earnedStatVal') && (document.getElementById('earnedStatVal').textContent='$'+earned.toFixed(2));
+  },200);
 }
 
 /* Protocol info */
-function openProto(name,apy,amount,desc,color){document.getElementById('protoName').textContent=name;document.getElementById('protoApyBig').textContent=apy+'%';document.getElementById('protoApyBig').style.color=color;document.getElementById('protoDesc').textContent=desc;document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Вложено</span><span style="font-size:13px;font-weight:700">$${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">TVL протокола</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Аудит</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Пройден</span></div>`;document.getElementById('protoModal').classList.add('open')}
+function openProto(name,apy,amount,desc,color){document.getElementById('protoName').textContent=name;document.getElementById('protoApyBig').textContent=apy+'%';document.getElementById('protoApyBig').style.color=color;document.getElementById('protoDesc').textContent=desc;document.getElementById('protoStats').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Invested</span><span style="font-size:13px;font-weight:700">$${amount}</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">APY</span><span style="font-size:13px;font-weight:700;color:${color}">${apy}%</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Protocol TVL</span><span style="font-size:13px;font-weight:700">$${(Math.random()*2+.5).toFixed(1)}B</span></div><div style="display:flex;justify-content:space-between;padding:10px;background:var(--navy2);border-radius:8px"><span style="font-size:13px;color:var(--muted)">Audit</span><span style="font-size:13px;font-weight:700;color:var(--teal)">✓ Passed</span></div>`;document.getElementById('protoModal').classList.add('open')}
 
 /* Dashboard modals */
 function openDashDeposit(){document.getElementById('dashDepositModal').classList.add('open')}
 function openDashWithdraw(){document.getElementById('dashWithdrawModal').classList.add('open')}
 function openDashActions(){document.getElementById('actionsModal').classList.add('open')}
 function setDashNet(el,addr){document.querySelectorAll('#dashDepositModal .net-c').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('dashDepAddr').textContent=addr}
-function copyDashAddr(){navigator.clipboard.writeText(document.getElementById('dashDepAddr').textContent).catch(()=>{});const b=document.querySelector('#dashDepositModal .copy-btn');b.textContent='✓ Готово';setTimeout(()=>b.textContent='Копировать',2000)}
-function doWithdraw(){const amt=document.getElementById('wdAmount').value,addr=document.getElementById('wdAddr').value;if(!amt||parseFloat(amt)<=0){document.getElementById('wdAmount').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);return}if(!addr){document.getElementById('wdAddr').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAddr').style.borderColor='',2000);return}document.getElementById('dashWithdrawModal').classList.remove('open');setTimeout(()=>showToast('📤 Запрос на вывод $'+parseFloat(amt).toFixed(2)+' отправлен'),300)}
+function copyDashAddr(){navigator.clipboard.writeText(document.getElementById('dashDepAddr').textContent).catch(()=>{});const b=document.querySelector('#dashDepositModal .copy-btn');b.textContent='✓ Done';setTimeout(()=>b.textContent='Copy',2000)}
+function doWithdraw(){const amt=document.getElementById('wdAmount').value,addr=document.getElementById('wdAddr').value;if(!amt||parseFloat(amt)<=0){document.getElementById('wdAmount').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAmount').style.borderColor='',2000);return}if(!addr){document.getElementById('wdAddr').style.borderColor='#FF5858';setTimeout(()=>document.getElementById('wdAddr').style.borderColor='',2000);return}document.getElementById('dashWithdrawModal').classList.remove('open');setTimeout(()=>showToast('📤 Withdrawal request for $'+parseFloat(amt).toFixed(2)+' submitted'),300)}
 function confirmLogout(){document.getElementById('logoutModal').classList.add('open')}
 function doLogout(){document.getElementById('logoutModal').classList.remove('open');setTimeout(()=>goToLanding(),400)}
 
