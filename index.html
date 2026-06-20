@@ -801,12 +801,15 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
         </div>
       </div>
 
-      <button class="apply-btn" id="applyBtn" onclick="applyStrategy()">Invest in this strategy</button>
+      <div style="display:flex;gap:10px;margin-top:0">
+        <button class="apply-btn" id="applyBtn" onclick="applyStrategy()" style="flex:1">Invest in this strategy</button>
+        <button class="btn-ghost" id="cancelStratBtn" onclick="cancelStrategy()" style="flex:0 0 auto;padding:13px 18px;white-space:nowrap;display:none">Cancel</button>
+      </div>
 
       <!-- CANCEL / WITHDRAW ANYTIME NOTICE -->
       <div style="display:flex;align-items:flex-start;gap:8px;margin-top:14px;padding:12px;background:rgba(255,255,255,0.03);border-radius:10px;border:0.5px solid var(--border)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="9" stroke="#8892A4" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" stroke="#8892A4" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <p style="font-size:11.5px;color:var(--muted);line-height:1.55">No lock-up. You can cancel this strategy and withdraw your funds at any time — just open <strong style="color:var(--muted2)">Manage → Withdraw funds</strong> below.</p>
+        <p style="font-size:11.5px;color:var(--muted);line-height:1.55" id="cancelNoticeText">No lock-up. You can cancel this strategy and withdraw your funds at any time — just open <strong style="color:var(--muted2)">Manage → Withdraw funds</strong> below.</p>
       </div>
 
       <!-- LIVE EARNINGS COUNTER (hidden until launch) -->
@@ -817,7 +820,7 @@ h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;line-height:1.2;margin-b
         </div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--teal);letter-spacing:-0.5px" id="liveEarnAmount">+$0.00</div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px" id="liveEarnRate">accruing ~$0.00 / sec</div>
-        <button class="btn-ghost" style="margin-top:12px;font-size:12px;padding:10px" onclick="openDashWithdraw()">↑ Withdraw / cancel anytime</button>
+        <button class="btn-ghost" style="margin-top:12px;font-size:12px;padding:10px;border-color:var(--red);color:#FF8A8A" onclick="cancelStrategy()">✕ Cancel strategy &amp; withdraw to available</button>
       </div>
     </div>
   </div>
@@ -1578,10 +1581,46 @@ function applyStrategy(){
     document.getElementById('investAmount').value='';
     renderProjection();
 
+    document.getElementById('cancelStratBtn').style.display='block';
+    document.getElementById('cancelNoticeText').innerHTML='AI is actively managing <strong style="color:var(--muted2)">'+fmtMoney(account.working)+'</strong> in the «'+s.name+'» strategy. No lock-up — cancel anytime to move funds back to Available.';
+
     showToast('🚀 '+fmtMoney(investAmt)+' invested in the «'+s.name+'» strategy');
     startLiveEarnings(s);
     addHistoryEvent('🚀','AI launched · '+fmtMoney(investAmt)+' invested','Just now','','move');
   },1200);
+}
+
+/* Cancel the active strategy — moves all working funds (incl. accrued earnings)
+   back to Available immediately. No lock-up, no penalty. */
+function cancelStrategy(){
+  if(!account.isLaunched || account.working<=0){
+    showToast('No active strategy to cancel');
+    return;
+  }
+  const movedAmount=account.working;
+  if(liveEarnInterval){clearInterval(liveEarnInterval);liveEarnInterval=null;}
+
+  account.available += account.working;
+  account.working = 0;
+  account.isLaunched = false;
+  renderBalances();
+
+  document.getElementById('apyStatVal').textContent='—';
+  document.getElementById('apyStatVal').style.color='var(--muted)';
+
+  document.getElementById('activeAllocSect').style.display='none';
+  document.getElementById('liveEarnBox').style.display='none';
+  document.getElementById('cancelStratBtn').style.display='none';
+  document.getElementById('nextStepBanner').style.display='block';
+  document.getElementById('cancelNoticeText').innerHTML='No lock-up. You can cancel this strategy and withdraw your funds at any time — just open <strong style="color:var(--muted2)">Manage → Withdraw funds</strong> below.';
+
+  const btn=document.getElementById('applyBtn');
+  btn.textContent='Invest in this strategy';
+  btn.style.background=strats[currentStrat].colorHex;
+  btn.style.opacity='1';
+
+  showToast('✕ Strategy cancelled — '+fmtMoney(movedAmount)+' moved back to Available');
+  addHistoryEvent('✕','Strategy cancelled','Just now',fmtMoney(movedAmount),'plus');
 }
 
 function startLiveEarnings(s){
